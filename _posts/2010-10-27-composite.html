@@ -10,6 +10,7 @@ tags:
 modified_time: '2016-01-15T23:27:32.416+01:00'
 blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-2253552308880365742
 blogger_orig_url: http://learningmonik.blogspot.com/2010/10/composite.html
+commentIssueId: 14
 ---
 
 <div dir="ltr" style="text-align: left;" trbidi="on"><i>Summary taken from the book ,,<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns: Elements of Reusable Object-Oriented Software</a>'', by Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides, Addison-Wesley, 1995.</i><br /><i><br /></i><br /><pre>class Node{<br />  Node[] children;<br />  getChildAt(int idx);<br />  ...<br />}<br />class FullNode extends Node{<br />}<br />class LeafNode extends Node{<br />}</pre><br />We compose objects to tree structures - when <span style="font-weight: bold;">we want to treat individual objects and compositions of objects in the same way</span>.<br /><br />It's recursive composition.<br /><br />The clients do not distinguish between invidual subclasses, they treat all of them uniformly.<br /><br />Should the methods be declared in superclass or subclasses? Depends if you favor safety (subclasses) or transparency (superclass):<br /><ul><li>if you favor <span style="font-weight: bold;">safety</span>, you can still add a getComposite() method to the superclass, and leaves would just return null:) </li><li>in case you favor <span style="font-weight: bold;">transparency </span>remember to throw at least exceptions in leaf subclasses, so that a possible bug will be noticed</li></ul></div>

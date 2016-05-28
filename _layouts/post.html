@@ -1,23 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>
-        {% if page.title %}
-        {{ page.title }}
-        {% else %}
-        Default Page Title
-        {% endif %}
-    </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>
+		{% if page.title %} {{ page.title }} {% else %} Default Page Title {% endif %}
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<script src="/js/jquery.min.js"></script>
+
+	<!-- jQuery -->
+	<script src="/js/jquery.js"></script>
+	<!-- Bootstrap Core JavaScript -->
+	<script src="/js/bootstrap.min.js"></script>
+	<!-- Plugin JavaScript -->
+	<script src="/js/jquery.easing.min.js"></script>
+	<script src="/js/jquery.fittext.js"></script>
+	<script src="/js/wow.min.js"></script>
+	<!-- Custom Theme JavaScript -->
+	<script src="/js/blog.js"></script>
+	<script type="text/javascript">
+
+       $.ajax("https://api.github.com/repos/monami555/monami555.github.com/issues/{{ page.commentIssueId }}/comments", {
+         headers: {Accept: "application/vnd.github.full+json"},
+         success: function(data){
+           document.getElementById("comments-div").innerHTML=
+		   '<div class="col-sm-10">'+
+			   '<h4>Anja'+
+				   '<small>Sep 29, 2015, 9:12 PM</small>'+
+			   '</h4>'+
+			   '<p>Keep up the GREAT work! I am cheering for you!! Lorem ipsum dolor sit amet, consectetur adipiscing elit,'+
+				   'sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>'+
+			   '<br>'+
+		   '</div>';
+         },
+         error:function(){
+
+			document.getElementById("comments-div").innerHTML=
+			   '<div class="col-sm-10">'+
+				   '<p>Cannot load the comments; try again later.</p>'+
+				   '<br>'+
+			   '</div>';
+		 
+         }
+       });
+
+
+
+
+	</script>
 </head>
 <body>
 
@@ -25,28 +61,21 @@
 
 <div class="col-sm-9">
 
-    <h2>{{ page.title }}</h2>
-    <h5><span class="glyphicon glyphicon-time"></span> Post by {{ page.author }}, {{ page.date | date_to_long_string }}.</h5>
-    <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br>
-    {{ content }}
+	<h2>{{ page.title }}</h2>
+	<h5><span class="glyphicon glyphicon-time"></span> Post by {{ page.author }}, {{ page.date | date_to_long_string }}.
+	</h5>
+	<h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br> {{ content }}
 
-    {% include comments.html %}
+																										   {% include
+																										   comments.html
+																										   %}
 
 </div>
 
 <footer class="container-fluid">
-    <p>Footer Text</p>
+	<p>Footer Text</p>
 </footer>
 
-<!-- jQuery -->
-<script src="/js/jquery.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-<!-- Plugin JavaScript -->
-<script src="/js/jquery.easing.min.js"></script>
-<script src="/js/jquery.fittext.js"></script>
-<script src="/js/wow.min.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="/js/creative.js"></script>
+
 </body>
 </html>
