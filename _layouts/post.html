@@ -30,16 +30,20 @@
          headers: {Accept: "application/vnd.github.full+json"},
 
          success: function(data){
-
            commentsTxt = "";
-           for (comment in data) {
-              console.log(comment);
-              commentsTxt += '<div class="col-sm-10">'+
-               '<h4>Anja '+
-                   '<small>Sep 29, 2015, 9:12 PM</small>'+
-               '</h4>'+
-               '<p>'+comment+'</p>'+
-               '<br></div>';
+           for (i=0;i<data.length;i++) {
+              comment = data[i];
+              commentsTxt +=
+                   '<div class="row">'+
+                   '<div class="col-sm-2 text-center">'+
+                        '<img src="' + comment.user.avatar_url + '" class="img-circle" height="65" width="65" alt="Avatar">'+
+                   '</div>'+
+                   '<div class="col-sm-10">'+
+                   '<h4>'+comment.user.login +' '+
+                       '<small>'+ new Date(comment.created_at).toDateString() +'</small>'+
+                   '</h4>'+
+                   '<p>'+comment.body+'</p>'+
+                   '<br></div></div>';
            }
            document.getElementById("comments-div").innerHTML=commentsTxt;
            document.getElementById("comments-count").innerHTML=data.length;
@@ -53,10 +57,6 @@
                '</div>';
          }
        });
-
-
-
-
     </script>
 </head>
 <body>
@@ -68,16 +68,16 @@
     <h2>{{ page.title }}</h2>
     <h5><span class="glyphicon glyphicon-time"></span> Post by {{ page.author }}, {{ page.date | date_to_long_string }}.
     </h5>
-    <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br> {{ content }}
+    <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br>
 
-                                                                                                           {% include
-                                                                                                           comments.html
-                                                                                                           %}
+    {{ content }}
+
+    {% include comments.html %}
 
 </div>
 
 <footer class="container-fluid">
-    <p>Footer Text</p>
+
 </footer>
 
 
