@@ -1,0 +1,15 @@
+---
+layout: post
+title: 'Design Patterns: Bridge (Handle/Body)'
+date: '2010-10-29T14:45:00.000+02:00'
+author: Monik
+tags:
+- Programming
+- Code Design
+- Design Patterns
+modified_time: '2016-01-15T23:27:08.930+01:00'
+blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-6335671514820937273
+blogger_orig_url: http://learningmonik.blogspot.com/2010/10/bridge_29.html
+---
+
+<div dir="ltr" style="text-align: left;" trbidi="on"><i>Summary taken from the book ,,<a href="http://c2.com/cgi/wiki?DesignPatternsBook">Design Patterns: Elements of Reusable Object-Oriented Software</a>'', by Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides, Addison-Wesley, 1995.</i><br /><br /><pre>Class{<br /> House house;<br /> ...<br />}<br />...<br />public static void main(String[] args){<br /> Class c = new Class(new DetachedHouse());<br />}</pre>Bridge pattern is when we use Interface/Absract class in a class instead of concrete subclasses, and instantiate it from outside, with concrete instance.<br /><br />We use it to separate abstraction from its implementation. Actually we usually have a class hierarchy for imlementation (e.g. arrayList, static array), and separate class hierarchy for abstraction (FIFO, LIFO) - in this way we connect them.</div>
