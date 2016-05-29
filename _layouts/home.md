@@ -1,5 +1,10 @@
+# sds
+asdas
+- sadfdsafasdf
+- sdaf
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" markdown="1">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,7 +31,7 @@
     <script src="/js/blog.js"></script>
 
 </head>
-<body>
+<body markdown="1">
 
 {% include menu.html %}
 
