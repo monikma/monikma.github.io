@@ -1,3 +1,5 @@
+# enable markdown that is compatible with GitHub Pages
 markdown: kramdown
 kramdown:
   input: GFM
+
