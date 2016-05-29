@@ -76,3 +76,8 @@ p {
     font-size: 16px;
     line-height: 1.5;
 }
+
+.collapsible ul li {
+    list-style-type: circle;
+    list-style-position:inside;
+}
