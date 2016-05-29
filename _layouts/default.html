@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>
+        {% if page.title %} {{ page.title }} {% else %} Mona's learning blog {% endif %}
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/blog.css">
+
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/js/jquery.fittext.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/blog.js"></script>
+
+</head>
+<body>
+
+{% include nav.html %}
+
+{% include posts-list.html %}
+
+<div class="col-sm-9">
+
+{{ content }}
+
+<footer class="container-fluid">
+
+</footer>
+
+</body>
+</html>
