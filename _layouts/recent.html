@@ -7,17 +7,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>
-        {% if page.title %}
-        {{ page.title }}
-        {% else %}
-        Default Page Title
-        {% endif %}
+        {% if page.title %} {{ page.title }} {% else %} Mona's learning blog {% endif %}
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/blog.css">
+
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="/js/jquery.easing.min.js"></script>
+    <script src="/js/jquery.fittext.js"></script>
+    <script src="/js/wow.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="/js/blog.js"></script>
+
 </head>
 <body>
 
@@ -28,46 +35,29 @@
     <h4>
         <small>RECENT POSTS</small>
     </h4>
-    <hr>
-    <h2>I Love Food</h2>
-    <h5><span class="glyphicon glyphicon-time"></span> Post by Jane Dane, Sep 27, 2015.</h5>
-    <h5><span class="label label-danger">Food</span> <span class="label label-primary">Ipsum</span></h5><br>
-    <p>Food is my passion. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-        aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-        deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.</p>
-    <br>
 
-    <hr>
-    <h2>Officially Blogging</h2>
-    <h5><span class="glyphicon glyphicon-time"></span> Post by John Doe, Sep 24, 2015.</h5>
-    <h5><span class="label label-success">Lorem</span></h5><br>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-        laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <br>
-    <hr>
+    <ul class="list-unstyled">
+        {% for post in site.posts %}
+        <li>
+            <div>
+                <a href="{{ post.url }}" style="text-decoration:none;"><h3>{{ post.title }}</h3></a>
+                <h5>
+                    <span class="glyphicon glyphicon-time"></span> Post by {{ post.author }}, {{ post.date | date_to_long_string }}.
+                </h5>
+                <h5>{% for tag in post.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br>
+                <p class="blogdate">{{ post.date | date: "%d %B %Y" }}</p>
+                <div>{{ post.content |truncatehtml | truncatewords: 60 }}</div>
+            </div>
+            <hr>
+        </li>
+        {% endfor %}
+    </ul>
 
 </div>
 
 <footer class="container-fluid">
-    <p>Footer Text</p>
+
 </footer>
 
-
-<!-- jQuery -->
-<script src="/js/jquery.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-<!-- Plugin JavaScript -->
-<script src="/js/jquery.easing.min.js"></script>
-<script src="/js/jquery.fittext.js"></script>
-<script src="/js/wow.min.js"></script>
-<!-- Custom Theme JavaScript -->
-<script src="/js/creative.js"></script>
 </body>
 </html>
