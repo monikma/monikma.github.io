@@ -44,8 +44,7 @@
                 <h5>
                     <span class="glyphicon glyphicon-time"></span> Post by {{ post.author }}, {{ post.date | date_to_long_string }}.
                 </h5>
-                <h5>{% for tag in post.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br>
-                <p class="blogdate">{{ post.date | date: "%d %B %Y" }}</p>
+                <h5>{% for tag in post.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5>
                 <div>{{ post.content |truncatehtml | truncatewords: 60 }}</div>
             </div>
             <hr>

@@ -68,7 +68,7 @@
     <h2>{{ page.title }}</h2>
     <h5><span class="glyphicon glyphicon-time"></span> Post by {{ page.author }}, {{ page.date | date_to_long_string }}.
     </h5>
-    <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5><br>
+    <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5>
 
     {{ content }}
 
