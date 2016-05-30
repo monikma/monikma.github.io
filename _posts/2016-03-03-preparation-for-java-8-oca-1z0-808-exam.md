@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Preparation for Java 8 OCA (Oracle Certified Associate Java Se 8 Programmer I) 1Z0 808 Exam
+title: Preparation for Java 8 Se OCA 1Z0 808 Exam
 date: '2016-03-03T12:14:00.003+01:00'
 author: Monik
 tags:
