@@ -11,6 +11,7 @@ thumbnail: https://1.bp.blogspot.com/-sPTePip1-4Y/VpfEAGRrCwI/AAAAAAAACVE/f634aJ
 blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-6637473164435863327
 blogger_orig_url: http://learningmonik.blogspot.com/2016/01/clean-code-robert-c-martin-notes.html
 commentIssueId: 27
+type: book
 ---
 
 <div class="bg-info panel-body" markdown="1">

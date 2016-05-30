@@ -11,6 +11,7 @@ thumbnail: https://1.bp.blogspot.com/-MvbdBFZac_8/Vva6untWECI/AAAAAAAACWY/K1q-kn
 blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-2617148401622069827
 blogger_orig_url: http://learningmonik.blogspot.com/2016/03/preparation-for-java-8-oca-1z0-808-exam.html
 commentIssueId: 30
+type: book
 ---
 
 <div class="bg-info panel-body" markdown="1">
