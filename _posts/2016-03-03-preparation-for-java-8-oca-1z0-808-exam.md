@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Preparation for Java 8 Se OCA 1Z0 808 Exam
+title: Java 8 Se OCA 1Z0 808 Exam Study Guide
 date: '2016-03-03T12:14:00.003+01:00'
 author: Monik
 tags:
