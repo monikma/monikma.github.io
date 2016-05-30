@@ -81,3 +81,7 @@ p {
     list-style-type: circle;
     list-style-position:inside;
 }
+
+.btn-link {
+  outline: 0px solid transparent;
+}
