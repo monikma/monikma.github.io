@@ -426,5 +426,5 @@ Book recommendation: _Doug Lea "Concurrent Programming in Java: Design Principle
 (Just full source code for the `SerialDate` use case)
 
 [1]: https://books.google.de/books/about/Clean_Code.html?id=dwSfGQAACAAJ
-[2]: https://1.bp.blogspot.com/-sPTePip1-4Y/VpfEAGRrCwI/AAAAAAAACVE/f634aJu_RYk/s320/dirty%2Btests.png
+[2]: http://monami555.github.io/pictures/2016-01-13-clean-code-robert-c-martin-notes/dirtyTests.png
 
