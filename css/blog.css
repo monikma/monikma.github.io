@@ -85,3 +85,9 @@ p {
 .btn-link {
   outline: 0px solid transparent;
 }
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
