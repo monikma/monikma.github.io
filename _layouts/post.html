@@ -83,6 +83,12 @@
     </h5>
     <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5>
 
+    {% if page.type == "book" %}
+    <span class="glyphicon glyphicon-book"></span> Book summary
+    {% elsif page.type == "certification" %}
+    <span class="glyphicon glyphicon-certificate"></span> Preparation for certification
+    {% else %} {% endif %}
+
     {{ content }}
 
     {% include comments.html %}
