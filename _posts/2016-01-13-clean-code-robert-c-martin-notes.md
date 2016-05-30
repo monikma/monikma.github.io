@@ -210,11 +210,9 @@ What happens at **boundaries** is **change**. **Minimize** the number of **touch
 
 (Some well known rules about TDD)
 
-Use **same quality standards** for tests as for production code! Otherwise maintenance will become pain in the head. No "_quick and dirty_" tests! **Dirty tests are worse than no tests**. Below an illustration of a real life story:
+Use **same quality standards** for tests as for production code! Otherwise maintenance will become pain in the head. No "_quick and dirty_" tests! **Dirty tests are worse than no tests**. Below an illustration of a real life story (the illustration is my own interpretation):
 
-| ----- |
-| ![][2] |
-| my own visualisation of the story from the book |
+![][2]
 
 Tests keep the production code **flexible**.
 
