@@ -79,7 +79,7 @@ Very important: please comment if you find an error.
 4. this follows maths `*`, `/`, `%`
 5. ..still maths `+`, `-`
 6. `<<`, `>>`, `>>>` (shift operators)
-7. and now we see that.. `<`, `>`, `<=`, `>=`, `instanceof` (relational operators)
+7. and now we see that.. `<`, `>`, `<=`, `>=`, <a href="#" data-toggle="tooltip" title="Out of scope for OCA exam :)">`instanceof`</a> (relational operators)
 8. ..equality is later than non equality `==`, `!=`
 9. logic comes quite late `&`, `^`, `|` (logical operators)
 10. ..even later short circuited `&&`, `||` (short circuit logical operators)
@@ -87,19 +87,27 @@ Very important: please comment if you find an error.
 12. assignment is last `=`, `+=`, `-=`, `*=`, `/=`, `%=`, `&=`, `^=`, `!=`, `<<=`, `>>=`, `>>>=` (assignment operators)
 </div>
 
-- what is _numeric promotion_, _overflow_ and _underflow_
+- what is _numeric promotion_ and its rules
 <button data-toggle="collapse" data-target="#q2_5" class="btn-link">[see]</button>
 <div id="q2_5" class="collapse collapsible bg-info" markdown="1">
-- [_Numeric promotion (§5.6) brings the operands of a numeric operator to a common type so that an operation can be performed._](https://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html); it occurs for example here `5==5.0` - even though the numbers are of different type, `5` is first converted to `5.0` and then the comparison is made; promotion occurs before an operand is applied or before method invocation
-- underflow and overflow
-    - happens when using **floating point operators**
-    - in case of integer based data types, decreasing below MIN value or increasing aboe MAX, causes skipping to either the MAX value, or the MIN value, respectivelly
-    - in case of non-integer data types, decreasing below MIN results in `0` value, and increasing above MAX value, results in `Infinity`
+- it occurs for example here `5==5.0` - even though the numbers are of different type, `5` is first converted to `5.0` and then the comparison is made
+- promotion occurs before an operand is applied or before method invocation
+- there are 4 rules for numeric promotion:
+  - smaller datatypes are promoted to larger ones
+  - integral types are promoted to floating point types
+  - `short`, `byte` and `char` are **always** promoted to `int` when applying a binary operator
+  - the resulting value is of common type of the two operands
+</div>
+
+- is it possible to cast from larger numeric type to smaller one?
+<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
+<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+- yes, it will just result in precision loss/overflow
 </div>
 
 - which types are allowed as type of `x` in `switch(x)`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q2_7" class="btn-link">[see]</button>
+<div id="q2_7" class="collapse collapsible bg-info" markdown="1">
 - `int` and `Integer`
 - `byte` and `Byte`
 - `short` and `Short`
@@ -108,6 +116,18 @@ Very important: please comment if you find an error.
 - `String`
 - no ~~long~~, no ~~boolean~~
 - all must be `final`
+</div>
+
+- is this `9.5` of type `double` or `float`?
+<button data-toggle="collapse" data-target="#q2_8" class="btn-link">[see]</button>
+<div id="q2_8" class="collapse collapsible bg-info" markdown="1">
+- `double`, float would be that: `9.5f`
+</div>
+
+- why would you use compound assignment (`a += b`) over a regular one (`a = a + b`)?
+<button data-toggle="collapse" data-target="#q2_9" class="btn-link">[see]</button>
+<div id="q2_9" class="collapse collapsible bg-info" markdown="1">
+- you would use it to save yourself casting back to the smaller data type, in case `a` is of smaller data type than `b`; the casting is done automatically (which also means be careful here)
 </div>
 
 ### Date and Time
@@ -464,3 +484,4 @@ Very important: please comment if you find an error.
 - know that _lenient_ means _permissive_, _merciful_ or _tolerant_
 - remember that exception thrown from inside `finally` block masks the exception thrown in the `catch` block
 - know that it is _allowed_ to catch `Error`s; it should not be done but it is allowed
+- know that `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
