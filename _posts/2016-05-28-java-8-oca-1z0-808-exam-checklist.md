@@ -120,44 +120,62 @@ Very important: please comment if you find an error.
 </div>
 
 - how to create custom date/time
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q3_2" class="btn-link">[see]</button>
+<div id="q3_2" class="collapse collapsible bg-info" markdown="1">
 - `LocalDate.now();`
 - `LocalDate.of(2015, Month.JANUARY, 1)`, same as `LocalDate.of(2015, 1, 1)`
 - `LocalTime.of(6, 15);`
-- `LocalTime.of(6, 15, 30);`
 - `LocalTime.of(6, 15, 30, 234);` - last one is nanoseconds
 - `LocalDateTime.of(2015, Month.JANUARY, 16, 15, 30);`
 - `LocalDateTime.of(date, time);`
 </div>
 
+- how to manipulate date/time
+<button data-toggle="collapse" data-target="#q3_3" class="btn-link">[see]</button>
+<div id="q3_3" class="collapse collapsible bg-info" markdown="1">
+- `LocalDate date = LocalDate.of(2014,1,23).plusDays(2).minusWeeks(1);` - remember it's immutable!
+- remember that you cannot add minutes to a date, or days to time, etc
+</div>
+
+- what is `Period` and `Duration`; what tricky thing was mentioned in the book about it
+<button data-toggle="collapse" data-target="#q3_4" class="btn-link">[see]</button>
+<div id="q3_4" class="collapse collapsible bg-info" markdown="1">
+- `Period period = Period.ofMonths(1); date = date.plus(period);`
+- `Period.of(1,0,7);` - every year and 7 days
+- remember that you cannot pass hours, minutes, etc to a `Period`
+- `Duration` is not on the exam
+- the tricky part is that the `of..` methods are **not builder methods** but **static helper methods** - so chaining has no effect, like it does in case of `LocalDate/Time/TimeDate`
+</div>
+
+- how to format date/time; what are the predefined formats; what is the default
+<button data-toggle="collapse" data-target="#q3_5" class="btn-link">[see]</button>
+<div id="q3_5" class="collapse collapsible bg-info" markdown="1">
+- `dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)` that resolves to `2020-01-20T12:12:34`
+- `date.format(DateTimeFormatter.ISO_LOCAL_DATE)`
+- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))` that resolves to `1/20/2020`
+- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))` that resolves to `Jan 20, 2020`
+- `DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).format(dateTime)` - also vice versa
+- you can use dateTime with date or time formatters, but not time or date with dateTime formatter, etc
+- `DateTimeFormatter.ofPattern("MMMM dd,yyy hh:mm")).format(dateTime)`
+- default is `2015-01-02T11:22`, and if seconds or nanoseconds were used, they are also appended
+</div>
+
 - how to create a date/time from `String`
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q3_6" class="btn-link">[see]</button>
+<div id="q3_6" class="collapse collapsible bg-info" markdown="1">
 - by using a `DateTimeFormatter`, e.g. `DateTimeFormatter.ISO_LOCAL_DATE`,  `DateTimeFormatter.ISO_LOCAL_DATE_TIME`
 - `LocalDate.parse(string, formatter);`
-- `LocalDate.parse(string);` - uses default
--
+- `LocalDate.parse(string);` - uses default format (see previous question), it's rather strict
 </div>
 
-- how to manipulate date/time
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
 
+- what exceptions were mentioned that are related to date/time, and which is thrown when
+<button data-toggle="collapse" data-target="#q3_7" class="btn-link">[see]</button>
+<div id="q3_7" class="collapse collapsible bg-info" markdown="1">
+- there are two:
+  - `DateFormatException` - when you pass e.g. January 67th
+  - `UnsupportedTemporalTypeException` - when you try to use time with date object, or date with time object
 </div>
-
-- what is `Period` and `Duration`
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- how to format date/time; what are the predefined formats
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
 
 ### Java classes
 
