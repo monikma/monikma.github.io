@@ -23,6 +23,11 @@
                 {% elsif post.type == "course" %}
                     <span class="glyphicon glyphicon-user"></span>
                 {% else %} {% endif %}
+
+                {% if post.draft == true %}
+                    <span class="glyphicon glyphicon-pencil"></span>
+                {% endif %}
+
                 {{ post.title }}
             </a>
         </li>

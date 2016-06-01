@@ -77,9 +77,14 @@
 
 <div class="col-sm-9">
 
-    <h2>{{ page.title }}</h2>
-    <h5><span
-            class="glyphicon glyphicon-time"></span> Posted by {{ page.author }}, {{ page.date | date_to_long_string }}.
+    <h2>
+        {% if page.draft == true %}
+            <small>(<span class="glyphicon glyphicon-pencil"></span> Draft)</small>
+        {% endif %}
+
+        {{ page.title }}
+    </h2>
+    <h5><span class="glyphicon glyphicon-time"></span> Posted by {{ page.author }}, {{ page.date | date_to_long_string }}.
     </h5>
     <h5>{% for tag in page.tags %}<span class="label label-primary">{{ tag }}</span> {% endfor %}</h5>
 

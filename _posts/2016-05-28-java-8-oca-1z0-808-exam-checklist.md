@@ -11,6 +11,7 @@ blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-23998901819167926
 blogger_orig_url: http://learningmonik.blogspot.com/2016/05/java-8-oca-1z0-808-exam-checklist.html
 commentIssueId: 31
 type: certification
+draft: true
 ---
 <div class="bg-info panel-body" markdown="1">
 Again, trying to make a summary of the summary ;) (see this [post](/2016/03/03/preparation-for-java-8-oca-1z0-808-exam.html) for more context). Tried to put the main topics together in a form of questions, along with the short answers (click on the "see" links to see them).
