@@ -199,105 +199,112 @@ Very important: please comment if you find an error.
 
 ### Java classes
 
-- class / variable valid names
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+- class / variable /method valid names
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
+- must start with a letter (Unicode) or `_` or `$`
+- cannot start with a number
+- can contain letters, numbers, `_` and `$`
+- cannot be same as reserved keyword
 </div>
 
 - when will you get compilation error on uninitialized variable and when not
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+<button data-toggle="collapse" data-target="#q4_2" class="btn-link">[see]</button>
+<div id="q4_2" class="collapse collapsible bg-info" markdown="1">
+- **required** to initialize local variable (also primitive), or `final` instance and class variable
+- **not required** to initialize non-`final` instance and class variable, if they are primitive type they are given the default value for that type
 </div>
 
 - what happens when you change method visibility while overriding
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_3" class="btn-link">[see]</button>
+<div id="q4_3" class="collapse collapsible bg-info" markdown="1">
+- more visibility is allowed
+- less visibility is not allowed (compilation error)
+</div>
 
+- order of initialization on object creation
+<button data-toggle="collapse" data-target="#q4_4" class="btn-link">[see]</button>
+<div id="q4_4" class="collapse collapsible bg-info" markdown="1">
+1. fields and instance initializers in the order they appear
+2. constructor
+</div>
+
+- how many variables are initialised here `int i1,i2,i3=0;`
+<button data-toggle="collapse" data-target="#q4_5" class="btn-link">[see]</button>
+<div id="q4_5" class="collapse collapsible bg-info" markdown="1">
+- one
+</div>
+
+- what happens on different kinds of import collisions
+<button data-toggle="collapse" data-target="#q4_6" class="btn-link">[see]</button>
+<div id="q4_6" class="collapse collapsible bg-info" markdown="1">
+- either compiler error saying _The type xxx is ambiguous_, or _The import xxx collides with another import statement_, depending on whether you imported those explicitly or implicitly (with wildcard `*`)
+- if you import one implicitly and another explicitly, there's no conflict
 </div>
 
 - method and variable hiding; when is hiding not allowed
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - labels
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- order of initialization on object creation
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what happens on different kinds of import collisions
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - what is the practical difference between `default` and `protected` access
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what happens with static methods / static variables when an instance of the owner's class is created
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - can you change the value of a `static` `final` instance variable and if yes then how
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - how to do a static import: is it `import static` or `static import`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - according to what and in which order is the right overloaded method determined
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - what means _covariant return type_
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - what is the difference between `interface` and `abstract interface`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - is it allowed to override a method while the signature doesn't match?
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - what modifiers are assumed in an interface
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
 - what is `virtual` method
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
+<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
 
 </div>
 
@@ -477,7 +484,7 @@ Very important: please comment if you find an error.
 - know that `String implements CharSequence`
 - know that `new StringBuilder(10)` is not `"10"` but it is setting the initial capacity to `10`
 - know that `StringBuffer` is just an old, thread-safe, slow version of `StringBuilder`
-- know that `System.out.println()` calls the .toString() method ????
+- know that `System.out.println()` calls the `.toString()` method
 - know that `list.toArray()` returns an unmodifiable list ???
 - know that default constructors are automatically added to the `*.class` file by the compiler, and as soon as you write a default constructor yourself, it is no longer called a default constructor
 - know that `package private` access is synonym for `default access`
@@ -485,3 +492,15 @@ Very important: please comment if you find an error.
 - remember that exception thrown from inside `finally` block masks the exception thrown in the `catch` block
 - know that it is _allowed_ to catch `Error`s; it should not be done but it is allowed
 - know that `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
+- if you get a question about number of code blocks, know that whether a block is nested inside another or not one doesn't matter - total number of pairs of `{}` counts
+- `finalize()` is called only once, on the first attempt to garbage collect the object
+
+#### Checklist on **every** question
+
+- are there typos
+- do the braces match, and are the semicolons in the right places
+- are imports missing (if line numbers start from 1)
+- are the method signatures really correct (e.g. constructor should not have return type)
+- are the letters `l` or `f` missing at the end of number `long` or `double` literals
+- are we not trying to call non-`static` method from a `static` method
+- don't try to compute tricky variable reassignments in memory, that's a trap - take the paper
