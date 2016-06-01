@@ -291,10 +291,9 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 
 - if the base class has **private methods**, to its children they don't exist; **redeclaring them is not overriding**
 - [my own conclusion] **protected does not mean** that subclass can access protected members of an object belonging to its supertype; it means that it inherits the protected members of its parent class, but **only in context of itself**; it can access the protected members of another object **only if it is in the same package**
+- in the picture below, `bla()` is protected in `A`, `A` and `B` are in different packages:
 
-| ----- |
-|  ![][11] |
-| `bla()` is protected in `A`, `A` and `B` are in different packages  |
+![][11]
 
 - **static variables** vs **static methods** - a copy of **static variable** is copied to each class, the code of the **static method** not
 - **static methods** are used e.g. in utility classes where they don't require object's state, or for sharing state among all instances, e.g. counter
@@ -351,8 +350,6 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - it's ok to refer to class variable in same class without the class name in front
 
 ![][13]
-
-####
 
 ### Chapter 5 Class Design (45% correct)
 

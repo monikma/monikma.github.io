@@ -494,7 +494,7 @@ Very important: please comment if you find an error.
 - know that it is _allowed_ to catch `Error`s; it should not be done but it is allowed
 - know that `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
 - if you get a question about number of code blocks, know that whether a block is nested inside another or not one doesn't matter - total number of pairs of `{}` counts
-- `finalize()` is called only once, on the first attempt to garbage collect the object
+- `finalize()` is called only once, on the first attempt to garbage collect the object (I actually just managed to almost freeze my computer by throwing a `RuntimeException` in the `finalize()` method.. not what I expected..)
 
 #### Checklist on **every** question
 
