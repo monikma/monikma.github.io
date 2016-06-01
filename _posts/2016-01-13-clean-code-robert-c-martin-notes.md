@@ -31,6 +31,7 @@ Because I hate getting stuck on abbreviations:
 - **OCP** - Open-Closed Principle - _Classes should be open for extension but closed for modification._
 - **SRP** - Single Responsibility Principle - _A class or module should have one, and only one, reason to change._
 - **DIP** - Dependency Inversion Principle - _Classes should depend upon abstractions, not on concrete details._
+
 [note that I skipped the first chapter, so the numbering of chapters is shifted by -1, comparing to the order in the book]
 
 ### 1. Meaningful Names
@@ -63,8 +64,9 @@ It is better to have **factory methods** and private constructors, than a big am
 
 Use **consistent lexicon**, e.g. _get_, _fetch_, _retrieve_ - **decide on one word** to use per project, not per developer. Or same with _manager_ vs _controller vs driver_.
 
-> BUT be aware to use one word **only when semantics** are same - for example _adding_ two strings together is not same as _adding_ an element to a list. Then you have to use a different name.
-
+<div class="bg-info panel-body" markdown="1">
+ BUT be aware to use one word **only when semantics** are same - for example _adding_ two strings together is not same as _adding_ an element to a list. Then you have to use a different name.
+</div>
 
 **Problem domain** (e.g. customer, account) vs **solution domain** (e.g. visitor, queue) terms - first try to use solution domain, then problem domain. The more code has to do with the solution domain problems, the more solution domain vocabulary it should use, and vice versa. It is important to **know the difference**.
 
@@ -86,7 +88,9 @@ Sometimes it's worth to use **polymorphism rather than a switch**. Using switch 
 
 Max number of **function input arguments** is 2-3, best 0. They increase **testing complexity**. Make the function harder to understand.
 
-> Using 2 arguments is only justified for example in situations like `new Point(0,0)`, because a point has 2 **ordered** coordinates. If there is no **natural cohesion or ordering** between arguments they should not be both input arguments of a function. E.g. the `.assertEquals(expected, actual)` is confusing, isn't it. And `.assertEquals(message, expected, actual)` is even more confusing - how many times you had to check the signature first?
+<div class="bg-info panel-body" markdown="1">
+ Using 2 arguments is only justified for example in situations like `new Point(0,0)`, because a point has 2 **ordered** coordinates. If there is no **natural cohesion or ordering** between arguments they should not be both input arguments of a function. E.g. the `.assertEquals(expected, actual)` is confusing, isn't it. And `.assertEquals(message, expected, actual)` is even more confusing - how many times you had to check the signature first?
+ </div>
 
 Often if a function takes many arguments it's a sign that they should be **wrapped into a class on their own**.
 
@@ -156,7 +160,9 @@ Each developer should follow **common team rules**, even if some of them don't l
 
 **Don't automatically add getters and setters** to each private variable. Why would we have private variables at all then?
 
-> For example a Point - can be defined by `[x,y]` (carthesian coordinates) or by `[r,theta]` (polar coordinates). If we don't add separate setters for `x`, `y`, `r`, `t`, but rather a setter for `x, y` and another setter for `r, t` - we **enforce an access policy**. And even despite having separate getters for each of `x`, `y`, `r`, `t`, we still **do not expose the internal implementation**.
+<div class="bg-info panel-body" markdown="1">
+ For example a Point - can be defined by `[x,y]` (carthesian coordinates) or by `[r,theta]` (polar coordinates). If we don't add separate setters for `x`, `y`, `r`, `t`, but rather a setter for `x, y` and another setter for `r, t` - we **enforce an access policy**. And even despite having separate getters for each of `x`, `y`, `r`, `t`, we still **do not expose the internal implementation**.
+</div>
 
 **Getters and setters** are part of the **interface** using which the object communicates with the world. Think it through.
 
@@ -164,16 +170,17 @@ Each developer should follow **common team rules**, even if some of them don't l
 
 **OO code** makes it easier to **add new classes** (add new objects), and **procedural code** makes it easier to **add new functions** (add new behaviour). **Always choose the style appropriate** to the task at hand. Everything **does not have to be an object**.
 
-> An example of a procedural code is the following: we have a class `Geometry` and different `Shape` subclasses. In Geometry class there is a number of methods that operate on a Shape, in each there is switch to check which subclass of Shape are we dealing with. If we add a new shape type, we need to make changes in every method in Geometry class. If we add a new operation type, we need to only add the new function to Geometry class.
+<div class="bg-info panel-body" markdown="1">
+ An example of a procedural code is the following: we have a class `Geometry` and different `Shape` subclasses. In Geometry class there is a number of methods that operate on a Shape, in each there is switch to check which subclass of Shape are we dealing with. If we add a new shape type, we need to make changes in every method in Geometry class. If we add a new operation type, we need to only add the new function to Geometry class.
 
-> Instead, we could have each subclass of `Shape` have their own set of those methods - that would be exactly the OO style.
-
+ Instead, we could have each subclass of `Shape` have their own set of those methods - that would be exactly the OO style.
+</div>
 
 **The Law of Demeter** - a module **should not know about the innards** of the objects it manipulates. A function can call operations on elements of an object **where it is declared**, but not on the objects **returned** by those operations.
 
-> That is why the `ctxt.getOptions().getScratchDir().getAbsolutePath()` is a candidate of breaking that law. BUT **not** if the subsequent classes are **data structures** not **objects**.
+- That is why the `ctxt.getOptions().getScratchDir().getAbsolutePath()` is a candidate of breaking that law. BUT **not** if the subsequent classes are **data structures** not **objects**.
 
-> And, if they are objects, there should not be "getSth" functions on them, but "doSth" functions. If we need to get sth, let's think about what we need it for, and move that logic into that class, under a "doSth" function.
+- And, if they are objects, there should not be "getSth" functions on them, but "doSth" functions. If we need to get sth, let's think about what we need it for, and move that logic into that class, under a "doSth" function.
 
 **Active Records** are DTOs with extra methods like `save()` and `find()`, e.g. for using with database. Treat them as **data structures** and don't add more logic.
 
@@ -393,7 +400,9 @@ There is a long use case presented. To sum it up: code may be quite nice and cle
 
 It's a common **misconception** that **increment operation** `++` is **atomic**. **Assigment** is usually also not. Something like 8 steps can be involved in single assignment on the level of **byte code**, hence so many possible paths of execution in a multithreaded environment.
 
-> That's why `AtomicInteger`, `AtomicReference` and `AtomicBoolean` are there since Java 5. They are **not slower** (because of special CAS feature of modern processors, which basically means that instead of locking, it just retries until it succeeds).
+<div class="bg-info panel-body" markdown="1">
+ That's why `AtomicInteger`, `AtomicReference` and `AtomicBoolean` are there since Java 5. They are **not slower** (because of special CAS feature of modern processors, which basically means that instead of locking, it just retries until it succeeds).
+ </div>
 
 **Nonthread-safe** classes:
 
