@@ -19,7 +19,7 @@ These are my **study notes** taken while preparing for **Java Oracle Certified A
 
 Some background about me - I have been programming in Java for about 7 years now (plus minus 2 years, I'm not good at memorizing stuff:P). My programming experience I started at Java 5, by reading thoughroughly the first two thirds of [Thinking in Java](http://mindview.net/Books/TIJ4) book (what I didn't read were threading and custom annotations), and then starting my first job. I recently understood some Java 8 stuff, though this came mostly by learning F# aside (a functional language derived from C#).
 
-Very important: please comment if you find an error.
+Very important: please comment if you see an error.
 </div>
 
 ### Things that surprised me about the exam

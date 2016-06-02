@@ -16,7 +16,7 @@ draft: true
 <div class="bg-info panel-body" markdown="1">
 Again, trying to make a summary of the summary ;) (see this [post](/2016/03/03/preparation-for-java-8-oca-1z0-808-exam.html) for more context). Tried to put the main topics together in a form of questions, along with the short answers (click on the "see" links to see them).
 
-Very important: please comment if you find an error.
+Very important: please comment if you see an error.
 </div>
 
 ### Checklist on **every** question
@@ -155,7 +155,17 @@ Very important: please comment if you find an error.
 - you would use it to save yourself casting back to the smaller data type, in case `a` is of smaller data type than `b`; the casting is done automatically (which also means be careful here)
 </div>
 
-### Java methods (TODO)
+### Java methods
+
+- what is the practical difference between `default` and `protected` access
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
+- `default` = `package private` - visible only to classes from the same package
+  - subpackage is understood here as another package
+- `protected` - visible to classes from the same package and to subclasses
+  - _subclass_ means an actual object of subclass type; you cannot access another object's protected field that is in another package, no matter how its type related to yours is
+</div>
 
 - method and variable hiding; when is hiding not allowed
 <button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
@@ -164,12 +174,6 @@ Very important: please comment if you find an error.
 </div>
 
 - labels
-<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
-<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what is the practical difference between `default` and `protected` access
 <button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
 <div id="q10_1" class="collapse collapsible bg-info" markdown="1">
 
