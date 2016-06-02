@@ -24,6 +24,7 @@ Very important: please comment if you find an error.
 - the question structure on the exam
 <button data-toggle="collapse" data-target="#q1_1" class="btn-link">[see]</button>
 <div id="q1_1" class="collapse collapsible bg-info" markdown="1">
+
 - when they ask you about **compilation errors**, they ask you about **all of them**, not the first one
 - when they ask for the "output" they can mean **any part of the output**
 - if there is an answer like "_an exception is thrown_" it still **does not mean** that some other outputs are not true as well, that will happen before the exception
@@ -33,6 +34,7 @@ Very important: please comment if you find an error.
 - how to start Java program from command line and what is required for which step (JDK or JRE)
 <button data-toggle="collapse" data-target="#q1_2" class="btn-link">[see]</button>
 <div id="q1_2" class="collapse collapsible bg-info" markdown="1">
+
 - to start a Java program:
   - `$ javac com/bla/Zoo.java` - requires JDK
   - `$ java com.bla.Zoo` - requires only JRE
@@ -43,6 +45,7 @@ Very important: please comment if you find an error.
 - what is stored on the _heap_ and what is stored on the _stack_
 <button data-toggle="collapse" data-target="#q1_3" class="btn-link">[see]</button>
 <div id="q1_3" class="collapse collapsible bg-info" markdown="1">
+
 - **heap**: objects, sometimes references to objects, arrays
 - **stack**: primitives, references to objects
 </div>
@@ -52,6 +55,7 @@ Very important: please comment if you find an error.
 - what are the bit sizes of each primitive type
 <button data-toggle="collapse" data-target="#q2_1" class="btn-link">[see]</button>
 <div id="q2_1" class="collapse collapsible bg-info" markdown="1">
+
 - `byte` (from `-128` to `127`), `short`, `int`, `long` are respectively: `8`, `16`, `32`, `64`-bit;
 - `float` and `double` are `32` and `64`-bit floating-point(=decimal), respectively;
 - `char` is `16`-bit Unicode
@@ -60,6 +64,7 @@ Very important: please comment if you find an error.
 - how is a binary, octal or hexadecimal number represented
 <button data-toggle="collapse" data-target="#q2_2" class="btn-link">[see]</button>
 <div id="q2_2" class="collapse collapsible bg-info" markdown="1">
+
 - `octal`: starts with `0`, e.g. `017`
 - `hexadecimal`: starts with `0x` or `0X`, e.g. `0xFF`
 - `binary`: starts with `0b` or `0B`, e.g. `0b10`
@@ -68,12 +73,14 @@ Very important: please comment if you find an error.
 - what is _upcasting_
 <button data-toggle="collapse" data-target="#q2_3" class="btn-link">[see]</button>
 <div id="q2_3" class="collapse collapsible bg-info" markdown="1">
+
 - upcasting happens e.g. here `double d = 98;` - where a number of lower precision is automatically casted to the one of higher precision
 </div>
 
 - operator types and operator precedence, have practiced that!
 <button data-toggle="collapse" data-target="#q2_4" class="btn-link">[see]</button>
 <div id="q2_4" class="collapse collapsible bg-info" markdown="1">
+
 1. the most popular `i++`, `i--`
 2. ..and the reverse `++i`, `--i`
 3. "_be or not to be_" unary `+`, `-`, `!`
@@ -91,6 +98,7 @@ Very important: please comment if you find an error.
 - what is _numeric promotion_ and its rules
 <button data-toggle="collapse" data-target="#q2_5" class="btn-link">[see]</button>
 <div id="q2_5" class="collapse collapsible bg-info" markdown="1">
+
 - it occurs for example here `5==5.0` - even though the numbers are of different type, `5` is first converted to `5.0` and then the comparison is made
 - promotion occurs before an operand is applied or before method invocation
 - there are 4 rules for numeric promotion:
@@ -103,12 +111,14 @@ Very important: please comment if you find an error.
 - is it possible to cast from larger numeric type to smaller one?
 <button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
 <div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+
 - yes, it will just result in precision loss/overflow
 </div>
 
 - which types are allowed as type of `x` in `switch(x)`
 <button data-toggle="collapse" data-target="#q2_7" class="btn-link">[see]</button>
 <div id="q2_7" class="collapse collapsible bg-info" markdown="1">
+
 - `int` and `Integer`
 - `byte` and `Byte`
 - `short` and `Short`
@@ -122,87 +132,116 @@ Very important: please comment if you find an error.
 - is this `9.5` of type `double` or `float`?
 <button data-toggle="collapse" data-target="#q2_8" class="btn-link">[see]</button>
 <div id="q2_8" class="collapse collapsible bg-info" markdown="1">
+
 - `double`, float would be that: `9.5f`
 </div>
 
 - why would you use compound assignment (`a += b`) over a regular one (`a = a + b`)?
 <button data-toggle="collapse" data-target="#q2_9" class="btn-link">[see]</button>
 <div id="q2_9" class="collapse collapsible bg-info" markdown="1">
+
 - you would use it to save yourself casting back to the smaller data type, in case `a` is of smaller data type than `b`; the casting is done automatically (which also means be careful here)
 </div>
 
-### Date and Time
+### Java methods
 
-- what are the new classes for representing date and time
-<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
-<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
-- `LocalDate`, `LocalTime`, `LocalDateTime`, in `java.time.*` package
-- `DateTimeException`
+- method and variable hiding; when is hiding not allowed
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
-- how to create custom date/time
-<button data-toggle="collapse" data-target="#q3_2" class="btn-link">[see]</button>
-<div id="q3_2" class="collapse collapsible bg-info" markdown="1">
-- `LocalDate.now();`
-- `LocalDate.of(2015, Month.JANUARY, 1)`, same as `LocalDate.of(2015, 1, 1)`
-- `LocalTime.of(6, 15);`
-- `LocalTime.of(6, 15, 30, 234);` - last one is nanoseconds
-- `LocalDateTime.of(2015, Month.JANUARY, 16, 15, 30);`
-- `LocalDateTime.of(date, time);`
+- labels
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
-- how to manipulate date/time
-<button data-toggle="collapse" data-target="#q3_3" class="btn-link">[see]</button>
-<div id="q3_3" class="collapse collapsible bg-info" markdown="1">
-- `LocalDate date = LocalDate.of(2014,1,23).plusDays(2).minusWeeks(1);` - remember it's immutable!
-- remember that you cannot add minutes to a date, or days to time, etc
+- what is the practical difference between `default` and `protected` access
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
-- what is `Period` and `Duration`; what tricky thing was mentioned in the book about it
-<button data-toggle="collapse" data-target="#q3_4" class="btn-link">[see]</button>
-<div id="q3_4" class="collapse collapsible bg-info" markdown="1">
-- `Period period = Period.ofMonths(1); date = date.plus(period);`
-- `Period.of(1,0,7);` - every year and 7 days
-- remember that you cannot pass hours, minutes, etc to a `Period`
-- `Duration` is not on the exam
-- the tricky part is that the `of..` methods are **not builder methods** but **static helper methods** - so chaining has no effect, like it does in case of `LocalDate/Time/TimeDate`
+- can you change the value of a `static` `final` instance variable and if yes then how
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
-- how to format date/time; what are the predefined formats; what is the default
-<button data-toggle="collapse" data-target="#q3_5" class="btn-link">[see]</button>
-<div id="q3_5" class="collapse collapsible bg-info" markdown="1">
-- `dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)` that resolves to `2020-01-20T12:12:34`
-- `date.format(DateTimeFormatter.ISO_LOCAL_DATE)`
-- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))` that resolves to `1/20/2020`
-- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))` that resolves to `Jan 20, 2020`
-- `DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).format(dateTime)` - also vice versa
-- you can use dateTime with date or time formatters, but not time or date with dateTime formatter, etc
-- `DateTimeFormatter.ofPattern("MMMM dd,yyy hh:mm")).format(dateTime)`
-- default is `2015-01-02T11:22`, and if seconds or nanoseconds were used, they are also appended
+- how to do a static import: is it `import static` or `static import`
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
-- how to create a date/time from `String`
-<button data-toggle="collapse" data-target="#q3_6" class="btn-link">[see]</button>
-<div id="q3_6" class="collapse collapsible bg-info" markdown="1">
-- by using a `DateTimeFormatter`, e.g. `DateTimeFormatter.ISO_LOCAL_DATE`,  `DateTimeFormatter.ISO_LOCAL_DATE_TIME`
-- `LocalDate.parse(string, formatter);`
-- `LocalDate.parse(string);` - uses default format (see previous question), it's rather strict
+- according to what and in which order is the right overloaded method determined
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
 </div>
 
+- what means _covariant return type_
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
 
-- what exceptions were mentioned that are related to date/time, and which is thrown when
-<button data-toggle="collapse" data-target="#q3_7" class="btn-link">[see]</button>
-<div id="q3_7" class="collapse collapsible bg-info" markdown="1">
-- there are two:
-  - `DateFormatException` - when you pass e.g. January 67th
-  - `UnsupportedTemporalTypeException` - when you try to use time with date object, or date with time object
 </div>
 
-### Java classes
+- what is the difference between `interface` and `abstract interface`
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
 
-- class / variable /method valid names
+</div>
+
+- is it allowed to override a method while the signature doesn't match?
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
+</div>
+
+- what modifiers are assumed in an interface
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
+</div>
+
+- what is `virtual` method
+<button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
+<div id="q10_1" class="collapse collapsible bg-info" markdown="1">
+
+</div>
+
+### Loops
+
+- the `do-while` loop and why to use it at all
+<button data-toggle="collapse" data-target="#qq11_1" class="btn-link">[see]</button>
+<div id="q11_1" class="collapse collapsible bg-info" markdown="1">
+
+- `do{...}while(booleanExpression)` - you can use it when you want that the body is executed **at least once**
+</div>
+
+- what are a segments of the `for` loop and which one can contain multiple expressions
+<button data-toggle="collapse" data-target="#qq11_1" class="btn-link">[see]</button>
+<div id="qq11_1" class="collapse collapsible bg-info" markdown="1">
+
+- `for(initialization; booleanExpression; updateStatement){}`
+- everything except the booleanExpression in the middle can have multiple expressions, seprarated by a comma `,`
+</div>
+
+- where can you use the `continue` and `break` keywords
+<button data-toggle="collapse" data-target="#qq11_1" class="btn-link">[see]</button>
+<div id="qq11_1" class="collapse collapsible bg-info" markdown="1">
+
+- `continue` only inside loops
+- `break` only inside loops and `switch` statement
+</div>
+
+### Java classes and variables
+
+- class / variable / method valid names
 <button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
 <div id="q4_1" class="collapse collapsible bg-info" markdown="1">
+
 - must start with a letter (Unicode) or `_` or `$`
 - cannot start with a number
 - can contain letters, numbers, `_` and `$`
@@ -212,6 +251,7 @@ Very important: please comment if you find an error.
 - when will you get compilation error on uninitialized variable and when not
 <button data-toggle="collapse" data-target="#q4_2" class="btn-link">[see]</button>
 <div id="q4_2" class="collapse collapsible bg-info" markdown="1">
+
 - **required** to initialize local variable (also primitive), or `final` instance and class variable
 - **not required** to initialize non-`final` instance and class variable, if they are primitive type they are given the default value for that type
 </div>
@@ -219,96 +259,34 @@ Very important: please comment if you find an error.
 - what happens when you change method visibility while overriding
 <button data-toggle="collapse" data-target="#q4_3" class="btn-link">[see]</button>
 <div id="q4_3" class="collapse collapsible bg-info" markdown="1">
+
 - more visibility is allowed
 - less visibility is not allowed (compilation error)
-</div>
-
-- order of initialization on object creation
-<button data-toggle="collapse" data-target="#q4_4" class="btn-link">[see]</button>
-<div id="q4_4" class="collapse collapsible bg-info" markdown="1">
-1. fields and instance initializers in the order they appear
-2. constructor
 </div>
 
 - how many variables are initialised here `int i1,i2,i3=0;`
 <button data-toggle="collapse" data-target="#q4_5" class="btn-link">[see]</button>
 <div id="q4_5" class="collapse collapsible bg-info" markdown="1">
+
 - one
 </div>
 
 - what happens on different kinds of import collisions
 <button data-toggle="collapse" data-target="#q4_6" class="btn-link">[see]</button>
 <div id="q4_6" class="collapse collapsible bg-info" markdown="1">
+
 - either compiler error saying _The type xxx is ambiguous_, or _The import xxx collides with another import statement_, depending on whether you imported those explicitly or implicitly (with wildcard `*`)
 - if you import one implicitly and another explicitly, there's no conflict
 </div>
 
-- method and variable hiding; when is hiding not allowed
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
+- order of initialization on object creation
+<button data-toggle="collapse" data-target="#q4_4" class="btn-link">[see]</button>
+<div id="q4_4" class="collapse collapsible bg-info" markdown="1">
+1. initialise the superclass
+2. class fields and class initializers (so everything `static`) in the order they appear
+3. instance fields and instance initializers in the order they appear
+4. constructor
 </div>
-
-- labels
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what is the practical difference between `default` and `protected` access
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- can you change the value of a `static` `final` instance variable and if yes then how
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- how to do a static import: is it `import static` or `static import`
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- according to what and in which order is the right overloaded method determined
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what means _covariant return type_
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what is the difference between `interface` and `abstract interface`
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- is it allowed to override a method while the signature doesn't match?
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what modifiers are assumed in an interface
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what is `virtual` method
-<button data-toggle="collapse" data-target="#q4_1" class="btn-link">[see]</button>
-<div id="q4_1" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
 
 ### Java 8 stuff
 
@@ -354,102 +332,243 @@ Very important: please comment if you find an error.
 
 </div>
 
+### Java APIs
 
-### String and StringBuilder
+#### String and StringBuilder
 
 - the trick with comparing Strings and string pool
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+<button data-toggle="collapse" data-target="#q6_1" class="btn-link">[see]</button>
+<div id="q6_1" class="collapse collapsible bg-info" markdown="1">
+- `String` literals are stored in _string pool_, so using `==` to compare them will result in `true` if they look the same
+- `new String()` is already forcing not using string pool
+- the result of `"abc"+"d"` is already a new String, not the one from String pool
+- the boolean value of `"s"=="s".trim()` is `true`
 </div>
 
 - methods on `String`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+<button data-toggle="collapse" data-target="#q6_2" class="btn-link">[see]</button>
+<div id="q6_2" class="collapse collapsible bg-info" markdown="1">
+- the easy ones:
+  - `length()`, `toLowerCase()`, `toUpperCase()`, `trim()`
+  - `equals(String)`, `equalsIgnoreCase(String)`
+  - `startsWith(String)`, `endsWith(String)`, `contains(String)`
+- a bit trickier:
+  - `substring(start[, end])`
+  - `indexOf(char[, fromIndex])`, `indexOf(String[, fromIndex])`
+  - `charAt(int)`
+  - `replace(char old, char neww)`, `replace(CharSequence old, CharSequence neww)`
 </div>
 
 - methods on `StringBuilder`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+<button data-toggle="collapse" data-target="#q6_1" class="btn-link">[see]</button>
+<div id="q6_1" class="collapse collapsible bg-info" markdown="1">
+- same as in `String`:
+  - `length()`, `String substring()`, indexOf()`, `charAt()`
+- new ones:
+  - `append(String)`
+  - `insert(offset, String)`
+  - `delete(start, end)`, `deleteCharAt(int)`
+  - `reverse()`
+  - `toString()` :)
 </div>
 
 - does `str.replace(oldChar, newChar)` replace all or just the first occurence?
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+<button data-toggle="collapse" data-target="#q6_1" class="btn-link">[see]</button>
+<div id="q6_1" class="collapse collapsible bg-info" markdown="1">
+- it replaces all the occurences
 </div>
 
-
-### Arrays
+#### Arrays
 
 - all variations on how to declare an array, also multidimensional arrays
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q7_1" class="btn-link">[see]</button>
+<div id="q7_1" class="collapse collapsible bg-info" markdown="1">
 
+- ways to instantiate:
+  - `int  i[] = new int{1,2};`
+  - `int  i[] = {1,2};`- anonymous array
+  - `int  i[] = new int[2];`
+  - `int i[][]= { {2,3},{1,2,3}};`
+  - `int i[][]= new int[2][3];`
+  - `int i[][]= new int[2][];`
+  - ~~`int i[][]= new int[][];`~~ - this won't compile
+- possible placement of the braces:
+  - `int[]  i = {1,2};`
+  - `int [] i = {1,2};`
+  - `int  []i = {1,2};`
+  - `int  i[] = {1,2};`
+  - `int i [] = {1,2};`
+  - and analogically for 2+D
+</div>
+
+- how can you get an exception related to object type while operating on arrays? which exception is it?
+<button data-toggle="collapse" data-target="#q7_2" class="btn-link">[see]</button>
+<div id="q7_2" class="collapse collapsible bg-info" markdown="1">
+
+- when you try to **read** from an array, and the declared type does not match the actual type, you get an `ArrayStoreException`
 </div>
 
 - all variations on how to declare multiple array variables in one line
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q7_3" class="btn-link">[see]</button>
+<div id="q7_3" class="collapse collapsible bg-info" markdown="1">
 
+- `int[] a, b;` - two 1D arrays
+- `int[] a[], b[][];` - two arrays, one 2D and one 3D
 </div>
 
 - how is the array represented in the memory
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q7_4" class="btn-link">[see]</button>
+<div id="q7_4" class="collapse collapsible bg-info" markdown="1">
 
+- a variable of type array holds the the reference to the array object
+- the array object holds either a series of primitive values (in case of primitive type array), or series of object references (in case of non primitive type array)
+- memory allocation happens on array initialization
 </div>
 
-- which exception is thrown when the type of object in the array doesn't match the declared type? when can it happen?
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+- how to sort an array
+<button data-toggle="collapse" data-target="#q7_5" class="btn-link">[see]</button>
+<div id="q7_5" class="collapse collapsible bg-info" markdown="1">
+- `java.util.Arrays.sort(array)`
 </div>
 
 - what does `Arrays.binarySearch(array,what)` return in case it did not find the element
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
+<button data-toggle="collapse" data-target="#q7_6" class="btn-link">[see]</button>
+<div id="q7_6" class="collapse collapsible bg-info" markdown="1">
 
+- value that is one smaller than the negative of index where such element would be, if it was there
+</div>
+
+#### Collections
+
+- available constructors and methods on `ArrayList`
+<button data-toggle="collapse" data-target="#q8_1" class="btn-link">[see]</button>
+<div id="q8_1" class="collapse collapsible bg-info" markdown="1">
+
+- constructors:
+  - `new ArrayList()`
+  - `new ArrayList(capacity)`
+  - `new ArrayList(anotherList)`
+- methods:
+  - `isEmpty()`, `size()`, `clear()`
+  - `boolean add(element)` - always returns `true`
+  - `void add(index, element)`
+  - `boolean remove(element)`
+  - `Object remove(int index)` - be careful when you remove an `int` element! it will resolve to this method instead of the one above
+  - `removeIf(Predicate)`
+  - `Object set(index, Object)`
+  - `boolean contains(Object)`
+  - `equals()` (uses elements' `equals()`)
+</div>
+
+- can you add `null` to an `ArrayList`
+<button data-toggle="collapse" data-target="#q8_2" class="btn-link">[see]</button>
+<div id="q8_2" class="collapse collapsible bg-info" markdown="1">
+
+- yes of course
+- be careful though, as if you try to unbox it to a primitive value you will get a `NullPointerException`
+</div>
+
+- what's the deal with this conversion to array of custom type `list.toArray(new String[0])`, why would you be forced to create an empty array just to discard it later
+<button data-toggle="collapse" data-target="#q8_3" class="btn-link">[see]</button>
+<div id="q8_3" class="collapse collapsible bg-info" markdown="1">
+
+- you can actually pass an existing array there, and it will be filled with the elements from the `ArrayList`, as long as it's big enough
+- if the array you passed is not big enough, it will be ignored all together
+- pay attention that you cannot pass a primitive type array there
+</div>
+
+- how to sort a `List`
+<button data-toggle="collapse" data-target="#q8_4" class="btn-link">[see]</button>
+<div id="q8_4" class="collapse collapsible bg-info" markdown="1">
+
+- `Collections.sort(list);`
+</div>
+
+#### Wrapper types
+
+- `parseInt()` and `valueOf()` - which one converts from which to which
+<button data-toggle="collapse" data-target="#q9_1" class="btn-link">[see]</button>
+<div id="q9_1" class="collapse collapsible bg-info" markdown="1">
+
+- `valueOf` creates the wrapper type; you can remember that the method which creates the object has same name for all wrappers, because objects have common superclass `Object`, and primitive types don't have a superclass; or you can remember that if `parseInt()` returned an `Integer` it should be called ~~`parseInteger()`~~
+  - `Integer.parseInt()` creates `int` out of many other types
+  - `Integer.valueOf()` creates `Integer` out of many other types
+- remember that `Character` does not participate in this stuff
+</div>
+
+#### Date and Time
+
+- what are the new classes for representing date and time
+<button data-toggle="collapse" data-target="#q3_1" class="btn-link">[see]</button>
+<div id="q3_1" class="collapse collapsible bg-info" markdown="1">
+
+- `LocalDate`, `LocalTime`, `LocalDateTime`, in `java.time.*` package
+- `DateTimeException`
+</div>
+
+- how to create custom date/time
+<button data-toggle="collapse" data-target="#q3_2" class="btn-link">[see]</button>
+<div id="q3_2" class="collapse collapsible bg-info" markdown="1">
+
+- `LocalDate.now();`
+- `LocalDate.of(2015, Month.JANUARY, 1)`, same as `LocalDate.of(2015, 1, 1)`
+- `LocalTime.of(6, 15);`
+- `LocalTime.of(6, 15, 30, 234);` - last one is nanoseconds
+- `LocalDateTime.of(2015, Month.JANUARY, 16, 15, 30);`
+- `LocalDateTime.of(date, time);`
+</div>
+
+- how to manipulate date/time
+<button data-toggle="collapse" data-target="#q3_3" class="btn-link">[see]</button>
+<div id="q3_3" class="collapse collapsible bg-info" markdown="1">
+
+- `LocalDate date = LocalDate.of(2014,1,23).plusDays(2).minusWeeks(1);` - remember it's immutable!
+- remember that you cannot add minutes to a date, or days to time, etc
+</div>
+
+- what is `Period` and `Duration`; what tricky thing was mentioned in the book about it
+<button data-toggle="collapse" data-target="#q3_4" class="btn-link">[see]</button>
+<div id="q3_4" class="collapse collapsible bg-info" markdown="1">
+
+- `Period period = Period.ofMonths(1); date = date.plus(period);`
+- `Period.of(1,0,7);` - every year and 7 days
+- remember that you cannot pass hours, minutes, etc to a `Period`
+- `Duration` is not on the exam
+- the tricky part is that the `of..` methods are **not builder methods** but **static helper methods** - so chaining has no effect, like it does in case of `LocalDate/Time/TimeDate`
+</div>
+
+- how to format date/time; what are the predefined formats; what is the default
+<button data-toggle="collapse" data-target="#q3_5" class="btn-link">[see]</button>
+<div id="q3_5" class="collapse collapsible bg-info" markdown="1">
+
+- `dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)` that resolves to `2020-01-20T12:12:34`
+- `date.format(DateTimeFormatter.ISO_LOCAL_DATE)`
+- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT))` that resolves to `1/20/2020`
+- `dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))` that resolves to `Jan 20, 2020`
+- `DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).format(dateTime)` - also vice versa
+- you can use dateTime with date or time formatters, but not time or date with dateTime formatter, etc
+- `DateTimeFormatter.ofPattern("MMMM dd,yyy hh:mm")).format(dateTime)`
+- default is `2015-01-02T11:22`, and if seconds or nanoseconds were used, they are also appended
+</div>
+
+- how to create a date/time from `String`
+<button data-toggle="collapse" data-target="#q3_6" class="btn-link">[see]</button>
+<div id="q3_6" class="collapse collapsible bg-info" markdown="1">
+
+- by using a `DateTimeFormatter`, e.g. `DateTimeFormatter.ISO_LOCAL_DATE`,  `DateTimeFormatter.ISO_LOCAL_DATE_TIME`
+- `LocalDate.parse(string, formatter);`
+- `LocalDate.parse(string);` - uses default format (see previous question), it's rather strict
 </div>
 
 
-### Collections
+- what exceptions were mentioned that are related to date/time, and which is thrown when
+<button data-toggle="collapse" data-target="#q3_7" class="btn-link">[see]</button>
+<div id="q3_7" class="collapse collapsible bg-info" markdown="1">
 
-- available methods on `ArrayList`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
+- there are two:
+  - `DateFormatException` - when you pass e.g. January 67th
+  - `UnsupportedTemporalTypeException` - when you try to use time with date object, or date with time object
 </div>
-
-- how to sort an `ArrayList`
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-
-### Loops
-
-- the `do-while` loop and why to use it at all
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- what are a segments of a loop and which one can contain multiple expressions
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
-- where can you use the `continue` keyword
-<button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
-<div id="q2_6" class="collapse collapsible bg-info" markdown="1">
-
-</div>
-
 
 ### Exceptions
 
@@ -472,28 +591,31 @@ Very important: please comment if you find an error.
 </div>
 
 
-### .. and also, know that
+### Important stuff I actually didn't know about
 
-- know that _autoboxing_ does not work with `Predicate`s
-- know that there is Java process managed by JVM, and this process executes the `static void main`
-- know that `java.lang.*` is automatically imported
-- know that this is correct: `double i = 1_000_000.0`, but this not: `double i = 1_000_000_.0` or double `i = _1_000_000.0` (also not)
-- know that `System.gc()` is just a suggestion
-- know that Oracle claims that _"Java prevents memory leaks"_, and that _"Java is secure because it runs inside JVM"_, and that Java 8 is still an OO language
-- know that `^` means XOR
-- know that `if(objectOfTypeA==objectOfTypeB)` will not even compile
-- know that `String implements CharSequence`
-- know that `new StringBuilder(10)` is not `"10"` but it is setting the initial capacity to `10`
-- know that `StringBuffer` is just an old, thread-safe, slow version of `StringBuilder`
-- know that `System.out.println()` calls the `.toString()` method
-- know that `list.toArray()` returns an unmodifiable list ???
-- know that default constructors are automatically added to the `*.class` file by the compiler, and as soon as you write a default constructor yourself, it is no longer called a default constructor
-- know that `package private` access is synonym for `default access`
-- know that _lenient_ means _permissive_, _merciful_ or _tolerant_
-- remember that exception thrown from inside `finally` block masks the exception thrown in the `catch` block
-- know that it is _allowed_ to catch `Error`s; it should not be done but it is allowed
-- know that `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
-- if you get a question about number of code blocks, know that whether a block is nested inside another or not one doesn't matter - total number of pairs of `{}` counts
+- `list.toArray()` returns a special fixed size list that is linked to the actual array - changes in one of them result in changes to the other
+- `System.gc()` is just a suggestion
+- `System.out.println()` calls the `.toString()` method
+- exception thrown from inside `finally` block masks the exception thrown in the `catch` block
+
+### Random short facts
+
+- _autoboxing_ does not work with `Predicate`s
+- there is Java process managed by JVM, and this process executes the `static void main`
+- `java.lang.*` is automatically imported
+- this is correct: `double i = 1_000_000.0`, but this not: `double i = 1_000_000_.0` or double `i = _1_000_000.0` (also not)
+- Oracle claims that _"Java prevents memory leaks"_, and that _"Java is secure because it runs inside JVM"_, and that Java 8 is still an OO language
+- `^` means XOR
+- `if(objectOfTypeA==objectOfTypeB)` will not even compile
+- `String implements CharSequence`
+- `new StringBuilder(10)` is not `"10"` but it is setting the initial capacity to `10`
+- `StringBuffer` is just an old, thread-safe, slow version of `StringBuilder`
+- default constructors are automatically added to the `*.class` file by the compiler, and as soon as you write a default constructor yourself, it is no longer called a default constructor
+- `package private` access is synonym for `default access`
+- _lenient_ means _permissive_, _merciful_ or _tolerant_
+- it is _allowed_ to catch `Error`s; it should not be done but it is allowed
+- `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
+- if you get a question about number of code blocks, know that whether a block is nested inside another or not one doesn't matter - total number of `{}` pairs counts
 - `finalize()` is called only once, on the first attempt to garbage collect the object (I actually just managed to almost freeze my computer by throwing a `RuntimeException` in the `finalize()` method.. not what I expected..)
 
 #### Checklist on **every** question
