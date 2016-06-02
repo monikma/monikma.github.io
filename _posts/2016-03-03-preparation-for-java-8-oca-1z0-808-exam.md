@@ -32,6 +32,13 @@ Very important: please comment if you find an error.
 - `StringBuilder str = "bla";` - another way to trick, this **does not compile**
 - Vocabulary: _legal_ = _valid_ = _compiles_
 
+### Important non-Java 8 stuff I actually didn't know about (and learnt from that book)
+
+- `list.toArray()` returns a special fixed size list that is linked to the actual array - changes in one of them result in changes to the other, attempting an operation that changes the size causes an exception
+- `System.gc()` is just a suggestion
+- `System.out.println()` calls the `.toString()` method internally
+- exception thrown from inside `finally` block masks the exception thrown in the `catch` block (actually learnt it recently, but the book confirmed it)
+
 ### General things that surprised me about Java
 
 #### On the self assesment test (40% correct)
@@ -400,8 +407,6 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - this, compiles (aaaarrrgh!):
 
 ![][18]
-
-
 
 - pay attention to **missing default constructors** when others are present!
 - look, a sentence: "_a class implementing an interface must implement all its methods_" is **false**, since the implementing class could be **abstract**(fa-ce-palm)

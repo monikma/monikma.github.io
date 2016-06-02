@@ -19,6 +19,18 @@ Again, trying to make a summary of the summary ;) (see this [post](/2016/03/03/p
 Very important: please comment if you find an error.
 </div>
 
+### Checklist on **every** question
+
+- are there typos
+- do the braces match, and are the semicolons in the right places
+- are imports missing (if line numbers start from 1)
+- are the method signatures really correct (e.g. constructor should not have return type)
+- are the letters `l` or `f` missing at the end of number `long` or `double` literals
+- are we not trying to call non-`static` method from a `static` method
+- are there any uninitialized local variables or class constants
+- is there a method called on an immutable object and not assigned to anything afterwards (look especially at Strings and Dates)
+- don't try to compute tricky variable reassignments in memory, that's a trap - take the paper
+
 ### Questions around Java
 
 - the question structure on the exam
@@ -143,7 +155,7 @@ Very important: please comment if you find an error.
 - you would use it to save yourself casting back to the smaller data type, in case `a` is of smaller data type than `b`; the casting is done automatically (which also means be careful here)
 </div>
 
-### Java methods
+### Java methods (TODO)
 
 - method and variable hiding; when is hiding not allowed
 <button data-toggle="collapse" data-target="#q10_1" class="btn-link">[see]</button>
@@ -288,7 +300,7 @@ Very important: please comment if you find an error.
 4. constructor
 </div>
 
-### Java 8 stuff
+### Java 8 stuff (TODO)
 
 - lambda expressions - when can you omit braces, semicolons, variables, etc
 <button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
@@ -570,7 +582,7 @@ Very important: please comment if you find an error.
   - `UnsupportedTemporalTypeException` - when you try to use time with date object, or date with time object
 </div>
 
-### Exceptions
+### Exceptions (TODO)
 
 - errors, checked exceptions and runtime exceptions - who throws what and who catches what
 <button data-toggle="collapse" data-target="#q2_6" class="btn-link">[see]</button>
@@ -590,15 +602,7 @@ Very important: please comment if you find an error.
 
 </div>
 
-
-### Important stuff I actually didn't know about
-
-- `list.toArray()` returns a special fixed size list that is linked to the actual array - changes in one of them result in changes to the other
-- `System.gc()` is just a suggestion
-- `System.out.println()` calls the `.toString()` method
-- exception thrown from inside `finally` block masks the exception thrown in the `catch` block
-
-### Random short facts
+### .. also, know that
 
 - _autoboxing_ does not work with `Predicate`s
 - there is Java process managed by JVM, and this process executes the `static void main`
@@ -617,13 +621,3 @@ Very important: please comment if you find an error.
 - `long x=(y=3)` is valid expression and it sets both `x` and `y` to `3`
 - if you get a question about number of code blocks, know that whether a block is nested inside another or not one doesn't matter - total number of `{}` pairs counts
 - `finalize()` is called only once, on the first attempt to garbage collect the object (I actually just managed to almost freeze my computer by throwing a `RuntimeException` in the `finalize()` method.. not what I expected..)
-
-#### Checklist on **every** question
-
-- are there typos
-- do the braces match, and are the semicolons in the right places
-- are imports missing (if line numbers start from 1)
-- are the method signatures really correct (e.g. constructor should not have return type)
-- are the letters `l` or `f` missing at the end of number `long` or `double` literals
-- are we not trying to call non-`static` method from a `static` method
-- don't try to compute tricky variable reassignments in memory, that's a trap - take the paper
