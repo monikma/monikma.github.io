@@ -20,7 +20,7 @@ The `public` and `private` are easy to understand. The first one means _"visible
 
 Then comes the `protected`. Oh, that is like something in between, visible only to me and all my subclasses. Okay clear, right.
 
-And finally, the _default_ access. We usually say that it is just like `protected` but plus visibility for classes from the same package.
+And finally, the _default_ access. What I had in my mind until now, was that it is just like `protected` but without the visibility for subclasses, only classes from the same package. Kind of special case.
 
 ### The problem
 
@@ -132,7 +132,8 @@ So instead of presenting the 4 access modes as a list, I would rather present it
   </tr>
 </table>
 
-Highly illogical, isn't it? But I bet that is why it causes so much confusion when you try to shrink it to a list.
+
+Highly illogical, isn't it? But I bet that is why it caused me so much confusion when I tried to shrink it to a list.
 
 ### The solution
 
@@ -150,4 +151,10 @@ public -------------> default---------------> private
 
 ```
 
-Be aware that "visible to subclasses" does not mean that every object has access to `protected` fields and methods of every concrete object that is of its supertype. It has access only to its own inherited fields and methods. May be obvious, but after hours of reading OCA study guide that was no longer that clear..
+Be aware that "visible to subclasses" does not mean that every object has access to `protected` fields and methods of every concrete object that is of its supertype. It has access only to its own inherited fields and methods. May be obvious, but after hours of reading OCA study guide and doing mock exams that's what was no longer clear to me..
+
+You can also ignore the whole thing with granting package access and just say, that _for any class the following holds_:
+
+> inside every other class in the same package everything that is not marked as `private` is seen from inside the first class as if it was marked `public`.
+
+I just made the above up and I think it does make sense.. at least now :)

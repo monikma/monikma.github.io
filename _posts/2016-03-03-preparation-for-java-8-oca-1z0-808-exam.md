@@ -325,11 +325,7 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
   - `String` and `Object`
   - `int` and `long`; even passing `123` to a method accepting long works
 - official **order of calling overloaded method**:
-  - exact match
-  - larger primitive type
-  - autoboxing
-  - varargs
-  - while trying to find an overload, **Java does max one conversion**, later is compilation error! E.g. calling a method accepting Long with an int argument causes a compilation error!
+  E.g. calling a method accepting Long with an int argument causes a compilation error!
 - in constructor, when you write: `this.name = name;` it works because local variable has priority
 - **default constructors** are actually **generated while compiling** (when applicable); the `*.class` file has them
 - a manually declared constructor that looks like **default constructor** is **not called** "default constructor" anymore
@@ -388,11 +384,12 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - **interface**'s variables are assumed to be `public static final` (so must be initialized, even if no `final` is explicitly written!)
 - **interface**'s methods are assumed to be `public abstract`, or actually either `abstract`, `static` or `default`, since Java 8!
 - on exam be careful with "_extending intefaces_" and "_implementing abctract classes_" (both wrong:P)
+  - but _"inherit an interface"_, _"override a method of an interface"_ - those seem to be **correct** expressions..
 - extending abstract classes and implementing (multiple) interfaces at the same time, what happens on **method clash**:
-- if **signatures match**, no problem (!)
-- if not (and it's not an overload), **compilation error** :)
-- unless, unless, **exactly one of them** is marked as `default` (Java 8)
-- okay, last chance :P also **more than one** can be marked as default, but then all implementing classes must override at least **all of them but one**
+  - if **signatures match**, no problem (!)
+  - if not (and it's not an overload), **compilation error** :)
+  - unless, unless, **exactly one of them** is marked as `default` (Java 8)
+  - okay, last chance :P also **more than one** can be marked as default, but then all implementing classes must override at least **all of them but one**
 - **default method** - can be defined **only in interface** and **has body**; is **not** assumed to be `abstract`, nor `static`, nor `final`, always assumed to be `public` though
 - was introduced to keep **backward compatibility** in Java 8
 - implementing classes can override but don't have to
@@ -402,7 +399,7 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 
 - **default method** can be **redeclared** as `abstract` in extending interface/implementing abstract class!
 - **static method of an interface** - also new in Java 8 - just like a static method, but does **not get inherited**! must be declared with word `static`; must be referred to using the **interface name** (even in implementing class)
-- **virtual method** - this is connected to plymorphism; it's a method whose implementation is not determined until runtime; all non-final, non-static and non-private methods in Java are **virtual**
+- **virtual method** - this is connected to polymorphism; it's a method whose implementation is not determined until runtime; all non-final, non-static and non-private methods in Java are **virtual**
 - (understanding **polymorphism** - of course, you need to know that if you create an object and assign it to reference of the type of its **superclass**, and call a method on it, **still the subclass' method** will be invoked)
 - this, compiles (aaaarrrgh!):
 
@@ -412,7 +409,6 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - look, a sentence: "_a class implementing an interface must implement all its methods_" is **false**, since the implementing class could be **abstract**(fa-ce-palm)
 - getting even better: "_a concrete **sub**class must implement all the methods defined in inherited interface_", also **false**, since it could have been a 2nd level inheritance, and maybe some class in the middle has already implemented some of the methods (ah, seriously?!)
 - conclustion - **read each answer separately**, don't keep the context from previous sentences you've just read.. ah, such bastards!
-- _"inherit an interface"_, _"override a method of an interface"_ - those seem to be **correct** expressions..
 - **method hiding** can be veery tricky:
 
 ![][19]
