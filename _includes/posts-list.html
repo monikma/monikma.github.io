@@ -26,26 +26,37 @@
         </div>
     </div>
 
-    <h4><small>POSTS</small></h4>
+    {% assign year = '0' %}
     <ul class="nav nav-pills nav-stacked" style="list-style-position: inside;">
-        {% for post in site.posts %} {% if page.url == post.url %}
-        <li class="active" style="margin: -5px 0;">
+        {% for post in site.posts %}
+            {% capture tmp %}{{ post.date | date: "%Y" }}{% endcapture %}
+            {% if year != tmp %}
+                {% capture year %}{{ post.date | date: "%Y" }}{% endcapture %}
+                <h4><small>{{ post.date | date: "%Y" }}</small></h4>
+            {% endif %}
+
+            {% if page.url == post.url %}
+                <li class="active" style="margin: -5px 0;">
             {% else %}
-        <li style="margin: -5px 0;">
-            {% endif %} <a href="{{ post.url }}">
-                {% if post.type == "book" %}
-                    <span class="glyphicon glyphicon-book"></span>
-                {% elsif post.type == "certification" %}
-                    <span class="glyphicon glyphicon-certificate"></span>
-                {% elsif post.type == "course" %}
-                    <span class="glyphicon glyphicon-user"></span>
-                {% else %} {% endif %}
+                <li style="margin: -5px 0;">
+            {% endif %}
 
-                {% if post.draft == true %}
-                    <span class="glyphicon glyphicon-pencil"></span>
-                {% endif %}
+            <a href="{{ post.url }}">
 
-                {{ post.title }}
+            {% if post.type == "book" %}
+                <span class="glyphicon glyphicon-book"></span>
+            {% elsif post.type == "certification" %}
+                <span class="glyphicon glyphicon-certificate"></span>
+            {% elsif post.type == "course" %}
+                <span class="glyphicon glyphicon-user"></span>
+            {% else %}
+            {% endif %}
+
+            {% if post.draft == true %}
+                <span class="glyphicon glyphicon-pencil"></span>
+            {% endif %}
+
+            {{ post.title }}
             </a>
         </li>
         {% endfor %}
