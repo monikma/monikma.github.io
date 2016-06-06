@@ -24,7 +24,6 @@ These are the notes I took while taking the "Data Wrangling with MongoDB" course
 - TOC
 {:toc max_level=2}
 
-
 ### 1. Data extraction Fundamentals
 
 <ul>
