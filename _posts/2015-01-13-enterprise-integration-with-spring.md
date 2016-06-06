@@ -21,6 +21,10 @@ These are my notes I took before taking the
 target="_blank">this book</a>.<br/><br/>There is some overlap of this exam with the first Spring Core exam. There is also some stuff that logically would belong to Spring Integration but is actually not part of the exam - the amount of material is simply too big to squeeze everything. That is why it is essential to read the official study guide and study according to it. Or to my notes below (which follow the guide) :P
 </div>
 
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
 ### Remoting
 
 <ol>

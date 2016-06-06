@@ -15,6 +15,10 @@ type: course
 Here is about some topic different form the usual ones.<br/><br/>Presentation skills training. A very tough for me, because as a developer I am naturally far from such topics as giving convincing presentations to top executives about company goals or new business possibilities. And my skills of self presentation and appearing confident are at level zero. It was even a leadership training in the area of giving presentations - something I would never sign up by myself.<br/><br/>Nevertheless, it was useful. The main thing I got from there is that whether a presentation I give feels successful (I feel I have managed to explain something to people, they seem interested and later give me good feedback) or it feels like a total failure (I just feel like collapsing / starting to cry / leaving the room, and people look at me like "wtf") is **not a matter of luck**. It is also **not a matter of my knowledge**, though there is some minimum amount of it required. It is a matter of having the **right attitude**. And I think that on this training I managed to somehow conceptualize this attitude in my head, so that I can actually remember it, be able to asses my current state, and maybe even controll it.
 </div>
 
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
 ### When giving a presentation to executives
 
 * **Execute agreements** - if you only present some cool topic, people will say "cool", leave and forget about it. Ask questions, give "Takeaway", ask for concrete commitment at the end.

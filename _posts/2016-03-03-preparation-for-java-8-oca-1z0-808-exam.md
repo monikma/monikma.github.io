@@ -22,6 +22,10 @@ Some background about me - I have been programming in Java for about 7 years now
 Very important: please comment if you see an error.
 </div>
 
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
 ### Things that surprised me about the exam
 
 - when they ask you about **compilation errors**, they ask you about **all of them**, not the first one

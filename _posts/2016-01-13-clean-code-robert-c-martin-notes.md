@@ -24,6 +24,10 @@ The book has a mission to "improve the state of software craftmanship". A lot of
 Just gonna mention that all the advice comes not from guesses but experience (as the author claims).
 </div>
 
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
 ### Dictionary
 
 Because I hate getting stuck on abbreviations:

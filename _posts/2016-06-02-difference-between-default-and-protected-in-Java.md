@@ -14,6 +14,10 @@ I feel that this topic is a bit under explained, so I attempt here to explain it
 The four `public`, `protected`, _default_, `private` access modes are most often presented as a list, where the visibility decreases when you move from `public` towards `private`. But this I find very confusing, as in some corner cases this model simply does not work. I want to present an alternative understanding here.
 </div>
 
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
 ### Introduction
 
 The `public` and `private` are easy to understand. The first one means _"visible to everyone"_, and the second _"visible only to me"_. No big deal here.
