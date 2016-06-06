@@ -130,6 +130,6 @@ h3 { /* trying to solve the https://github.com/twbs/bootstrap/issues/1768 proble
 h4, h5 { /* trying to solve the https://github.com/twbs/bootstrap/issues/1768 problem */
     padding-top: 60px; margin-top: -50px;
 }
-h5 { 
+h5 {
     font-weight: bold;
 }
