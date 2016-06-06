@@ -86,7 +86,7 @@
     </h2>
     <h5><span class="glyphicon glyphicon-time"></span> Posted by {{ page.author }}, {{ page.date | date_to_long_string }}.
     </h5>
-    <h5>{% for tag in page.tags %}<a href="/search.html?fields=tags&query={{ tag }}" class="label label-primary">{{ tag }}</a> {% endfor %}</h5>
+    <h5>{% for tag in page.tags %}<a href="/search.html?fields=tags&query={{ tag }}" class="label label-primary">{{ tag | replace:'_',' ' }}</a> {% endfor %}</h5>
 
     {% if page.type == "book" %}
     <span class="glyphicon glyphicon-book"></span> Book summary

@@ -7,7 +7,7 @@
     for (var t = 0; t< item.tags.length; t++){
          itemBody += '<a href="/search.html?fields=tags&query=' + item.tags[t] + '" class="label ';
          itemBody += item.tags[t]===searchTerm?'label-primary">':'label-default">';
-         itemBody += item.tags[t] + '</a> ';
+         itemBody += item.tags[t].replace("\_", " ") + '</a> ';
     }
     itemBody += '</h5>' + item.content.substring(0, 150) + '...<hr/>';
     return itemBody;

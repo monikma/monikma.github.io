@@ -7,7 +7,7 @@ tags:
 - Programming
 - MongoDB
 - Python
-- Data Mining
+- Data_Mining
 - NoSQL
 modified_time: '2016-01-13T20:58:34.006+01:00'
 blogger_id: tag:blogger.com,1999:blog-5940427300271272994.post-1884713552860826320

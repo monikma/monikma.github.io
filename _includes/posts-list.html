@@ -19,7 +19,7 @@
             {% for category in site.tags %}
             <span style="font-size: {{ category | last | size | times: 120 | divided_by: site.tags.size | plus: 70  }}%">
                 <a href="/search.html?fields=tags&query={{ category | first }}" style="text-decoration:none;">
-                    {{ category | first }}
+                    {{ category | first | replace:'_',' '}}
                 </a>
             </span>
             {% endfor %}

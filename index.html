@@ -18,7 +18,7 @@ layout: home
                 <span class="glyphicon glyphicon-time"></span> Post by {{ post.author }}, {{ post.date | date_to_long_string }}.
             </h5>
             <h5>{% for tag in post.tags %}
-                <a href="/search.html?fields=tags&query={{ tag }}" class="label label-primary">{{ tag }}</a>
+                <a href="/search.html?fields=tags&query={{ tag }}" class="label label-primary">{{ tag | replace:'_',' ' }}</a>
                 {% endfor %}</h5>
             <div>{{ post.content |truncatehtml | truncatewords: 60 }}</div>
         </div>
