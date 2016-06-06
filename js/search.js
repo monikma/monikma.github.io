@@ -1,8 +1,9 @@
 (function() {
+
   function displaySearchResults(results, store) {
 
-    //show the search results div
-    document.getElementById('search-results-div').style.display="block";
+    //hide the spinner
+    document.getElementById('search-spinner').style.display="none";
 
     var searchResults = document.getElementById('search-results');
 
