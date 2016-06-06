@@ -12,10 +12,13 @@
 
       for (var i = 0; i < results.length; i++) {  // Iterate over the results
         var item = store[results[i].ref];
-        appendString += '<li><a href="' + item.url + '"><h3>' + item.title + '</h3></a>';
-        appendString += '<p>' + item.content.substring(0, 150) + '...</p></li>';
+        appendString += '<li><a href="' + item.url + '" style="text-decoration:none;"><h3>' + item.title + '</h3></a><h5>';
+        appendString += '<span class="glyphicon glyphicon-time"></span> Post by ' + item.author + ', ' + item.date + '. ';
+        for (var t = 0; t< item.tags.length; t++){
+             appendString += '<span class="label label-default">' + item.tags[t] + '</span> ';
+        }
+        appendString += '</h5>' + item.content.substring(0, 150) + '...<hr/></li>';
       }
-
       searchResults.innerHTML = appendString;
     } else {
       searchResults.innerHTML = '<li>No results found</li>';
@@ -46,7 +49,7 @@
       this.field('id');
       this.field('title', { boost: 10 });
       this.field('author');
-      this.field('category');
+      this.field('tags');
       this.field('content');
     });
 
@@ -55,7 +58,7 @@
         'id': key,
         'title': window.store[key].title,
         'author': window.store[key].author,
-        'category': window.store[key].category,
+        'tags': window.store[key].tags,
         'content': window.store[key].content
       });
 

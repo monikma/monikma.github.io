@@ -6,7 +6,7 @@ layout: home
 <h4>
     <small>SEARCH RESULTS</small>
 </h4>
-<ul id="search-results"></ul>
+<ul id="search-results" class="list-unstyled"></ul>
 
 <div class="spinner" id="search-spinner">
     <div class="bounce1"></div>
@@ -19,9 +19,10 @@ layout: home
       window.store = {
         {% for post in site.posts %}
           "{{ post.url | slugify }}": {
-            "title": "{{ post.title | xml_escape }}",
+            "title": '{{ post.title }}',
             "author": "{{ post.author | xml_escape }}",
-            "category": "{{ post.category | xml_escape }}",
+            "tags": {{ post.tags | jsonify }},
+            "date": "{{ post.date | date_to_long_string }}",
             "content": {{ post.content | strip_html | strip_newlines | jsonify }},
             "url": "{{ post.url | xml_escape }}"
           }
