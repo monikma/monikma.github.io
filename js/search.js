@@ -2,11 +2,12 @@
 
   function getItemBody(item){
     var itemBody = '<a href="' + item.url + '" style="text-decoration:none;"><h3>' + item.title + '</h3></a>';
-    itemBody += '<h5><span class="glyphicon glyphicon-time"></span> '+
-        'Post by ' + item.author + ', ' + item.date + '. ';
+    itemBody += '<h5><span class="glyphicon glyphicon-time"></span> ';
+    itemBody += 'Post by ' + item.author + ', ' + item.date + '. ';
     for (var t = 0; t< item.tags.length; t++){
-         itemBody += '<a href="/search.html?fields=tags&query=' + item.tags[t] +
-            (item.tags[t].includes(searchTerm)?'" class="label label-primary">':'" class="label label-default">') + item.tags[t] + '</a> ';
+         itemBody += '<a href="/search.html?fields=tags&query=' + item.tags[t] + '" class="label ';
+         itemBody += item.tags[t]===searchTerm?'label-primary">':'label-default">';
+         itemBody += item.tags[t] + '</a> ';
     }
     itemBody += '</h5>' + item.content.substring(0, 150) + '...<hr/>';
     return itemBody;
@@ -82,6 +83,7 @@
       displaySearchResults(results, window.store); // We'll write this in the next section
     }
   } else {
+     //empty string - redirect to welcome page
      window.location="/index.html";
   }
 })();

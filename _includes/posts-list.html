@@ -1,6 +1,7 @@
 <div class="col-sm-3 sidenav">
-    <br/>
-    <div class="input-group">
+
+    <!-- search input -->
+    <div class="input-group" style="margin-top:10px;">
         <form action="/search.html" method="get">
             <span class="input-group-btn">
                 <input type="text" class="form-control" placeholder="Search Blog.." id="search-box" name="query">
@@ -10,13 +11,27 @@
             </span>
         </form>
     </div>
-    <p/>
-    <ul class="nav nav-pills nav-stacked">
 
+    <div class="panel panel-default" style="margin-top:7px;margin-bottom:3px;">
+        <div class="panel-body" style="padding-top:0;">
+            <h4><small>TAGS</small></h4>
+            <!-- tag cloud by Tobias Sjösten, http://vvv.tobiassjosten.net/jekyll/jekyll-tag-cloud/ -->
+            {% for category in site.tags %}
+            <span style="font-size: {{ category | last | size | times: 120 | divided_by: site.tags.size | plus: 70  }}%">
+                <a href="/search.html?fields=tags&query={{ category | first }}" style="text-decoration:none;">
+                    {{ category | first }}
+                </a>
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <h4><small>POSTS</small></h4>
+    <ul class="nav nav-pills nav-stacked" style="list-style-position: inside;">
         {% for post in site.posts %} {% if page.url == post.url %}
-        <li class="active">
+        <li class="active" style="margin: -5px 0;">
             {% else %}
-        <li>
+        <li style="margin: -5px 0;">
             {% endif %} <a href="{{ post.url }}">
                 {% if post.type == "book" %}
                     <span class="glyphicon glyphicon-book"></span>
