@@ -21,6 +21,13 @@ Update: I passed :) It was a really really annoying exam to prepare. And yes it 
 
 </div>
 
+
+
+<h3>Table of contents</h3>
+- TOC
+{:toc max_level=2}
+
+
 ### Checklist on **every** question
 
 - are there typos

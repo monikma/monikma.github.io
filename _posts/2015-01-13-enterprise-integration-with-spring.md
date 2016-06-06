@@ -633,7 +633,7 @@ client-side:
                     <span>Spring provides </span><span>KeyStoreFactoryBean</span><span><span> </span><span>and </span></span><span>KeyStoreCallbackHandler</span>
                 </div>
             </li>
-        </ul>
+
 
 <div markdown="1">
 
@@ -662,417 +662,344 @@ client-side:
 </bean>
 ```
 </div>
+ </ul>
 </ol>
 
 ### RESTful services with Spring-MVC
 
-<ol >
-    <li
-        style="font-weight: bold;">
-        <div  ><span
-                >The main REST principles</span>
+<ol>
+    <li style="font-weight: bold;">
+        The main REST principles
+    </li>
+    <ul>
+        <li>
+            <div><span>(makes HTTP not only transport protocol, but also application protocol)</span>
+            </div>
+        </li>
+        <li>
+            <div><span><span>H </span><span>Hypermedia (links)</span></span>
+            </div>
+        </li>
+        <li>
+            <div><span><span>U </span><span>Uniform Interface (nouns for resources, verbs for operations: GET, POST, PUT, DELETE, HEAD, OPTIONS)</span></span>
+            </div>
+        </li>
+        <li>
+            <div><span><span>S </span><span>Stateless Conversation =&gt; scalable</span></span>
+            </div>
+        </li>
+        <li>
+            <div><span><span>I </span><span>Identifiable Resources</span></span>
+            </div>
+        </li>
+        <li>
+            <div><span><span>R </span><span>Resource Representations (multiple representations for resource, which is abstract; Accept header in req, Content-Type in res)</span></span>
+            </div>
+        </li>
+        <table style="margin-left:2em; margin-top:1em;"> <!-- The main REST principles -->
+            <tbody>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Method</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">
+                        <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Safe (no side effects)</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">
+                        <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Indepotent</span>
+                    </div>
+                </td>
+                <td>
+                    <div style=" "><span style="font-family: &quot;arial&quot;; font-weight: bold; ">Comments</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; ">GET</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td>
+                    <div style=" "><span
+                            style="font-family: &quot;arial&quot;; ">Is cacheable (ETag) or Last-Modified, 304</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; ">HEAD</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td><br/></td>
+            </tr>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; ">POST</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">n
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">n
+                    </div>
+                </td>
+                <td>
+                    <div style=" "><span style="font-family: &quot;arial&quot;; ">Location header in response</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; ">PUT</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">n
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td>
+                    <div style=" "><span style="font-family: &quot;arial&quot;; ">Create OR update</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 0px;">
+                <td>
+                    <div style="text-align: right;">
+                        <span style="font-family: &quot;arial&quot;; ">DELETE</span>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">n
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: center;">y
+                    </div>
+                </td>
+                <td><br/></td>
+            </tr>
+            </tbody>
+        </table>
+    </ul>
+    <li style="font-family: Arial; font-weight: bold;">
+        <div><span>REST support in Spring-MVC </span>
         </div>
     </li>
-    <ul >
-        <li
-            >
-            <div  ><span
-                    >(makes HTTP not only transport protocol, but also application protocol)</span>
+    <ul>
+        <table style="margin-left:2em; margin-top:1em;"> <!-- REST support in Spring-MVC -->
+            <tbody>
+            <tr style="height: 27px;">
+                <td><br/></td>
+                <td colspan="2">
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">SOAP / POX (Spring WS)</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 27px;">
+                <td>
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">web.xml</span>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;servlet&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-name&gt;http-ws-gateway&lt;/servlet-name&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-class&gt;</span><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; font-weight: bold; ">HttpRequestHandlerServlet</span><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet-class&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&lt;init-param&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;contextConfigLocation&lt;/param-  name&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;http-ws-gateway.xml&lt;/param-value&gt;</span>
+                    </div>
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet&gt;</span>
+                    </div>
+                    <br/>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;servlet-mapping&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-name&gt;http-ws-gateway&lt;/servlet-name&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;url-pattern&gt;/httpquote&lt;/url-pattern&gt;</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet-mapping&gt;</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 28px;">
+                <td>
+                    <div style=" "><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">web infrastr. config</span>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;int-http:inbound-gateway </span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;id="http-inbound-gateway"</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;request-channel="http-request"</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;reply-channel="http-response"</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;extract-reply-payload="false"</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;view-name="about"</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;reply-key, reply-timeout,message-converters, </span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;supported-methods, convert-exceptions, </span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;request-payload-type, error-code, errors-key,</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;header-mapper, name/&gt;</span>
+                    </div>
+                    <br/>
+                    <ul style=" padding: 0px 0px 0px 2em;">
+                        <li style="color: #333333; font-family: Arial;    ">
+                            <div><span>name - e.g. "/subscribe", so that it allows it to be used with DispatcherServlet</span>
+                            </div>
+                        </li>
+                        <li style="color: #333333; font-family: Arial;    ">
+                            <div><span>view-name - is the Spring MVC view name</span>
+                            </div>
+                        </li>
+                        <li style="color: #333333; font-family: Arial;    ">
+                            <div><span>you can also use inbound-message-adapter if you don't need two way communication, it uses MessageTemplate</span>
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr style="height: 28px;">
+                <td>
+                    <div style=" "><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">app config</span>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">N/A</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="height: 28px;">
+                <td>
+                    <div style=" "><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">Endpoint implementation</span>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">@Controller</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">@RequestMapping(“/rewards”)</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; ">public class Blabla{</span>
+                    </div>
+                    <br/>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@RequestMapping(value=”/{number}”, method=GET)</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;public String Reward blabla(@RequestBody someObject / Model model, @PathVariable(“number”) String number){</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// ...</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// return view name</span>
+                    </div>
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;}</span>
+                    </div>
+                    <br/>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@RequestMapping(method=POST)</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@ResponseStatus(HttpStatus.CREATED)</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;public @ResponseBody Reward blabla(@RequestBody someObject, HttpServletResponse res){</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// ...</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;res.addHeader(“Location”, getMeUrl(order.getId()));</span>
+                    </div>
+                    <div><span
+                            style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// return the object, will be mapped because of @ResponseBody, by converter based on Accept header</span>
+                    </div>
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;}</span>
+                    </div>
+                    <div><span style="color: #333333; font-family: &quot;courier new&quot;; ">}</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <li>
+            <div style=" "><span>you can also add e.g. </span><span
+                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; ">@ResponseStatus(value=HttpStatus.CONFLICT)</span><span><span
+                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;"> </span><span>on your Exception class, to have the exception mapped</span></span>
             </div>
         </li>
-        <li
-            >
-            <div  ><span
-                    ><span
-                    >H </span><span
-                    >Hypermedia (links)</span></span>
-            </div>
-        </li>
-        <li
-            >
-            <div  ><span
-                    ><span
-                    >U </span><span
-                    >Uniform Interface (nouns for resources, verbs for operations: GET, POST, PUT, DELETE, HEAD, OPTIONS)</span></span>
-            </div>
-        </li>
-        <li
-            >
-            <div  ><span
-                    ><span
-                    >S </span><span
-                    >Stateless Conversation =&gt; scalable</span></span>
-            </div>
-        </li>
-        <li
-            >
-            <div  ><span
-                    ><span
-                    >I </span><span
-                    >Identifiable Resources</span></span>
-            </div>
-        </li>
-        <li
-            >
-            <div  ><span
-                    ><span
-                    >R </span><span
-                    >Resource Representations (multiple representations for resource, which is abstract; Accept header in req, Content-Type in res)</span></span>
-            </div>
-        </li>
-    <table style="margin-left:2em; margin-top:1em;" > <!-- The main REST principles -->
-        <tbody>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Method</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">
-                    <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Safe (no side effects)</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">
-                    <span style="font-family: &quot;arial&quot;; font-weight: bold; ">Indepotent</span>
-                </div>
-            </td>
-            <td >
-                <div  style=" "><span
-                        style="font-family: &quot;arial&quot;; font-weight: bold; ">Comments</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; ">GET</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td >
-                <div  style=" "><span
-                        style="font-family: &quot;arial&quot;; ">Is cacheable (ETag) or Last-Modified, 304</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; ">HEAD</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td ><br/></td>
-        </tr>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; ">POST</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">n
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">n
-                </div>
-            </td>
-            <td >
-                <div  style=" "><span
-                        style="font-family: &quot;arial&quot;; ">Location header in response</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; ">PUT</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">n
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td >
-                <div  style=" "><span
-                        style="font-family: &quot;arial&quot;; ">Create OR update</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 0px;">
-            <td >
-                <div
-                     style="text-align: right;">
-                    <span style="font-family: &quot;arial&quot;; ">DELETE</span>
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">n
-                </div>
-            </td>
-            <td >
-                <div
-                     style="text-align: center;">y
-                </div>
-            </td>
-            <td ><br/></td>
-        </tr>
-        </tbody>
-    </table>
-    </ul>
-        <li
-            style="font-family: Arial; font-weight: bold;">
-            <div  ><span
-                    >REST support in Spring-MVC </span>
-            </div>
-        </li>
-        <ul>
-    <table style="margin-left:2em; margin-top:1em;" > <!-- REST support in Spring-MVC -->
-        <tbody>
-        <tr style="height: 27px;">
-            <td ><br/></td>
-            <td colspan="2" >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">SOAP / POX (Spring WS)</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 27px;">
-            <td >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">web.xml</span>
-                </div>
-            </td>
-            <td colspan="2" >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;servlet&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-name&gt;http-ws-gateway&lt;/servlet-name&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-class&gt;</span><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; font-weight: bold; ">HttpRequestHandlerServlet</span><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet-class&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&lt;init-param&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-name&gt;contextConfigLocation&lt;/param-  name&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;&nbsp;&lt;param-value&gt;http-ws-gateway.xml&lt;/param-value&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet&gt;</span>
-                </div>
-                <br/>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;servlet-mapping&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;servlet-name&gt;http-ws-gateway&lt;/servlet-name&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&lt;url-pattern&gt;/httpquote&lt;/url-pattern&gt;</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;/servlet-mapping&gt;</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 28px;">
-            <td >
-                <div  style=" "><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">web infrastr. config</span>
-                </div>
-            </td>
-            <td colspan="2" >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">&lt;int-http:inbound-gateway </span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;id="http-inbound-gateway"</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;request-channel="http-request"</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;reply-channel="http-response"</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;extract-reply-payload="false"</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;view-name="about"</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;reply-key, reply-timeout,message-converters, </span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;supported-methods, convert-exceptions, </span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;request-payload-type, error-code, errors-key,</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;header-mapper, name/&gt;</span>
-                </div>
-                <br/>
-                <ul style=" padding: 0px 0px 0px 2em;">
-                    <li
-                        style="color: #333333; font-family: Arial;    ">
-                        <div
-                             ><span
-                                >name - e.g. "/subscribe", so that it allows it to be used with DispatcherServlet</span>
-                        </div>
-                    </li>
-                    <li
-                        style="color: #333333; font-family: Arial;    ">
-                        <div
-                             ><span
-                                >view-name - is the Spring MVC view name</span>
-                        </div>
-                    </li>
-                    <li
-                        style="color: #333333; font-family: Arial;    ">
-                        <div
-                             ><span
-                                >you can also use inbound-message-adapter if you don't need two way communication, it uses MessageTemplate</span>
-                        </div>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-        <tr style="height: 28px;">
-            <td >
-                <div  style=" "><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">app config</span>
-                </div>
-            </td>
-            <td colspan="2" >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">N/A</span>
-                </div>
-            </td>
-        </tr>
-        <tr style="height: 28px;">
-            <td >
-                <div  style=" "><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">Endpoint implementation</span>
-                </div>
-            </td>
-            <td colspan="2" >
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">@Controller</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">@RequestMapping(“/rewards”)</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">public class Blabla{</span>
-                </div>
-                <br/>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@RequestMapping(value=”/{number}”, method=GET)</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;public String Reward blabla(@RequestBody someObject / Model model, @PathVariable(“number”) String number){</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// ...</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// return view name</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;}</span>
-                </div>
-                <br/>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@RequestMapping(method=POST)</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;@ResponseStatus(HttpStatus.CREATED)</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;public @ResponseBody Reward blabla(@RequestBody someObject, HttpServletResponse res){</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// ...</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;res.addHeader(“Location”, getMeUrl(order.getId()));</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;&nbsp;&nbsp;// return the object, will be mapped because of @ResponseBody, by converter based on Accept header</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; "> &nbsp;}</span>
-                </div>
-                <div  ><span
-                        style="color: #333333; font-family: &quot;courier new&quot;; ">}</span>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-        <li
-            >
-            <div  style=" "><span
-                    >you can also add e.g. </span><span
-                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; ">@ResponseStatus(value=HttpStatus.CONFLICT)</span><span
-                    ><span
-                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;"> </span><span
-                    >on your Exception class, to have the exception mapped</span></span>
-            </div>
-        </li>
-        <li
-            >
-            <div  ><span
-                    >alternatively to the above, in your controller you can add an empty void method annotated with </span><span
-                    ><span
-                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">@ExceptionHandler(value=YourException.class)</span><span
-                    > </span></span><span
-                    >and </span><span
+        <li>
+            <div><span>alternatively to the above, in your controller you can add an empty void method annotated with </span><span><span
+                    style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">@ExceptionHandler(value=YourException.class)</span><span> </span></span><span>and </span><span
                     style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; ">@ResponseStatus(value=HttpStatus.NOT_FOUND)</span>
             </div>
         </li>
