@@ -5,7 +5,8 @@
     itemBody += '<h5><span class="glyphicon glyphicon-time"></span> '+
         'Post by ' + item.author + ', ' + item.date + '. ';
     for (var t = 0; t< item.tags.length; t++){
-         itemBody += '<span class="label label-default">' + item.tags[t] + '</span> ';
+         itemBody += '<a href="/search.html?fields=tags&query=' + item.tags[t] +
+            (item.tags[t].includes(searchTerm)?'" class="label label-primary">':'" class="label label-default">') + item.tags[t] + '</a> ';
     }
     itemBody += '</h5>' + item.content.substring(0, 150) + '...<hr/>';
     return itemBody;
@@ -42,6 +43,10 @@
         return decodeURIComponent(pair[1].replace(/\+/g, '%20'));
       }
     }
+  }
+
+  function htmlDecode(value){
+    return $('<div/>').html(value).text();
   }
 
   var searchTerm = getQueryVariable('query');
