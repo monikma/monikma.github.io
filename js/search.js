@@ -1,5 +1,16 @@
 (function() {
 
+  function getItemBody(item){
+    var itemBody = '<a href="' + item.url + '" style="text-decoration:none;"><h3>' + item.title + '</h3></a>';
+    itemBody += '<h5><span class="glyphicon glyphicon-time"></span> '+
+        'Post by ' + item.author + ', ' + item.date + '. ';
+    for (var t = 0; t< item.tags.length; t++){
+         itemBody += '<span class="label label-default">' + item.tags[t] + '</span> ';
+    }
+    itemBody += '</h5>' + item.content.substring(0, 150) + '...<hr/>';
+    return itemBody;
+  }
+
   function displaySearchResults(results, store) {
 
     //hide the spinner
@@ -12,12 +23,7 @@
 
       for (var i = 0; i < results.length; i++) {  // Iterate over the results
         var item = store[results[i].ref];
-        appendString += '<li><a href="' + item.url + '" style="text-decoration:none;"><h3>' + item.title + '</h3></a><h5>';
-        appendString += '<span class="glyphicon glyphicon-time"></span> Post by ' + item.author + ', ' + item.date + '. ';
-        for (var t = 0; t< item.tags.length; t++){
-             appendString += '<span class="label label-default">' + item.tags[t] + '</span> ';
-        }
-        appendString += '</h5>' + item.content.substring(0, 150) + '...<hr/></li>';
+        appendString += '<li>' + getItemBody(item) + '</li>';
       }
       searchResults.innerHTML = appendString;
     } else {
@@ -39,28 +45,33 @@
   }
 
   var searchTerm = getQueryVariable('query');
+  var searchFields = getQueryVariable('fields');
 
   if (searchTerm) {
-    document.getElementById('search-box').setAttribute("value", searchTerm);
+
+    if (!searchFields){
+        document.getElementById('search-box').setAttribute("value", searchTerm);
+    }
+
+    searchFields = searchFields ? searchFields : "title,author,tags,content";
+    searchFields = searchFields.split(",");
 
     // Initalize lunr with the fields it will be searching on. I've given title
     // a boost of 10 to indicate matches on this field are more important.
     var idx = lunr(function () {
-      this.field('id');
-      this.field('title', { boost: 10 });
-      this.field('author');
-      this.field('tags');
-      this.field('content');
+        for (var f=0; f<searchFields.length; f++){
+             this.field(searchFields[f]);
+             //this.field('title', { boost: 10 });
+        }
     });
 
     for (var key in window.store) { // Add the data to lunr
-      idx.add({
-        'id': key,
-        'title': window.store[key].title,
-        'author': window.store[key].author,
-        'tags': window.store[key].tags,
-        'content': window.store[key].content
-      });
+
+      var data = {'id': key};
+      for (var f=0; f<searchFields.length; f++){
+         data[searchFields[f]]=window.store[key][searchFields[f]];
+      }
+      idx.add(data);
 
       var results = idx.search(searchTerm); // Get lunr to perform a search
       displaySearchResults(results, window.store); // We'll write this in the next section
