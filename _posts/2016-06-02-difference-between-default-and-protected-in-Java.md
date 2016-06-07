@@ -86,7 +86,26 @@ public class B extends A {
 }
 ```
 
-It would also compile if both classes were in the same package and `something` would have the _default_ access.
+It would also compile if both classes were in the same package and `B` didn't extend `A`.
+
+```java
+package a;
+public class A {
+    protected int something;
+}
+```
+
+```java
+package a;
+public class B {
+    void check(){
+        A anotherObject = new A();
+        int h = anotherObject.something; //compiles!
+    }
+}
+```
+
+As long as the classes are in the same package, it would also compile if `something` had the _default_ access (with or without inheritance).
 
 ```java
 package a;
@@ -97,7 +116,7 @@ public class A {
 
 ```java
 package a;
-public class B extends A {
+public class B {
     void check(){
         A anotherObject = new A();
         int h = anotherObject.something; //compiles!
