@@ -38,7 +38,7 @@ Very important: please comment if you see an error.
 
 ### Important non-Java 8 stuff I actually didn't know about (and learnt from that book)
 
-- `list.toArray()` returns a special fixed size list that is linked to the actual array - changes in one of them result in changes to the other, attempting an operation that changes the size causes an exception
+- `Arrays.asList()` returns a special fixed size list that is linked to the actual array - attempting an operation that changes the size causes an exception
 - `System.gc()` is just a suggestion
 - `System.out.println()` calls the `.toString()` method internally
 - exception thrown from inside `finally` block masks the exception thrown in the `catch` block (actually learnt it recently, but the book confirmed it)
@@ -209,7 +209,7 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - `.isEmpty()`, `.clear()`
 - `.contains()` - calls **equals on elements**!
 - `.equals()` - deep comparing
-- `list.toArray()` converts not to ArrayList, but something that **does not let you remove**() - it's a fixed size version of a list
+- `Arrays.asList()` converts not to ArrayList, but something that **does not let you remove**() - it's a fixed size version of a list
 
 ![][6]
 
