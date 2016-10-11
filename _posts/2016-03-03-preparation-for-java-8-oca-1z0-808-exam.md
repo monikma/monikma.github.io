@@ -58,7 +58,7 @@ Very important: please comment if you see an error.
 
 ![][2]
 
-- printing list without `.toString()` prints only the object ref of course
+- printing an array prints the object ref of course
 - `int[] array = {3,5};` - this is also how you can initialize an array (along with `=new int[]{3,5};`), but only **if it is in same line as declaration**!
 - it is possible to **override** a protected method with a **public**; if the method is not protected but **private**, there is no compiler error, and the two are **completely separate**;
 - writing `super()` in `public F() { super();...` is optional, **`super();` will be invoked anyway (first)** if no super is invoked manually
