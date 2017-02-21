@@ -153,4 +153,23 @@ The complexities from worst to best:
 1. `lg(n)` - e.g. binary search
 1. `1` - single operations
 
+## Sorting
+
+- [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
+
+Take first element and look for a most smaller one. Swap. Take second, and so on.
+
+![Selection sort, source: wikipedia]("https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif")
+
+- [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
+
+Take each element and pull it to the beginning of the array until it's in the right place.
+
+![Insertion sort, source: wikipedia]("https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif")
+
+## Strings
+
+### String matching
+
+Compare letter by letter and if it does not match at one point skip to the next one.
 
