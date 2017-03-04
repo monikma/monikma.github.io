@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Internet works
+title: How Internet works - summary
 date: '2017-03-04'
 author: Monik
 tags:
@@ -11,11 +11,12 @@ commentIssueId: 35
 Summary of [How Does the Internet Work?](http://www.theshulers.com/whitepapers/internet_whitepaper/).
 </div>
 
+<img src="http://www.snipe.net/wp-content/uploads/2013/07/maxresdefault.jpg" height="170" width="300"/>
+
+
 <h3>Table of contents</h3>
 - TOC
 {:toc max_level=1}
-
-<img src="http://www.snipe.net/wp-content/uploads/2013/07/maxresdefault.jpg" height="170" width="300"/>
 
 ## IP Address
 

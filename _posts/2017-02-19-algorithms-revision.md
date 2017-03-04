@@ -220,6 +220,19 @@ The complexities from worst to best:
 1. `lg(n)` - e.g. binary search, everything where we divide into halves
 1. `1` - single operations
 
+## NP Completness
+
+The problems to be solved by algorithms have been divided to a number of problem classes:
+
+1. **P** - problems that can be solved in polynomial time (or better)
+1. **NP** - binary problems to which solution can be determined in polynomial time
+1. **NP hard** - problems to which any NP problem can be reduced in polynomial time (not necessarily included in NP class)
+1. **NP complete** - problems that are both NP and NP hard
+
+Some conclusions:
+
+<img src="https://i.stack.imgur.com/CFDuq.png"/>
+
 ## Data Structures
 
 _Linked data structures_ means the ones that involve pointers: lists, trees, as opposed to arrays, heaps, matrices and hash tables.
@@ -254,7 +267,7 @@ It works on elements that have priorities assigned. Priority queue has the two o
 
 It is most often implemented using *heap*, but can also be implemented using simple array, or binary tree.
 
-### Heaps
+### Heap
 
 A heap is a tree but arranged differently than the binary tree. It is normally stored in an array.
 
@@ -271,7 +284,7 @@ _Heap sort_ (O(`n*lon(n)`)) is actually a form of selection sort but with a bett
 
 Searching in a heap is very ineffective.
 
-### Hash tables
+### Hash table
 
 Each element has a function applied that maps it to _array index_. Looking up an index in an array is fast. Of course two elements can map to the same index, that's why:
 
@@ -284,6 +297,14 @@ The example function for strings is: sum of powers of lengths of the alphabet ti
 Hashing can be used for string matching - e.g. Rabin Karp algorithm that hashes each next segment using the information of the has of the previous one, and running in up to Θ(n + m), instead of the naive Θ(nm).
 
 ## Sorting & Search
+
+### Binary search
+
+In a sorted list: take the middle element and compare to the searched one; either continue with the right or left half of the list (note do not copy the arrays, maintain start and end indices).
+
+Each level of a binary tree has `2`<sup>`level`</sup> branches. The height of the tree with `n` leaves is `log`<sub>`2`</sub>`n`, as log<sub>2</sub>n = h <=> 2<sup>h</sup> = n.
+
+Time complexity: O(`log(n)`)
 
 ### [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 
@@ -312,14 +333,6 @@ Time complexity: O(`n*logn`)
 5. Sort the part before and after the pivot separately.
 
 Time complexity: average is O(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number).
-
-### Binary search
-
-In a sorted list: take the middle element and compare to the searched one; either continue with the right or left half of the list (note do not copy the arrays, maintain start and end indices).
-
-Each level of a binary tree has `2`<sup>`level`</sup> branches. The height of the tree with `n` leaves is `log`<sub>`2`</sub>`n`, as log<sub>2</sub>n = h <=> 2<sup>h</sup> = n.
-
-Time complexity: O(`log(n)`)
 
 ## Strings
 
