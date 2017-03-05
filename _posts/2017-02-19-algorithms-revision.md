@@ -4,6 +4,7 @@ title: Algorithms - revision
 date: '2017-02-19'
 author: Monik
 tags:
+- Programming
 - Algorithms
 commentIssueId: 34
 ---
@@ -220,19 +221,6 @@ The complexities from worst to best:
 1. `lg(n)` - e.g. binary search, everything where we divide into halves
 1. `1` - single operations
 
-## NP Completness
-
-The problems to be solved by algorithms have been divided to a number of problem classes:
-
-1. **P** - problems that can be solved in polynomial time (or better)
-1. **NP** - binary problems to which solution can be determined in polynomial time
-1. **NP hard** - problems to which any NP problem can be reduced in polynomial time (not necessarily included in NP class)
-1. **NP complete** - problems that are both NP and NP hard
-
-Some conclusions:
-
-<img src="https://i.stack.imgur.com/CFDuq.png"/>
-
 ## Data Structures
 
 _Linked data structures_ means the ones that involve pointers: lists, trees, as opposed to arrays, heaps, matrices and hash tables.
@@ -296,6 +284,10 @@ The example function for strings is: sum of powers of lengths of the alphabet ti
 
 Hashing can be used for string matching - e.g. Rabin Karp algorithm that hashes each next segment using the information of the has of the previous one, and running in up to Θ(n + m), instead of the naive Θ(nm).
 
+### Black-red tree
+
+TODO
+
 ## Sorting & Search
 
 ### Binary search
@@ -332,11 +324,78 @@ Time complexity: O(`n*logn`)
 4. The element just after the marker is now exactly where the pivot should be in the final sorted array. Swap the pivot and the element after the marker
 5. Sort the part before and after the pivot separately.
 
-Time complexity: average is O(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number).
+Time complexity: average is O(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number). We can avoid the worst complexity by pre-randominzing the data set first, or simply choosing the pivot at random each time.
 
 ## Strings
 
 ### String matching
 
 Compare letter by letter and if a letter of a small text does not match skip to the next letter of the big text.
+
+## Graphs
+
+### Graph types
+
+### Constructing the graph
+
+In adjacency list the order of elements in the list does not matter.
+
+### Breadth-first traversal
+
+O(n+m) on both directed and undirected graph (m number of edges, n number of vertices).
+
+It is possible to find shortest possible path between `x` and `y` (in an unweighted graph), provided we do the traversal starting from `x`. To do so, we always remember who the parent is, and once we get to `y` we backtrack to `x`.
+
+Finding connected components.
+
+Two-coloring graphs
+
+
+### Depth-first traversal
+
+Using stack, or actually also recursively.
+
+While using the recursive implementation, if we record the "time" (1 unit of time is one recursion) of entering and exiting each node, we can quickly see who is the ancestor of whom (by comparing the times). It is also easy to see how many descendants each node has.
+
+It divides edges into tree and back edges (the one that point back to the tree) - don't get it
+
+
+## Geometrical algorithms
+
+### Convex hull
+
+TODO
+
+## NP Completness
+
+The problems to be solved by algorithms have been divided to a number of problem classes:
+
+1. **P** - problems that can be solved in polynomial time (or better)
+1. **NP** - binary problems to which solution can be determined in polynomial time
+1. **NP-hard** - problems to which any NP problem can be reduced in polynomial time (do not have to be NP problems themselves)
+1. **NP-complete** - problems that are both NP and NP hard
+
+<img src="https://i.stack.imgur.com/CFDuq.png" height="300" width="200" style=" margin-left:auto;margin-right:auto;display:block;"/>
+
+Some conclusions:
+
+1. `P != NP`
+
+How to prove that a problem is an **NP-complete** problem do these 2 things:
+
+1. prove that the problem is **NP** - give a polynomial time verification algorithm
+2. find another **NP-complete** which reduces to your problem (so such that solution to that problem equals solution to your problem)
+
+## NP Complete problems
+
+### Knapsack problem
+
+Here is the absolutely best [video](https://www.youtube.com/watch?v=EH6h7WA7sDw).
+
+TODO
+
+### Travelling salesman problem
+
+TODO
+
 
