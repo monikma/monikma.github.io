@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Pieces from mathematics
+title: Pieces of mathematics
 date: '2017-02-19'
 author: Monik
 tags:
@@ -8,7 +8,7 @@ tags:
 commentIssueId: 35
 ---
 <div class="bg-info panel-body" markdown="1">
-Pieces from mathematics that are relevant for a developer.
+Pieces of mathematics that are relevant for a developer.
 </div>
 
 <h3>Table of contents</h3>
@@ -17,7 +17,7 @@ Pieces from mathematics that are relevant for a developer.
 
 <!-- http://docs.mathjax.org/en/latest/start.html -->
 
-# Summations
+## Summations
 
 This is called a summation, more specifically arithmetic progression:
 
@@ -96,7 +96,7 @@ Geometric series have the index of the loop involved in the exponent:
     <mi>)</mi>
 </math>
 
-for for `a>=1`.
+for for `a>1`.
 
 What may be also relevant is this factorial formula:
 
@@ -107,13 +107,14 @@ What may be also relevant is this factorial formula:
       <mi>n</mi>
     </munderover>
     <mi>i</mi>
-    <mo>×</mo>
-    <mi>i!</mi>
+    <mo>*</mo>
+    <mi>i</mi>
+    <mo>!</mo>
     <mo>=</mo>
     <mi>(n+1)!-1</mi>
 </math>
 
-# Logarithms
+## Logarithms
 
 This is what logarithm is:
 
@@ -121,7 +122,7 @@ b<sup>x</sup> = y <=> log <sub>b</sub> y = x
 
 | Important formulas                |
 |-----------------------------------|
-|e<sup>ln x</sub> = x               |
+|e<sup>ln x</sup> = x               |
 |b<sup>log<sub> b</sub> y</sup> = y |
 |log<sub>a</sub>(x*y) = log<sub>a</sub>(x) + log<sub>a</sub>(y) |
 |a<sup>b</sup> = e<sup>ln(a^b)</sup> = e<sup>b*ln(a)</sup> |
@@ -169,37 +170,56 @@ Harmonic summation is another important formula:
     <mi>ln(n)</mi>
 </math>
 
-# Quadratic Equation
+## Quadratic Equation
 
 Square roots of quadratic equation:
 
-- d = sqrt(b^2-4ac)
-- x = (-b +/- d)/2a
+- `d = sqrt(b`<sup>`2`</sup>`-4ac)`
+- `x = (-b +/- d)/2a`
 
-# Trygonometry
+## Trygonometry
 
 Area of a triangle:
 
-- 1/2 a*h, h is the height of the triangle
-- 1/2 a*b * sin(the angle between them)
+- `1/2 * a * h`, `h` is the height of the triangle measured from `a`
+- `1/2 * a * b * sin(α)`, `α` is the angle between `a` and `b`
 
-# Prime numbers
+## Prime numbers
 
 _Every positive integer can be decomposed into a product of primes_.
 
-# Conditional probability
+[Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes) is an algorithm to fins all prime numbers up to a given
+**max** value: in a sorted list starting from `2` we take each number and count it as prime, and cross out all following numbers that are divisible by this number.
 
-- P(A and B) = P(B given A)*P(A)
-- P(A or B) = P(A) + P(B) - P(A and B)
+We can also ask for testing whether a [number is prime](https://en.wikipedia.org/wiki/Primality_test).
+
+## Combinatorics
+
+- Number of possible **permutations** of `n` elements: `n!`
+- Number of possible **variations** of `k` distinct elements from `n` (order matters): `n!/(n-k)!`
+- Number of possible **variations** of `k` elements from `n` (order matters): `n^k`
+- Number of possible **combinations** of `k` distinct elements from `n` (order does not matter): `n!/k!(n-k)!` (Newton's symbol)
+- Number of possible **combinations** of `k` elements from `n` (order does not matter): `(n+k-1)!/k!(n-1)!`
+
+## Probability
+
+What is the probability that out of 3 consecutive tries 2 are successful, if each try has probability _p_ of being successful?
+
+Answer: `p*p*(1-p)`.
+
+### Conditional probability
+
+- `P(A and B) = P(B given A)*P(A)`
+- `P(A or B) = P(A) + P(B) - P(A and B)`
 
 But:
 
 For A and B independent (A happening tells me nothing about B happening):
 
-- P(A and B) = P(A)*P(B)
+- `P(A and B) = P(A) * P(B)`
 
 For A and B mutually exclusive (if A happens B cannot happen:
 
-- P(A or B) = P(A) + P(B)
+- `P(A or B) = P(A) + P(B)`
 
-* Only impossible events are both mutually exclusive and independent.
+*Only impossible events are both mutually exclusive and independent.

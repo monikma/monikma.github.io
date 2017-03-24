@@ -16,9 +16,9 @@ Complexity analysis and the most important algorithms.
 - TOC
 {:toc max_level=1}
 
-# Complexity analysis
+## Complexity analysis
 
-## Random Access Machine
+### Random Access Machine
 
 RAM stands here for _Random Access Machine_, and it is a computation model that we use to talk about algorithm time complexity:
 
@@ -26,13 +26,13 @@ RAM stands here for _Random Access Machine_, and it is a computation model that 
 - memory access - is one step
 - loops and subroutines - is as many steps as many of the above they contain in all iterations
 
-## Algorithm properties
+### Algorithm properties
 
 _Stability of sorting_: a stable sorting algorithm preserves the order of records with equal keys ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
 
 _Numerical stability of algorithm_: a numerically stable algorithm avoids magnifying small errors ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
 
-## Complexity
+### Complexity
 
 We have two types of it:
 - time complexity
@@ -65,9 +65,9 @@ The complexities from worst to best:
 1. `lg(n)` - e.g. binary search, everything where we divide into halves
 1. `1` - single operations
 
-# Sorting & Search
+## Sorting & Search
 
-## Binary search
+### Binary search
 
 In a sorted list: take the middle element and compare to the searched one; either continue with the right or left half of the list (note do not copy the arrays, maintain start and end indices).
 
@@ -75,41 +75,94 @@ Each level of a binary tree has `2`<sup>`level`</sup> branches. The height of th
 
 Time complexity: O(`log(n)`)
 
-## [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
+### [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 
 Take first element and look for a "most smaller" one. Swap. Take second, and so on.
 
 Time complexity: Θ(`n`<sup>`2`</sup>)
 
-## [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
+### [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
 
 Take each element and pull it to the beginning of the array until it's in the right place (constant swapping).
 
 Time complexity: O(`n`<sup>`2`</sup>)
 
-## [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
+### [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
 
 Merge sort each half of the array, and then merge 2 parts together in order.
 
 Time complexity: O(`n*logn`)
 
-## [Quick sort](https://www.youtube.com/watch?v=aQiWF4E8flQ)
+### [Quick sort](https://www.youtube.com/watch?v=aQiWF4E8flQ)
 
 1. Pick the last element (pivot)
 2. Put a marker just before the first element
 3. Go from start to end, and whenever there is an element < pivot, put it just in front of the marker and move the marker one element towards the end
 4. The element just after the marker is now exactly where the pivot should be in the final sorted array. Swap the pivot and the element after the marker
-5. Sort the part before and after the pivot separately.
+5. Sort the part before and after the pivot/marker separately.
 
 Time complexity: average is Θ(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number). We can avoid the worst complexity by pre-randominzing the data set first, or simply choosing the pivot at random each time.
 
-# Strings
+### Bucket sort
 
-## String matching
+We put elements into `k` baskets of some ranges, and sort data in each basket (in another way), and then but the data back into the array.
+
+Distributing the elements into the baskets is `O(n)` time. There are some catches though when it comes to the complexity of assembling the array back:
+
+- if we can afford one basket per value we store only element counts in each basket instead of list of elements. If the data is uniformly distributed, then indeed the average complexity will be equal to `Θ(n+k)`. Why? Because first we iterate through every of `k` buckets and for every bucket we check on average `n/k` elements. That is `Θ(k*(n/k+c)) = Θ(n+k)`, where `c` is the cost of looking into that basket (the original explanation is [here](http://stackoverflow.com/questions/7311415/how-is-the-complexity-of-bucket-sort-is-onk-if-we-implement-buckets-using-lin)).
+
+- if we cannot afford one basket per value, then each basket we have to sort additionally, which is usually done by insertion sort that has complexity `O(n^2)`, hence the worst case time complexity is `O(n^2)`.
+
+### Radix sort
+
+Similar to bucket sort, but we do it like that:
+
+- have 10 buckets (queue style)
+- put numbers to baskets using least significant digit
+- put numbers back to the array
+- put numbers to baskets using second least significant digit
+- put numbers back to the array
+- ...
+
+By repeating it until we process all digits we actually end up with a sorted array.
+
+Instead we can start from most significant digit (use recursion), and that is how strings can be efficiently sorted.
+
+The time complexity is `O(w*n)`, where `w` is the max length of numbers/words.
+
+## Graph algorithms
+
+### Minimum spanning tree
+
+This is done in a weighted graph. In an unweighted graph each tree is a tree with minimum number of edges already (`n-1` edges).
+
+#### Prim's algorithm
+
+It goes like BFT and on each depth it chooses the minimum cost edge. Even though it is greedy it actually does always find the minimum spanning tree. The complexity is O(`n^2`) but if we use e.g. heap instead of linked list we can reduce it to O(`m*logn`) where `m` is the number of all vertices.
+
+#### Kruskal algorithm
+
+Start from cheapest to most expensive edges and before adding each of them check if we are still having a tree here (we shall not be adding to the same connected component). Time complexity: sorting edges is O(`m*logm`), building the tree O(`m*n`) and with a better data structure for testing connected component it is O(`m*logm`), which is better for sparse graphs.
+
+### Shortest path in weighted graph
+
+We look for a cheapest path between 2 vertices. In an unweighted graph we just do BFT starting from one of the edges.
+
+#### Djikstra's algorithm
+
+Similar to Prim's algorithm, but for each vertex we record tentative cost of travelling to it from the starting vertex. At the beginning the starting vertex has a cost of 0 and all other vertices have cost of infinity. When we find a lower cost for a vertex, we update it.
+
+We also move in a BFT fashion, but always pick the vertex with the cheapest tentative cost first. We finish when we have traversed all the graph.
+
+Usually uses heap to keep track of the minimum distance for each vertex.
+
+## Strings
+
+### String matching
 
 Compare letter by letter and if a letter of a small text does not match skip to the next letter of the big text.
 
-# NP Completness
+## NP Completness
 
 The problems to be solved by algorithms have been divided to a number of problem classes:
 
@@ -129,9 +182,9 @@ How to prove that a problem is an **NP-complete** problem do these 2 things:
 1. prove that the problem is **NP** - give a polynomial time verification algorithm
 2. find another **NP-complete** which reduces to your problem (so such that solution to that problem equals solution to your problem)
 
-# NP Hard problems
+## NP Hard problems
 
-## Knapsack problem
+### Knapsack problem
 
 Solution is NP Hard.
 
@@ -139,7 +192,7 @@ Decision whether the solution is correct is NP Complete.
 
 Here is the absolutely best [video](https://www.youtube.com/watch?v=EH6h7WA7sDw).
 
-## Travelling salesman problem
+### Travelling salesman problem
 
 Solution is NP Complete.
 

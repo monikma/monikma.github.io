@@ -23,7 +23,7 @@ _Linked data structures_ means the ones that involve pointers: lists, trees, as 
 - Queue - FIFO order. Operations can be calles e.g. enqueue and dequeue.
 - Linked List - each contains the data plus a pointer to the next (or next and previous) item. No random access to items is possible.
 
-# Hash table
+## Hash table
 
 Each element has a function applied that maps it to _array index_. Looking up an index in an array is fast. Of course two elements can map to the same index, that's why:
 
@@ -39,7 +39,7 @@ Then we have to apply modulo (arbitrary) m, as otherwise the number would be too
 
 Hashing can be used for string matching - e.g. Rabin Karp algorithm that hashes each next segment using the information of the has of the previous one, and running in up to Θ(n + m), instead of the naive Θ(nm).
 
-# Priority queue
+## Priority queue
 
 It works on elements that have priorities assigned. Priority queue has the two operations available:
 
@@ -48,7 +48,7 @@ It works on elements that have priorities assigned. Priority queue has the two o
 
 It is most often implemented using *heap*, but can also be implemented using simple array, or binary tree.
 
-# Heap
+## Heap
 
 A heap is a tree but arranged differently than the binary tree. It is normally stored in an array.
 
@@ -65,7 +65,7 @@ _Heap sort_ (O(`n*lon(n)`)) is actually a form of selection sort but with a bett
 
 Searching in a heap is very ineffective.
 
-# Binary Search Tree
+## Binary Search Tree
 
 For every element `x` the following holds: all elements of right subtree of `x` are `>x` and all elements of the left subtree are `<=x`. Watch out: not only immediate children matter, but all the descendants! immediate children can meet this criterion but the grandchildren not anymore.
 
@@ -83,7 +83,7 @@ Note that insertions/deletions can create unbalanced trees which are no longer s
 
 In a complete tree (all nodes have 2 children or are leaves) the number of nodes is `2^n -1`.
 
-# AVL Tree
+## AVL Tree
 
 Balanced binary tree is such that its right and left subtrees' heights differ by at most 1. AVL tree is an example of a balanced binary tree.
 
@@ -91,7 +91,7 @@ In AVL tree each node has assigned "balance" which is the height of the left sub
 
 After each insert the tree is re-balanced: we rotate - left or right. If the child and grandchild in the unbalancing subtree are on the same side we need to rotate only once, if they are on opposite sides (left and right, or right and left) - we need to rotate twice, in opposite directions.
 
-# Graph
+## Graph
 
 Graph consists of set of vertices and edges. They can be:
 
@@ -103,7 +103,7 @@ Graph consists of set of vertices and edges. They can be:
 - implicit or explicit - implicit graph is constructed as it is used
 - labelled or unlabelled
 
-## Storing the graph
+### Storing the graph
 
 Graph can be stored in 2 ways:
 
@@ -111,8 +111,9 @@ Graph can be stored in 2 ways:
 - **adjacency list** - array of linked lists, each list holds vertices connected with the vertex connected with the vertext corresponding to the array index - good for traversal
 
 In adjacency list the order of elements in the list does not matter.
+To store a weighted graph in an adjacency list we simply add the information about the node's weight in the vertex object, or keep a two element array instead.
 
-## Breadth-first traversal
+### Breadth-first traversal
 
 We check the node, then we check each of its children, then for each child we check the grandchildren, and so on. Implemented using a queue.
 
@@ -124,7 +125,7 @@ Applications:
 - finding connected components
 - coloring of graph vertices by using the least possible amount of colours; bipartite graphs - only 2 colours.
 
-## Depth-first traversal
+### Depth-first traversal
 
 We check the node, then we check the first child, then the grandchild, and so on, watching out not to collide with an already visited node. Implemented using stack or recursively.
 
