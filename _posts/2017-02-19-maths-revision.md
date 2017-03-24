@@ -1,14 +1,14 @@
 ---
 layout: post
-title: Algorithms - revision
-date: '2017-02-20'
+title: Pieces from mathematics
+date: '2017-02-19'
 author: Monik
 tags:
 - Maths
 commentIssueId: 35
 ---
 <div class="bg-info panel-body" markdown="1">
-Revising the most important things from mathematics that are useful for algorithms.
+Pieces from mathematics that are relevant for a developer.
 </div>
 
 <h3>Table of contents</h3>

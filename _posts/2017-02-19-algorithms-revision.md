@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Algorithms - revision
+title: Algorithms
 date: '2017-02-19'
 author: Monik
 tags:
@@ -9,7 +9,7 @@ tags:
 commentIssueId: 34
 ---
 <div class="bg-info panel-body" markdown="1">
-Revising the most important things about algorithms.
+Complexity analysis and the most important algorithms.
 </div>
 
 <h3>Table of contents</h3>

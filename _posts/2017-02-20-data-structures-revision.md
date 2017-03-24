@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Algorithms - revision
-date: '2017-02-19'
+title: Data structures
+date: '2017-02-20'
 author: Monik
 tags:
 - Programming
@@ -9,7 +9,7 @@ tags:
 commentIssueId: 36
 ---
 <div class="bg-info panel-body" markdown="1">
-Revising the most important things about data structures.
+The most important data structures.
 </div>
 
 <h3>Table of contents</h3>
