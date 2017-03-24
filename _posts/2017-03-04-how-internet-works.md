@@ -5,7 +5,7 @@ date: '2017-03-04'
 author: Monik
 tags:
 - Internet
-commentIssueId: 35
+commentIssueId: 37
 ---
 <div class="bg-info panel-body" markdown="1">
 Summary of [How Does the Internet Work?](http://www.theshulers.com/whitepapers/internet_whitepaper/).
@@ -55,7 +55,7 @@ Are specified by RFC (Request For Comments) documents.
 
 ### HTTP
 
-Is protocols that Web Browsers and Web Servers use (client - server). It is connectionless. 
+Is protocols that Web Browsers and Web Servers use (client - server). It is connectionless.
 
 _(I skip the part of how the Web page is requested, sent and rendeded in the browser.)_
 
@@ -63,7 +63,7 @@ _(I skip the part of how the Web page is requested, sent and rendeded in the bro
 
 ### SMTP
 
-SMTP (Simple Mail Transfer Protocol) is used by mail client. It is connection oriented protocol - the client maintains the connection.  
+SMTP (Simple Mail Transfer Protocol) is used by mail client. It is connection oriented protocol - the client maintains the connection.
 
 ## TCP/IP Protocol
 

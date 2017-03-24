@@ -9,7 +9,7 @@ tags:
 commentIssueId: 34
 ---
 <div class="bg-info panel-body" markdown="1">
-Revising the most important things about data structures and algorithms.
+Revising the most important things about algorithms.
 </div>
 
 <h3>Table of contents</h3>
@@ -17,163 +17,6 @@ Revising the most important things about data structures and algorithms.
 {:toc max_level=1}
 
 ## Complexity analysis
-
-### Maths
-
-<!-- http://docs.mathjax.org/en/latest/start.html -->
-
-First, some mathematics. 
-
-#### Summations
-
-This is called a summation, more specifically arithmetic progression:
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <munderover>
-      <mo>&sum;</mo>
-      <mn>i=1</mn>
-      <mn>n</mn>
-    </munderover>
-    <mo>=</mo>
-    <mfrac><mi>n(n+1)</mi><mn>2</mn></mfrac>
-</math>
-
-because mathematical induction. Important to remember, as this means that the complexity of an algorithm that takes `i` steps with every iteration from `i=0..n` has complexity of `Θ(n^2)` (big theta). This is the case of **selection sort**. And the generified rule is:
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <mi>S(n, p)</mi>
-    <mo>=</mo>
-    <munderover>
-      <mo>&sum;</mo>
-      <mi>i</mi>
-      <mi>n</mi>
-    </munderover>
-    <msup>
-      <mi>i</mi>
-      <mi>p</mi>
-    </msup>
-    <mo>=</mo>
-    <mi>Θ(</mi> 
-    <msup>
-         <mi>n</mi>
-         <mi>p+1</mi>
-    </msup>
-    <mi>)</mi>
-</math>
-
-for `p>=1`.
-
-Geometric series have the index of the loop involved in the exponent:
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <mi>G(n, a)</mi>
-    <mo>=</mo>
-    <munderover>
-      <mo>&sum;</mo>
-      <mi>i=0</mi>
-      <mi>n</mi>
-    </munderover>
-    <msup>
-      <mi>a</mi>
-      <mi>i</mi>
-    </msup>
-    <mo>=</mo>
-    <mfrac>
-        <mrow>
-            <msup>
-              <mi>a</mi>
-              <mi>n+1</mi>
-            </msup>
-            <mo>-</mo>
-            <mn>1</mn>
-        </mrow>
-        <mrow>
-            <mi>a</mi>
-            <mo>-</mo>
-            <mn>1</mn>
-        </mrow>
-    </mfrac>
-    <mo>=</mo>
-    <mi>Θ(</mi> 
-    <msup>
-         <mi>a</mi>
-         <mi>n+1</mi>
-    </msup>
-    <mi>)</mi>
-</math>
-
-for for `a>=1`.
-
-What may be also relevant is this factorial formula:
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <munderover>
-      <mo>&sum;</mo>
-      <mi>i=1</mi>
-      <mi>n</mi>
-    </munderover>
-    <mi>i</mi>
-    <mo>×</mo>
-    <mi>i!</mi>
-    <mo>=</mo>
-    <mi>(n+1)!-1</mi>
-</math>
-
-#### Logarithms
-
-This is what logarithm is:
-
-b<sup>x</sup> = y <=> log <sub>b</sub> y = x
-
-| Important formulas                |
-|-----------------------------------|
-|e<sup>ln x</sub> = x               |
-|b<sup>log<sub> b</sub> y</sup> = y |
-|log<sub>a</sub>(x*y) = log<sub>a</sub>(x) + log<sub>a</sub>(y) |
-|a<sup>b</sup> = e<sup>ln(a^b)</sup> = e<sup>b*ln(a)</sup> |
-
-The last one can be used for computing a<sup>n</sup> fast. We just make a recursive function that will compute the squares or "squares + 1" of the previous result, and that is just O(`lg(n)`).
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <msub>
-        <mi>log</mi>
-        <mi>a</mi> 
-    </msub>
-    <mi>b</mi>
-    <mo>=</mo>
-    <frac>
-        <mrow>
-            <msub>
-                <mi>log</mi>
-                <mi>c</mi> 
-            </msub>
-            <mi>b</mi>
-        </mrow>
-        <mrow>
-            <msub>
-                <mi>log</mi>
-                <mi>c</mi> 
-            </msub>
-            <mi>a</mi>
-        </mrow>
-    </frac>
-</math>
-
-Harmonic summation is another important formula:
-
-<math xmlns="http://www.w3.org/1998/Math/MathML">
-    <munderover>
-      <mo>&sum;</mo>
-      <mi>i=1</mi>
-      <mi>n</mi>
-    </munderover>
-    <frac>
-      <mn>1</mn>
-      <mi>i</mi>
-    </frac>
-    <mo>≈</mo>
-    <mi>ln(n)</mi>
-</math>
 
 ### Random Access Machine
 
@@ -218,75 +61,9 @@ The complexities from worst to best:
 1. `n`<sup>`3`</sup>, e.g. some dynamic programming algorithms
 1. `n`<sup>`2`</sup>, e.g. insertion sort, selection sort
 1. `n*lg(n)` - called also superlinear, e.g. quick sort, merge sort
+1. `n` - linear
 1. `lg(n)` - e.g. binary search, everything where we divide into halves
 1. `1` - single operations
-
-## Data Structures
-
-_Linked data structures_ means the ones that involve pointers: lists, trees, as opposed to arrays, heaps, matrices and hash tables.
-
-- Array - fixed-size, contains data records that can be located using an _index_ (direct memory address).
-- Stack - LIFO order. Push adds an item to the top, pop removes and returns the item on the top.
-- Queue - FIFO order. Operations can be calles e.g. enqueue and dequeue.
-- Linked List - each contains the data plus a pointer to the next (or next and previous) item. No random access to items is possible.
-
-### Binary Tree
-
-For every element `x` the following holds: all elements of right subtree of `x` are `>x` and all elements of the left subtree are `<x`. 
-
-Operations:
-
-- **search** - is easy: just go left or right
-- **traversal**:
-  - _in-order_ - left subtree, me, right subtree
-  - _pre-order_ - me, left subtree, right subtree
-  - _post-order_ - left subtree, right subtree, me
-- **insertion** - perform the search until you find NULL and put it there
-- **deletion** - tricky only for a node that has 2 children; replace with the one which is the most on th left out of all its left subtrees
-
-Note that insertions/deletions can create unbalanced trees which are no longer so optimal - that's why data randomness is often desired. An example of always balanced trees are the red-black trees.
-
-### Priority queue
-
-It works on elements that have priorities assigned. Priority queue has the two operations available:
-
-- **add** element
-- **remove** and return element with highest priority
-
-It is most often implemented using *heap*, but can also be implemented using simple array, or binary tree.
-
-### Heap
-
-A heap is a tree but arranged differently than the binary tree. It is normally stored in an array.
-
-_heap property_ - if A is parent of B it is ordered with respect to B with the same ordering across the heap
-
-In the representing array the children of a node at position `n` are at positions `2n` and `2n + 1`.
-
-Most important operations:
-
-- **adding** element: add at the end and move up until heap property is restored
-- **removing** top element: remove the top, move the last one to the beginning and move it down until heap property is restored (always pick the bigger child)
-
-_Heap sort_ (O(`n*lon(n)`)) is actually a form of selection sort but with a better data structure.
-
-Searching in a heap is very ineffective.
-
-### Hash table
-
-Each element has a function applied that maps it to _array index_. Looking up an index in an array is fast. Of course two elements can map to the same index, that's why:
-
-- the mapping function has to be chosen carefully, so that it maps the values uniformly
-- for the duplicates we can use a linked list - so each cell in hash table is actually a list
-- another option for duplicates is to put the duplicate in nearest empty space - will be fast enough to find it
-
-The example function for strings is: sum of powers of lengths of the alphabet times the code of the character (in other words the strings are "digits" in a number system of base=size of the alphabet), modulo (arbitrary) m.
-
-Hashing can be used for string matching - e.g. Rabin Karp algorithm that hashes each next segment using the information of the has of the previous one, and running in up to Θ(n + m), instead of the naive Θ(nm).
-
-### Black-red tree
-
-TODO
 
 ## Sorting & Search
 
@@ -324,47 +101,13 @@ Time complexity: O(`n*logn`)
 4. The element just after the marker is now exactly where the pivot should be in the final sorted array. Swap the pivot and the element after the marker
 5. Sort the part before and after the pivot separately.
 
-Time complexity: average is O(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number). We can avoid the worst complexity by pre-randominzing the data set first, or simply choosing the pivot at random each time.
+Time complexity: average is Θ(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number). We can avoid the worst complexity by pre-randominzing the data set first, or simply choosing the pivot at random each time.
 
 ## Strings
 
 ### String matching
 
 Compare letter by letter and if a letter of a small text does not match skip to the next letter of the big text.
-
-## Graphs
-
-### Graph types
-
-### Constructing the graph
-
-In adjacency list the order of elements in the list does not matter.
-
-### Breadth-first traversal
-
-O(n+m) on both directed and undirected graph (m number of edges, n number of vertices).
-
-It is possible to find shortest possible path between `x` and `y` (in an unweighted graph), provided we do the traversal starting from `x`. To do so, we always remember who the parent is, and once we get to `y` we backtrack to `x`.
-
-Finding connected components.
-
-Two-coloring graphs
-
-
-### Depth-first traversal
-
-Using stack, or actually also recursively.
-
-While using the recursive implementation, if we record the "time" (1 unit of time is one recursion) of entering and exiting each node, we can quickly see who is the ancestor of whom (by comparing the times). It is also easy to see how many descendants each node has.
-
-It divides edges into tree and back edges (the one that point back to the tree) - don't get it
-
-
-## Geometrical algorithms
-
-### Convex hull
-
-TODO
 
 ## NP Completness
 
@@ -386,16 +129,28 @@ How to prove that a problem is an **NP-complete** problem do these 2 things:
 1. prove that the problem is **NP** - give a polynomial time verification algorithm
 2. find another **NP-complete** which reduces to your problem (so such that solution to that problem equals solution to your problem)
 
-## NP Complete problems
+## NP Hard problems
 
 ### Knapsack problem
 
-Here is the absolutely best [video](https://www.youtube.com/watch?v=EH6h7WA7sDw).
+Solution is NP Hard.
 
-TODO
+Decision whether the solution is correct is NP Complete.
+
+Here is the absolutely best [video](https://www.youtube.com/watch?v=EH6h7WA7sDw).
 
 ### Travelling salesman problem
 
-TODO
+Solution is NP Complete.
 
+Exponential time.
 
+Algorithm:
+
+1. write the matrix of cost of travelling between cities (the diagonal will be "-")
+1. **row minimisation** - for each row: substract the smallest element in the row from each element in the row
+1. **column minimisation** - for each column: substract the smallest element in the column from each element in the column
+1. **penalties** - for each zero, sum the minimum element in its row and minimum element in its column
+1. cross out the column and row of the zero with the biggest penalty (if mutliple are equal then it does not matter wchich one)
+1. the crossed out city pair is part of the solution (keep the direction same)
+1. remove the crossed out row and column and go to step 2.
