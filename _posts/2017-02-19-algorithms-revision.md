@@ -16,9 +16,9 @@ Complexity analysis and the most important algorithms.
 - TOC
 {:toc max_level=1}
 
-## Complexity analysis
+# Complexity analysis
 
-### Random Access Machine
+## Random Access Machine
 
 RAM stands here for _Random Access Machine_, and it is a computation model that we use to talk about algorithm time complexity:
 
@@ -26,13 +26,13 @@ RAM stands here for _Random Access Machine_, and it is a computation model that 
 - memory access - is one step
 - loops and subroutines - is as many steps as many of the above they contain in all iterations
 
-### Algorithm properties
+## Algorithm properties
 
 _Stability of sorting_: a stable sorting algorithm preserves the order of records with equal keys ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
 
 _Numerical stability of algorithm_: a numerically stable algorithm avoids magnifying small errors ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
 
-### Complexity
+## Complexity
 
 We have two types of it:
 - time complexity
@@ -65,9 +65,9 @@ The complexities from worst to best:
 1. `lg(n)` - e.g. binary search, everything where we divide into halves
 1. `1` - single operations
 
-## Sorting & Search
+# Sorting & Search
 
-### Binary search
+## Binary search
 
 In a sorted list: take the middle element and compare to the searched one; either continue with the right or left half of the list (note do not copy the arrays, maintain start and end indices).
 
@@ -75,25 +75,25 @@ Each level of a binary tree has `2`<sup>`level`</sup> branches. The height of th
 
 Time complexity: O(`log(n)`)
 
-### [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
+## [Selection sort](https://en.wikipedia.org/wiki/Selection_sort)
 
 Take first element and look for a "most smaller" one. Swap. Take second, and so on.
 
 Time complexity: Θ(`n`<sup>`2`</sup>)
 
-### [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
+## [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
 
 Take each element and pull it to the beginning of the array until it's in the right place (constant swapping).
 
 Time complexity: O(`n`<sup>`2`</sup>)
 
-### [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
+## [Merge sort](https://en.wikipedia.org/wiki/Merge_sort)
 
 Merge sort each half of the array, and then merge 2 parts together in order.
 
 Time complexity: O(`n*logn`)
 
-### [Quick sort](https://www.youtube.com/watch?v=aQiWF4E8flQ)
+## [Quick sort](https://www.youtube.com/watch?v=aQiWF4E8flQ)
 
 1. Pick the last element (pivot)
 2. Put a marker just before the first element
@@ -103,13 +103,13 @@ Time complexity: O(`n*logn`)
 
 Time complexity: average is Θ(`n*logn`), worst is O(`n`<sup>`2`</sup>) (in case the pivot happens to be always the smallest/the largest number). We can avoid the worst complexity by pre-randominzing the data set first, or simply choosing the pivot at random each time.
 
-## Strings
+# Strings
 
-### String matching
+## String matching
 
 Compare letter by letter and if a letter of a small text does not match skip to the next letter of the big text.
 
-## NP Completness
+# NP Completness
 
 The problems to be solved by algorithms have been divided to a number of problem classes:
 
@@ -129,9 +129,9 @@ How to prove that a problem is an **NP-complete** problem do these 2 things:
 1. prove that the problem is **NP** - give a polynomial time verification algorithm
 2. find another **NP-complete** which reduces to your problem (so such that solution to that problem equals solution to your problem)
 
-## NP Hard problems
+# NP Hard problems
 
-### Knapsack problem
+## Knapsack problem
 
 Solution is NP Hard.
 
@@ -139,7 +139,7 @@ Decision whether the solution is correct is NP Complete.
 
 Here is the absolutely best [video](https://www.youtube.com/watch?v=EH6h7WA7sDw).
 
-### Travelling salesman problem
+## Travelling salesman problem
 
 Solution is NP Complete.
 

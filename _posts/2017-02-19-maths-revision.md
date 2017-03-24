@@ -17,7 +17,7 @@ Pieces from mathematics that are relevant for a developer.
 
 <!-- http://docs.mathjax.org/en/latest/start.html -->
 
-## Summations
+# Summations
 
 This is called a summation, more specifically arithmetic progression:
 
@@ -113,7 +113,7 @@ What may be also relevant is this factorial formula:
     <mi>(n+1)!-1</mi>
 </math>
 
-## Logarithms
+# Logarithms
 
 This is what logarithm is:
 
@@ -169,26 +169,25 @@ Harmonic summation is another important formula:
     <mi>ln(n)</mi>
 </math>
 
-## Quadratic Equation
+# Quadratic Equation
 
 Square roots of quadratic equation:
 
 - d = sqrt(b^2-4ac)
 - x = (-b +/- d)/2a
 
-## Trygonometry
+# Trygonometry
 
 Area of a triangle:
 
 - 1/2 a*h, h is the height of the triangle
 - 1/2 a*b * sin(the angle between them)
 
-
-## Prime numbers
+# Prime numbers
 
 _Every positive integer can be decomposed into a product of primes_.
 
-## Conditional probability
+# Conditional probability
 
 - P(A and B) = P(B given A)*P(A)
 - P(A or B) = P(A) + P(B) - P(A and B)
