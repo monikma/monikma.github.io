@@ -370,3 +370,19 @@ Siege cli lets you simulate many concurrent requests to test concurrency
 CloudFlare for improved DNS with monitoring and failover capabilities. - like analytics
 DataDog for stack performance and health status. - like profiling
 AWS also has native tools to help monitor performance called CloudWatch.
+
+### Git and Readme
+
+What you may want to pay attention on your github profile:
+- friendly but not weird picture, does not have to be your face but should express something about you
+- "professional" profile name, not , best contain your name in some way
+- twitter link, to see your interests
+- repositories should have descriptions, if you contributed it is food if they have many stars - this is good to check team work
+- contribution chart, at least 2 weeks regularly
+
+Online Markdown editor: [Dillinger] (https://dillinger.io/).
+
+Commit message Udacity best practices:
+- type: subject, up to 50 characters, first letter capitalized, without a period
+- body, after a blank line, up to 72 characters per line
+- footer, which ticket it resolves, related issues
