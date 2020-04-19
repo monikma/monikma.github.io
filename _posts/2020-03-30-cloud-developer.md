@@ -386,3 +386,35 @@ Commit message Udacity best practices:
 - type: subject, up to 50 characters, first letter capitalized, without a period
 - body, after a blank line, up to 72 characters per line
 - footer, which ticket it resolves, related issues
+
+## Microservices
+
+### Definition
+
+### Best Practices
+
+### Data Patterns
+
+**Shared Data Pattern**
+
+Sometimes some microservices may use the same database, because it is too complicated to divide it into multiple databases.
+
+**Proxy Pattern**
+
+Forwards the requests from the frontend to the right microservice, based on the URL. Decouples the information of which service does what and how from the frontend, and even from the loadbalancer. E.g. nginx.
+
+**Aggregator Microservice Pattern**
+
+Like the Proxy Pattern above, but this service in the front is also a microservice with its own business logic. Can e.g. combine data from 2 services.
+
+**Chained Microservice Pattern**
+
+Service A needs data from Service B, which in turn needs data from Service C.
+
+**Branch Microservice Pattern**
+
+Service A needs data from Service B and from Service C.
+
+**Asynchronous Messaging Pattern**
+
+Having a message queue between 2 microservices, so they communicate via this queue. Or more microservices. E.g. Kafka.
