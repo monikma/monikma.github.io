@@ -11,6 +11,8 @@ tags:
 - Microservices
 - Cloud_Computing
 - Type_Script
+- Ionic
+- Javascript_Testing
 commentIssueId: 39
 ---
 <div class="bg-info panel-body" markdown="1">
