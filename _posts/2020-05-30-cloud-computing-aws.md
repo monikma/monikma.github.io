@@ -1,14 +1,19 @@
 ---
 layout: post
-title: Cloud Developer Udacity Course
-date: '2020-03-30'
+title: AWS Cloud Computing Notes
+date: '2020-05-30'
 author: Monik
 tags:
 - Programming
+- Node.js
+- Express
+- AWS
+- Microservices
+- Cloud_Computing
 commentIssueId: 39
 ---
 <div class="bg-info panel-body" markdown="1">
-Cloud Developer Udacity Course
+Those are the notes I took during the Cloud Developer Udacity Course, as well as during doing my projects in that topic.
 </div>
 
 <h3>Table of contents</h3>
@@ -173,7 +178,7 @@ The configuration will be written into `config.yml`. Add there:
 deploy:
   artifact: ./www/Archive.zip   
 ```
-- for Windows install [UnixUtils](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/nodejs-dynamodb-tutorial.html#nodejs-dynamodb-tutorial-prereqs) (stay brave)
+- for Windows install [UnxUtils](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/nodejs-dynamodb-tutorial.html#nodejs-dynamodb-tutorial-prereqs) (stay brave)
 
 In the `package.json` -> script -> build there is a little trick of preparing that `*.zip` file that AWS accepts, all in one line.
 
@@ -182,7 +187,9 @@ In the `package.json` -> script -> build there is a little trick of preparing th
 - run `npm run build` to have the `Archive.zip` created
 - run `eb create` to have everything deployed to AWS with Elastic Beanstalk
 - you can take the defaults, for Load Balancer choose "Application"
-- in AWS Console update the env variables; note that the profile is now `DEPLOYED`, this is because in the code there is an `if` not to copy the IAM local credentials in such case:
+- in AWS Console update the env variables (Configuration -> Software -> Modify -> Env. variables)
+
+Note that the profile is now `DEPLOYED`, this is because in the code there is an `if` not to copy the IAM local credentials in such case:
 ```
  if(c.aws_profile !== "DEPLOYED") {
    var credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
@@ -356,65 +363,14 @@ Can also be scaled, up and out. See the [docu](https://aws.amazon.com/blogs/data
 #### Debugging on the cloud
 
 Troubleshooting:
-- Elastic Beanstalk is red -> check "Health" and HTTP codes %
-check "Logs"
 
-Tools:
+If Elastic Beanstalk status is red 
+- check "Health" and HTTP codes %
+- check "Logs"
 
-https://sentry.io/
-
-Intercepts any errors and gives an overview of them, also maps JS to TS.
-
-Siege cli lets you simulate many concurrent requests to test concurrency
-
-CloudFlare for improved DNS with monitoring and failover capabilities. - like analytics
-DataDog for stack performance and health status. - like profiling
-AWS also has native tools to help monitor performance called CloudWatch.
-
-### Git and Readme
-
-What you may want to pay attention on your github profile:
-- friendly but not weird picture, does not have to be your face but should express something about you
-- "professional" profile name, not , best contain your name in some way
-- twitter link, to see your interests
-- repositories should have descriptions, if you contributed it is food if they have many stars - this is good to check team work
-- contribution chart, at least 2 weeks regularly
-
-Online Markdown editor: [Dillinger] (https://dillinger.io/).
-
-Commit message Udacity best practices:
-- type: subject, up to 50 characters, first letter capitalized, without a period
-- body, after a blank line, up to 72 characters per line
-- footer, which ticket it resolves, related issues
-
-## Microservices
-
-### Definition
-
-### Best Practices
-
-### Data Patterns
-
-**Shared Data Pattern**
-
-Sometimes some microservices may use the same database, because it is too complicated to divide it into multiple databases.
-
-**Proxy Pattern**
-
-Forwards the requests from the frontend to the right microservice, based on the URL. Decouples the information of which service does what and how from the frontend, and even from the loadbalancer. E.g. nginx.
-
-**Aggregator Microservice Pattern**
-
-Like the Proxy Pattern above, but this service in the front is also a microservice with its own business logic. Can e.g. combine data from 2 services.
-
-**Chained Microservice Pattern**
-
-Service A needs data from Service B, which in turn needs data from Service C.
-
-**Branch Microservice Pattern**
-
-Service A needs data from Service B and from Service C.
-
-**Asynchronous Messaging Pattern**
-
-Having a message queue between 2 microservices, so they communicate via this queue. Or more microservices. E.g. Kafka.
+Other tools:
+- https://sentry.io/ - intercepts any errors and gives an overview of them, also maps JS to TS
+- Siege cli - lets you simulate many concurrent requests to test concurrency
+- CloudFlare - for improved DNS with monitoring and fail-over capabilities (like analytics)
+- DataDog - for stack performance and health status (like profiling)
+- CloudWatch - AWS native tools to help monitor the performance
