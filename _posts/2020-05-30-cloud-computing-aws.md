@@ -10,6 +10,7 @@ tags:
 - AWS
 - Microservices
 - Cloud_Computing
+- Type_Script
 commentIssueId: 39
 ---
 <div class="bg-info panel-body" markdown="1">
