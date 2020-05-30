@@ -16,7 +16,7 @@ tags:
 commentIssueId: 39
 ---
 <div class="bg-info panel-body" markdown="1">
-Those are the notes I took during the Cloud Developer Udacity Course, as well as during doing my projects in that topic.
+Those are the notes I took during the [Cloud Developer Udacity Nanodegree Course](https://www.udacity.com/course/cloud-developer-nanodegree--nd9990), as well as during doing my projects in that topic.
 </div>
 
 <h3>Table of contents</h3>
@@ -377,3 +377,31 @@ Other tools:
 - CloudFlare - for improved DNS with monitoring and fail-over capabilities (like analytics)
 - DataDog - for stack performance and health status (like profiling)
 - CloudWatch - AWS native tools to help monitor the performance
+
+## Microservice Data Patterns
+
+Greatly simplified:
+
+**Shared Data Pattern**
+
+Sometimes some microservices may use the same database, because it is too complicated to divide it into multiple databases.
+
+**Proxy Pattern**
+
+Forwards the requests from the frontend to the right microservice, based on the URL. Decouples the information of which service does what and how from the frontend, and even from the loadbalancer. E.g. nginx.
+
+**Aggregator Microservice Pattern**
+
+Like the Proxy Pattern above, but this service in the front is also a microservice with its own business logic. Can e.g. combine data from 2 services.
+
+**Chained Microservice Pattern**
+
+Service A needs data from Service B, which in turn needs data from Service C.
+
+**Branch Microservice Pattern**
+
+Service A needs data from Service B and from Service C.
+
+**Asynchronous Messaging Pattern**
+
+Async queue or publish/subscribe.
