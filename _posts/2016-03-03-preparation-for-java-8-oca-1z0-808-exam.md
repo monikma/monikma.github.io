@@ -451,23 +451,23 @@ where `Zoo` has `static void main` of course (**JDK required for javac, for java
 - all of these exceptions have default constructor, yaay!
 - **Errors are allowed to be handled or declared** - this sentence is true; yes, they should not be, but they are allowed to!
 
-[1]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/notinitialized.png
-[2]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/stringpool.png
-[3]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/conversion.png
-[4]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/incompatibleEquals.png
-[5]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/arrays.png
-[6]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/toArray.png
-[7]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/autoboxing.png
-[8]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/immutable.png
-[9]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/varargs.png
-[10]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/visibility.png
-[11]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/visibility3.png
-[12]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/nullstatic.png
-[13]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/staticreference.png
-[14]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/hidingvars.png
-[15]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/exceptions.png
-[16]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/abstractInterface.png
-[17]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/defaultmethod.png
-[18]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/spaces.png
-[19]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/methodhiding.png
-[20]: http://monami555.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/exceptionConstrs.png
+[1]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/notinitialized.png
+[2]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/stringpool.png
+[3]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/conversion.png
+[4]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/incompatibleEquals.png
+[5]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/arrays.png
+[6]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/toArray.png
+[7]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/autoboxing.png
+[8]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/immutable.png
+[9]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/varargs.png
+[10]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/visibility.png
+[11]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/visibility3.png
+[12]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/nullstatic.png
+[13]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/staticreference.png
+[14]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/hidingvars.png
+[15]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/exceptions.png
+[16]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/abstractInterface.png
+[17]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/defaultmethod.png
+[18]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/spaces.png
+[19]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/methodhiding.png
+[20]: http://monikma.github.io/pictures/2016-03-03-preparation-for-java-8-oca-1z0-808-exam/exceptionConstrs.png
