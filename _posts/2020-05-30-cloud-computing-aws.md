@@ -14,6 +14,7 @@ tags:
 - Ionic
 - Javascript_Testing
 commentIssueId: 39
+type: course
 ---
 <div class="bg-info panel-body" markdown="1">
 Those are the notes I took during the [Cloud Developer Udacity Nanodegree Course](https://www.udacity.com/course/cloud-developer-nanodegree--nd9990), as well as during doing my projects in that topic.
