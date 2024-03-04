@@ -31,6 +31,17 @@ RAM stands here for _Random Access Machine_, and it is a computation model that 
 _Stability of sorting_: a stable sorting algorithm preserves the order of records with equal keys ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
 
 _Numerical stability of algorithm_: a numerically stable algorithm avoids magnifying small errors ([source](https://en.wikipedia.org/wiki/Stable_algorithm)).
+_Input_ :The algorithm must have input(atleast one) from the specified set.
+
+_Output_ : The algorithm must have atleast one output from the specified set of inputs.
+
+_Finiteness_ : The algorithm must terminate after finite number of steps.
+
+_Definiteness_ : All steps of algorithm must be precisely defined.
+
+_Effectiveness_: It must be possible to perform each step of algorithm correctly and 
+in finite amount of time.
+
 
 ### Complexity
 
