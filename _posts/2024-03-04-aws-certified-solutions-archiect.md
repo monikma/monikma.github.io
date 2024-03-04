@@ -1,7 +1,7 @@
 ---
 layout: post
 title: AWS Certified Solutions Architect - Associate (SAA-C03)
-date: '2023-03-04'
+date: '2024-03-04'
 author: monikma
 tags:
 - Architecture
