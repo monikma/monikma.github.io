@@ -8,7 +8,7 @@ tags:
 - AWS
 - Cloud
 commentIssueId: 41
-type: course
+type: certification
 ---
 
 <div class="bg-info panel-body" markdown="1">
