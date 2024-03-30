@@ -207,8 +207,8 @@ Now I will go topic by topic/service by service.
 - Management -> Replication rules
   - you need to specify AIM role (why?)
   - specify path to completion report, e.g. `s3//sourcebucket343425`
-  - there may be a **S3 Batch Job** created to replicate existing (or also future?) objects, its folder will be created in source bucket,
-    and also replicated into destination bucket
+  - there may be a **S3 Batch Job** created to replicate existing (or also future?) objects, its folder may be created in source bucket,
+    and also replicated into destination bucket -> but I have not seen this in the lab, only course video
 
 ## EBS - Elastic Block Store
 - Virtual hard disc attached to VM
