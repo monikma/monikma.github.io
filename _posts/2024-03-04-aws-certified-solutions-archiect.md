@@ -148,14 +148,14 @@ Now I will go topic by topic/service by service.
   - retain data for 7-10 years
   - e.g. legal and compliance documents
 
-| Storage Class           | Availiability | Durability | AZs   | Use Case                                                                    |
-|-------------------------|---------------|------------|-------|-----------------------------------------------------------------------------|
-| S3 Standard             | 99.99%        | 11 9s      | >=3   | Most, websites, mobile&gaming apps, big data analytics                      |
-| S3 S. Infrequent Access | 99.99%        | 11 9s      | >=3   | Long term, infrequently accessed critical data (backups, disaster recovery) |                 
-| S3 One-Zone Inf. Access | **99.95%**    | 11 9s      | **1** | Long term, infrequently accessed non-critical data                          |
-| S3 Glacier              | 99.99%        | 11 9s      | >=3   | Long term, very infrequently accessed, but quick retrieval                  |                                                        
-| S3 G. Deep Archive      | 99.99%        | 11 9s      | >=3   | Rarely accessed, e.g. regulatory, retrieval from 12h                        |                                                              
-| S3 Intelligent Tiering  | 99.99%        | 11 9s      | >=3   | Unpredictable access patterns                                               |
+| Storage Class                               | Availiabi. | Durabi.| AZs   | Use Case                                                                    |
+|---------------------------------------------|------------|--------|-------|-----------------------------------------------------------------------------|
+| S3 Standard                                 | 99.99%     | 11 9s  | >=3   | Most, websites, mobile&gaming apps, big data analytics                      |
+| S3 S. Infrequent Access                     | 99.99%     | 11 9s  | >=3   | Long term, infrequently accessed critical data (backups, disaster recovery) |                 
+| S3 One-Zone Inf. Access                     | **99.95%** | 11 9s  | **1** | Long term, infrequently accessed non-critical data                          |
+| S3 Glacier (aka Glacier Flexible Retrieval) | 99.99%     | 11 9s  | >=3   | Long term, very infrequently accessed, but quick retrieval                  |                                                        
+| S3 G. Deep Archive                          | 99.99%     | 11 9s  | >=3   | Rarely accessed, e.g. regulatory, retrieval from 12h                        |                                                              
+| S3 Intelligent Tiering                      | 99.99%     | 11 9s  | >=3   | Unpredictable access patterns                                               |
 
 ### S3 Lifecycle Management
 - automatically move files to different tiers, e.g. after a period of not used (TODO how? i think this is wrong)
