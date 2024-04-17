@@ -53,6 +53,25 @@ Now I will go topic by topic/service by service.
 - instances completely controlled by you
 - revolutionising: pay per use, no wasted capacity, no long term planning for how many machines you need
 - quick server provisioning (minutes not days)
+- when it starts:
+  - OS boots up
+  - User data script is run
+  - Applications start
+
+### EC2 Hibernation
+- instance memory (RAM) is saved to EBS root volume, and any data volumes are persisted
+  - max 150 GB RAM
+  - max 60 days
+  - supported instances:
+    - families: General Purpose, Compute, Memory and Storage Optimized Groups, and more
+    - types: On-Demand and Reserved
+  - supported OS:
+    - Windows, Amazon Linux 2 AMI, Ubuntu
+- on restoring from hibernation
+  - EC2 instance is restored, with same ID
+  - RAM is reloaded, processes resumed
+  - data volumes are reattached
+- this boots way faster, useful for long running processes or long initializing ones
 
 ### EC2 Pricing Options
 
@@ -554,6 +573,88 @@ Now I will go topic by topic/service by service.
 
 ## EBS - Elastic Block Store
 - Virtual hard disc attached to VM
+- You can attach them to your EC2 instance
+- You can install OS there, install applications, database, etc.
+- For mission critical data, production, highly available, automatically replicated within 1 AZ
+- Scalable: can dynamically adjust capacity without downtime, you just have to extend the filesystem in the OS, so that it can see it
+  - you can also freely change instance type on-the-fly
+- Have to be in the same AZ as EC2 they are attached to
+- When you Stop an instance, the data is kept on EBS, but when you Terminate, the root device volume will also be terminated (by default)
+
+### IOPS vs Throughtput
+- IOPS (or PIOPS): read/write operations per second, quick transactions, low latency apps, transactions going on simultaneously, if you have transactional DB
+  - best fit: Provisioned IOPS SSD (io1 or io2)
+- Throughput: read/written bits per second, large datasets, large IO sizes, complex queries, large datasets
+  - best fit: Throughput Optimized HDD (st1)
+
+### EBS Types
+- `General Purpose SSD (gp2)`
+  - balance of price & performance
+  - 3 IOPS / GiB, `<16k IOPS` per volume
+  - for < 1TB, <3k IOPS
+  - 99.9% durability
+  - good for boot volumes, or development and test applications that are not latency sensitive
+- `General Purpose SSD (gp3)`
+  - max performance **4 times faster than gp2**
+  - predictable 3k IOPS performance and 125 MiB/s regardless of size
+  - 99.9% durability
+  - for apps requiring high performance at low cost, e.g. MySQL, Cassandra, virtual desktops, Hadoop analytics
+  - can get 16k IOPS and 1k MiB/s for extra fee
+  - you don't have to remember numbers, choose gp3 over gp2 always
+- `Provisioned IOPS SSD (io1 legacy)`
+  - most expensive, high performance
+  - `< 64k IOPS` per volume, 50 IOPS / GiB
+  - use if you need more than 16k OIPS
+  - for IO intensive applications, large databases, latency sensitive workloads
+- `Provisioned IOPS SSD (io2)`
+  - same price as io1
+  - `< 64k IOPS` per volume, 500 IOPS / GiB
+  - `99.9999%` durability
+  - usage like io1 but high durability
+- `Throughput optimized HDD (st1)`
+  - low cost hard disk drive, a lot of data
+  - baseline throughput of 40 MB/s per TB, spiking up to 250 MB/s per TB
+  - max throughput 500 MB/s per volume
+  - 99.9% durability
+  - frequently accessed, throughput intensive workloads, e.g. big data, data warehouses, ETL, log processing
+  - cannot be a boot volume
+- `Cold HDD (SC1)`
+  - cheapest
+  - 12 MB/s per TB, spiking up to 80 MB/s per TB
+  - max throughput 250 MB/s per volume
+  - 99.9% durability
+  - for data requiring fewer scans per day, performance not a factor, e.g. file server
+  - cannot be a boot volume
+- Summary:
+  - big data, data warehouse, ETLs -> Throughput Optimized HDD
+  - transactions -> Provisioned IOPS SSD if you have money (io2), otherwise General Purpose SSD (gp2)
+  - lowest cost -> Cold HDD
+
+### EBS Volumes & Snapshots
+- an EBS Volume is virtual hard disk = root device volume, where stuff is installed
+  - you need minimum 1 volume per EC2 instance
+- an EBS Snapshot is an incremental copy of the Volume, in a point in time, put on S3
+  - first Snapshot is going to take longer
+  - recommended to take a Snapshot on a stopped instance, to avoid missing data cached in memory
+  - taking a Snapshot of an encrypted Volume will be automatically encrypted
+  - you can share Snapshot within same region, otherwise you have to copy it to another region (that's how you copy EC2 between regions!)
+    - EC2 -> Elastic Block Store -> Volumes -> Actions -> Create Snapshot
+    - EC2 -> Elastic Block Store -> Snapshots -> Actions -> Copy Snapshot - pick another region (you can extra encrypt it)
+    - go to the other region -> EC2 -> Elastic Block Store -> Snapshots -> Actions -> Create Image from Snapshot (not Volume)
+    - EC2 -> Images -> AMIs -> Launch Instance from AMI
+
+### EBS Encryption
+- you can encrypt your Volume with an industry standard AES-256 algorithm
+- uses KMS's (Key Management Service) CMKs (Customer Master Keys)
+- when EBS is encrypted, it is end-to-end:
+  - => data inside the Volume is encrypted
+  - => data in transit between instance and Volume is encrypted
+  - => all snapshots are encrypted
+  - => all Volumes created from those snapshots are encrypted
+- handled transparently
+- minimal impact on latency
+- you can enable it also while copying unencrypted snapshot, this is how you encrypt an unencrypted volume
+
 
 ## EFS - Elastic File Service
 - Storing files centrally
