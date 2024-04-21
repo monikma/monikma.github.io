@@ -737,19 +737,64 @@ Now I will go topic by topic/service by service.
 # Databases
 
 ## RDS
+- data organized into tables
+- SQLServer, PostgreSQL, Oracle, MariaDB, MySQL, Aurora
+- RDS is an EC2 instance where you don't have access to OS, only the DB
+- Multi AZ support - primary can be in different AZ than secondary (stand-by), automated failover
+  - this is not used for lessening load on writer instance, only failover/disaster recovery! 
+    - everything happens in the background, stand-by database will be promoted to primary one, DNS address will point to the new one
+  - multi AZ deployment clusters offer 2 stand-by instances
+  - Aurora is always multi AZ by default
+- Automated backups
+- used for OLTP processing (online transaction processing)
+  - as opposed to OLAP (online analytical processing), where RDS is not suitable (e.g. complex queries, analysis, Big Data), where RedShift is more appropriate
+- Read replica - for read queries (e.g BI), same be multi AZ or even cross region
+  - must have automated backups enabled to deploy one
+  - up to 5 read replicas per DB, can be different DB type
+  - has a separate DNS endpoint
+  - can also be promoted to be its own database, useful e.g. before a big querying party
+  - RDS -> DB -> Actions -> Create read replica
+  - max 40 Amazon RDS DB instances per account
+
+### Provisioning RDS
+- RDS -> Create Database
+  - you can put your credentials into Secret Manager automatically
+  - pick VPC and Subnet (will show many subnets after creation, why?)
+  - Public access usually No
+  - Security groups
+  - after creating there is a popup View credential details - you only see it once
+
+### Amazon Aurora
+- is Amazon's DB
+- MySQL and PostgreSQL compatible
+- 5 times better performance than MySQL and 3 times better than PostgreSQL, also cheaper
+- starts with `10 GB` and goes up to `128 TB`, in 10 GB increments
+- up to `96 vCPUs` and `768 GB` memory
+- in minimum 3 AZ, 2 copies each -> `6` copies!
+  - can handle losing up to 2 copies for writes and 3 copies for reads, with no downtime
+  - max 15 replicas, with Aurora (with automated failover), MySQL or PostgreSQL
+- self healing - data blocks and discs scanned and repaired automatically
+- automated backups enabled automatically
+- you can take snapshots and share with other accounts
+
+### Aurora Serverless
+- scales up and down according to the needs
+- for infrequent, intermittent or unpredictable workflows
 
 ## DynamoDB
-
 - Fast flexible non relational, with consistent millisecond latency
 - Supports both documents and key value data models
+- IoT, gaming, mobile
 - Spread across 3 geographically different data centers, on SSD
 - Eventually consistent reads (default, ~<1s) / strongly consistent reads / transactional reads
-- Standard and transactional writes
-- DAX - in memory cache, down to microseconds (10x) (with ttl)
+- Standard / transactional writes
+- DAX - in memory cache, down to microseconds (<10x) (with ttl)
   - You then connect only to DAX
   - Pay per request
+  - you connect to DAX, everything else in the background
 - Partition key (PK), sort key
 - "no application rewrites" - they mean you don’t have to change the code, refactor to enable global tables
+- On-Demand (pay per request) or provisioned
 - if they ask how to spread data across multiple regions - enable Global tables, it’s a tab in your table -> create replica, choose region
 - if they ask about high performance DB -> is DynamoDB
 
@@ -757,14 +802,14 @@ Now I will go topic by topic/service by service.
 - Encryption at rest with KMS
 - Site to site VPN
 - Direct Connect (DC)
-- IAM policies and roles, fine grained
-- CloudWatch and CloudTrail
+- IAM policies and roles, fine grained access
+- CloudWatch and CloudTrail integration
 - VPC endpoints (traffic stays in AWS)
 
 ### DynamoDB transactions
 - ACID
 - Across many tables
-- <25 items or <4MB data per transaction
+- <100 items or <4MB data per transaction
 
 ### DynamoDB Backups
 - On demand, no impact on performance / availability
@@ -775,14 +820,43 @@ Now I will go topic by topic/service by service.
 ### DynamoDB Streams
 - Time ordered sequence of item-level changes in a table, FIFO
 - Each change has a sequence number, stored for 24h
-- Divided into records, grouped into shards, with ids, probably by item key
+- Streams divided into records (1 record = 1 change?), grouped into shards, with ids, probably by item key
 - Can add lambdas, which kinda work as stored procedures
 
 ### Global tables
-- Multi region, for globally distributed applications, disaster recovery and high availability
+- Multi region tables, for globally distributed applications, offers disaster recovery and high availability
+- Can be turned on without need to make code changes
 - Based on DynamoDB streams, you need to enable them first
 - Multi master
 - Replication latency ~< 1s
+- How to spread your table across multiple regions
+  - DynamoDB -> Create table -> PK -> Open the table -> Global Tables -> Create replica -> pick region (streams will be automatically enabled)
+
+## DocumentDB
+- is MongoDB on AWS - document database
+- only if you already have MongoDB on premise and want to move it to the Cloud, otherwise DynamoDB is better
+- will add scalability and durability, backups, all ops overhread
+  - you use AWS Migration Service
+
+## Amazon Keyspaces
+- is Cassandra on AWS - distributed noSQL DB for Big Data
+- is serverless
+
+## Amazon Neptune
+- is a graph database
+- use cases: social graphs, ad targeting, personalisation, analytics, product database, model general information, fraud detection, security risk detection
+
+## QLDB (Amazon Quantuum Ledger Database)
+- nothing to do with quantuum computing
+- ledger database - changelog where records cannot be modified, you don't update, only insert
+  - cryptographically verifiable
+  - owned by 1 authority
+- usages: crypto, blockchain, shipping tracking, deliveries, pharmaceutical companies tracking drug distribution, financial transactions, claims history
+
+## Amazon Timestream
+- DB for data points logged over series of time
+- trillions of events per day, up to 1k faster and 10x cheaper than RDS
+- uses: IoT, weather stations, web traffic analysis, devops monitoring
 
 ## RedShift
 - DB warehousing technology
@@ -804,6 +878,43 @@ Now I will go topic by topic/service by service.
 ## AWS Global Accelerator
 - Accelerate your audiences against your application in the AWS
 
+## Installing Wordpress
+- create RDS DB
+- create EC2, inside:
+```bash
+sudo apt install apache2 libapache2-mod-php php-mysql
+# (install wordpress - skipped)
+cd /var/www/
+ls
+sudo mv /wordpress .
+cd wordpress
+sudo mv 000-default.conf /etc/apache2/sites-enabled/ #apache configuration, to serve from /var/www/wordpress
+sudo apache2ctl restart
+sudo nano wp-config.php
+```
+```
+...
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'wordpress' );
+
+/** MySQL database username */
+define( 'DB_USER', 'wordpress' );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', 'wordpress' );
+
+/** MySQL hostname */
+define( 'DB_HOST', '<the RDS Endpoint>' );
+
+/** Database Charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
+
+/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );\
+...
+```
+- Security Group -> add MySQL inbound rule, from that same SG
 
 # IAM
 - `us-east-1` is the region AWS rolls out their services first - but IAM is global
