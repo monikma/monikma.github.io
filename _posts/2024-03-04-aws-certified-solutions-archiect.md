@@ -222,7 +222,7 @@ Now I will go topic by topic/service by service.
   - like an extra accelerator
   - can use OS-bypass, only supported by Linux
 
-## EC2 Placement Groups
+### EC2 Placement Groups
 - Cluster Placement Groups
   - grouping of instances within a single AZ, low latency & high throughput
   - only certain instances are compatible
@@ -407,7 +407,28 @@ Now I will go topic by topic/service by service.
   - find the policy created above, add, create
 - EC2 -> Running Instances -> Actions -> Security -> Modify IAM Role -> pick new role
 - verify from cli: `aws sts get-caller-identity`
-- 
+
+### EC2 AMIs
+- stands for Amazon Machine Image, information to launch an instance, you specify this when you launch EC2 instance
+- can be based on:
+  - region
+  - OS
+  - Architecture (32 or 64 bit)
+  - Launch permissions
+  - Storage for the root device (root device volume, where OS is)
+- can be backed by:
+  - EBS - root device is EBS volume, created from instance snapshot
+    - by default you lose your data on termination, but you can change it (funny UI, keep clicking around). You don't lose the data on stopping the instance.
+  - Instance Store - root device is instance store volume, created from a template stored in S3
+    - this is ephemeral storage - the volume cannot be stopped. You lose your data on host failure (or termination).
+      - you don't loose the data on reboot
+    - you can find them in Browse more AMIs -> Community AMIs -> filter by Instance Store
+
+### AWS Backup
+- why to use it - you can backup many things in one place, consistency (mostly EC2 stuff with their various storage options)
+- can create automations, lifecycle policies to expire backups, encryption of backup, overview for audits 
+- can be used with AWS Organizations (multiple accounts)
+
 # Lambda
 # Elastic Beanstalk
 
@@ -588,6 +609,11 @@ Now I will go topic by topic/service by service.
   - best fit: Throughput Optimized HDD (st1)
 
 ### EBS Types
+- `standard`
+  - previous generation volume, for infrequent access
+  - 1 GiB - 1 TiB
+  - IOPS 40-200
+  - Throughput 40-90 MiB/s
 - `General Purpose SSD (gp2)`
   - balance of price & performance
   - 3 IOPS / GiB, `<16k IOPS` per volume
@@ -658,9 +684,55 @@ Now I will go topic by topic/service by service.
 
 ## EFS - Elastic File Service
 - Storing files centrally
-
+- Managed NAS filer based on NFS (Network File System), can be mounted on many EC2 instances at once, in multiple AZs
+  - connected via Mount Target, which is in the services' VPC&Subnet, but the NFS is outside
+- Highly available, scalable and expensive
+  - pay per use
+  - thousands of concurrent connections (EC2 instances)
+  - 10 GB/s throughput
+  - up to Petabytes of storage
+  - you can pick: General Purpose (web server, CMS, etc) or Max I/O (big data, media processing)
+- Read after write consistency
+- Use cases: content management, web servers
+- Uses NFSv4 (Network File System v4) protocol, only Linux, no Windows
+- Encryption at rest using KMS
+- File system scales automatically
+- Storage Tiers, also has lifecycle management
+  - Standard
+  - Infrequently Accessed
+- By default Encrypted, by default tiny size
+- You can choose backups, performance settings (Enhances, Bursting, Provisioned, ..)
+- Lab: each web server had EBS storage containing identical data, replace 3 EBSs with one EFS -> cost reduction
+  - to see mounted drives -> `df -h`, there you can also see the sizes, or `lsblk`
+  - you need to set same security group for the mount point as EC2 is in, and add an Inbound Rule for NFS (`0.0.0.0/0`)
+  - to mount the EFS:
+    - login to the instance
+    - `sudo mkdir /efs`
+    - in the console, choose Attach -> by IP -> copy the command, but add slash before `efs`
+      `sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 10.0.0.36:/ /efs`
+    - `lsblk` will not show it, but `mount` or `df -h` will
+    - to copy files better use `rsync -rav <source> <destination>`
+    - to unmount old EBS: `sudo umount /data` (`/data` is where it was mounted)
+    - to keep it unmounted on reboot: `sudo nano /etc/fstab`, remove the line with `/data`
+    - to mount EFS on reboot to the same dir, add line (with tabs not spaces):
+    `<the IP of the EFS from the console>:/     /data     nfs4   <options from the -o arg in the console> 0 0`, in our case:
+    `10.0.0.36:/     /data     nfs4    nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport 0 0`
+    - unmount `/efs` to be sure it works with `/data` only `sudo umount /efs`
+    - `sudo mount -a`, and see `/data` is mounted
+    - go to the Console and detach the Volume, and then delete Volume
+  
 ## FSx
-- Storage Gateway
+- FSx for Windows
+  - centralized storage
+  - built on Windows File Server, fully managed native Microsoft Windows file system
+  - Runs SMB (Windows Server Message Block) based file services
+  - Supports AD users, access control lists, groups, security policies, DFS (Distributed File System) namespaces and replication
+  - Offers encryption with KMS
+  - E.g. SharePoint, Workspaces, IIS Web Server are also native Microsoft applications
+- FSx for Lustre
+  - optimized for compute intensive workloads, HPC (High Performance Computing), AI, machine learning, financial modelling
+  - hundreds of GiB/s, millions of IOPS, sub-milliseconds latencies
+  - can store data directly on S3
 
 # Databases
 
