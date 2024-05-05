@@ -870,6 +870,7 @@ Now I will go topic by topic/service by service.
   - route table, main network ACL created by default
   - many subnets are also created, one per AZ
   - EC2 have private and public IP addresses
+  - the CIDR block is `172.31.0.0/16`
 - for a custom VPC you can configure: IP address range, subnets, route tables and network gateways, VPN
   - with VPN you can extend your data center into an AWS VPC, via a private gateway
 - CIDR IP ranges - you need to define such range for your VPC
@@ -892,6 +893,7 @@ Now I will go topic by topic/service by service.
 - IPAM - Amazon VPC IP Manager, helps you with specifying the CIDR range
 
 ### Provisioning custom VPC
+- we want to have 1 VPC with one public and one private subnet. The private contains a DB server and public one a web server.
 - VPC -> Create VPC -> VPC only
   - IPv4 Manual Input -> 10.0.0.0/16
   - Create VPC 
@@ -934,7 +936,7 @@ Now I will go topic by topic/service by service.
     - launch another EC2 in that VPC and private subnet, and the new SG
   - Test
     - Connect to the EC2 Web Server instance
-    - create `mykey.pem` and copy the private key (from creating the DB EC2??)
+    - create `mykey.pem` and copy the private key (from creating the DB EC2)
     - `chmod 400 mykey.pem`
     - `ssh ec2-user@<private IP of the DB EC2> -i mykey.pem`
     - see it works
@@ -998,9 +1000,11 @@ Now I will go topic by topic/service by service.
 - can be cross regions, and can be even cross account
 - that connection is not transitive! ("hub-and-spoke model")
 - how to create
-  - VPC -> Peering Connections, select the VPCs
+  - VPC -> Peering Connections, select the VPCs (acceptor is the one who will be accessing the requester - but isn't it symmetrical?)
   - the CIDR ranges must not overlap!
   - then you have certain amount of time to accept -> Actions -> Accept request
+  - next, you need to adjust the main route tables on both sides - map the other's CIDR to Peering Connection
+  - and lastly, modify requester security group - e.g. allow MySQL traffic from the other VPC CIDR
 
 ## AWS PrivateLink
 - to expose your VPC to up to thousands of customers VPC
@@ -1050,7 +1054,86 @@ Now I will go topic by topic/service by service.
 
 
 ## Route53
-- DNS, registering domain names and pointing them at AWS webservice
+- DNS service, registering domain names and pointing them at AWS webservice, DNS operates on port `53`
+  - DNS converts domain names to IP addresses, which computers use to identify each other on the network
+- IPv4 was the old pool of IPs, which are running out (32 bits, 4 billion addresses), this is why we have IPv6 (128 bits, 340 undecilion addresses) (migration is in progress), both are supported by Route53
+- Domains
+  - In this address: `google.com`, `.com` is the top-level domain (TLD), and `google` would be second-level domain
+  - TLDs are controlled by IANA (Internet Assigned Numbers Authority), in a root zone database with all top-level domains
+  - Domain registrars are authorities that can assign domain names directly under TLD, with InterNIC (from ICANN), which enforces uniqueness, and stores domains in WHOIS database; examples: GoDaddy, domain.com, AWS, Namecheap
+- DNS Resolution
+  - First TLD resolution, gives you NS record - name server record, used by top level domain servers to direct traffic to content DNS server, which contains the authoritative DNS records
+  - Next, NS Record leads you SOA record, this is the start of the authority, start of your DNS records
+    - contains: server name for the zone, administrator of the zone, current version of data file, TTL file on resource records
+    - all other records, like
+      - A record - the mapping between domain and the IP address, this has the TTL
+      - CNAME - resolve one domain name to another, e.g. `m.acloudguru.com`, cannot be used for naked domain names, like `acloudguru.com`
+      - AWS Alias Record - is similar to CNAME, maps records to AWS services, can be used for naked domain names, pick this one in the exam
+- How to register a domain name
+  - AWS is now also a domain registrar, so you only need AWS
+  - Route53 -> Register Domain -> Select -> checkout -> Enter personal details -> you will receive status email for each domain
+  - EC2 -> create instances in 2 regions, with a simple webpage
+  - Route53 -> Hosted Zone (your domain will be the hosted zone name) -> Create record
+    - Record name - subdomain in front of your main domain, can keep blank to create for root domain, pick A record
+    - Enter the public IP addresses of your EC2s
+    - Set TTL
+    - Set routing policy
+- You can also have private hosted zones with Route53
+
+### Route53 routing policies
+- Simple Routing Policy - you can only have 1 record, it returns all record values (IPs) in random order
+- Weighted Routing Policy - multiple records, some % of traffic to one set and some % to another, create 1 record per EC2 instance, set weights, pick health check
+  - Health Checks - you can set it on records, you can set up SNS alerts
+    - Route53 -> Health Checks -> Endpoint -> put your IP, put `index.html` as hostname, no path; create 1 HC per EC2 instance
+    - if HC fails, the Weighted Policy will send traffic to other records
+- Failover Routing Policy - multiple records, if one fails HC then the other is a fallback; you need to pick Primary / Secondary
+- Geolocation Routing Policy - multiple records, returns based on requested IP location; when you create records, you pick location - continents or countries
+- Geoproximity Routing Policy - needs Traffic Flow, you can set a `bias` value to adjust the area of geographical zone
+  - Route53 Traffic Flow - graphical UI, complex workflow for routing, you can combine other policies, it is using geographical location, latency and availability
+- Latency Routing Policy - picks the record with lowest response time, you still have to tell AWS its region; remember latency changes
+- Multivalue Answer Policy - multiple records, works like Simple Routing Policy but with Health Check
+
+## ELB (Elastic Load Balancing)
+- automatically distributing traffic across multiple targets, can be across multiple AZs
+- Application Load Balancers
+  - HTTP & HTTP traffic, level 7 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/) (Open System Interconnection), application aware, intelligent
+  - To be configured
+    - Listener - you specify protocol and port, has rules
+    - Rules - a rule consists of priority, actions and condition(s) (of when is activated), as a result the traffic is sent to a Target Group
+    - Target Group - routes traffic to one or more registered targets, e.g. EC2, on given port and protocol, also has a Health Check attached
+    - Path Based Routing - you enable path patterns, the decision about target group is based on request path, e.g. a subpath can be routed to another server, in a different AZ
+  - to use HTTPS listener you need a SSL/TLS server certificate deployed on your ALB, the ALB then terminates frontend connections, decrypts the requests from clients and sends them to the targets, you will get the certificate if you register your domain with Route53
+  - EC2 -> Load Balancing -> Create Load Balancer -> Application Load Balancer -> Internet facing, IPv4, pick your VPC
+    - add mappings to all the AZs where your EC2 instances are
+    - add SG of your EC2 instances
+    - Listener -> Create Target Group -> pick Instances type, HTTP, set up Health Checks -> pick all EC2s to register targets -> Create target Group
+    - you can then see if you access the LB DNS name, one of your EC2 instances will be hit
+- Network Load Balancers
+  - TCP traffic, level 4 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/), low latency, performance, millions request per second
+  - it has a Target Group, picks a target and opens a connection on given port and protocol
+    - supported protocols: UDP, TCP, TCP_UDP, TLS
+    - supported ports: 1-65535
+  - can use TLS listener for decryption / encryption, for that it also needs a SSL server certificate deployed
+  - there are no LB Rules
+  - fail-open mode - if all instances are unhealthy, NLB will try to send traffic to all of them
+- Gateway Load Balancers
+  - Network level, level 3 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/), for inline virtual load balancing
+  - not appearing in the exam
+- Classic Load Balancers
+  - legacy, can be used in test and dev
+  - HTTP & HTTPS, and TCP
+  - X-Forwarded-For header - contains the original IP address of the client, because the instance will get request from the LB
+  - if LB cannot make a connection to the targets it will respond with `504 Gateway Timeout`
+  - EC2 -> Load Balancers -> Create Load Balancer -> Drop Down -> Classic Load Balancer -> Create, the rest same as ALB 
+  - Sticky Sessions - you can tell the LB to bind user session to a specific instance, not good if that instance dies
+    - in ALB you can also have them, but on Target Group level, so you can at least have several IPs as the target
+- Deregistration Delay (Connection Draining)
+  - allows LB to keep existing connections open if EC2 instances are de-registered or become unhealthy, so that it can complete in-flight requests, enabled by default (you put the amount of milliseconds)
+
+### ELB Health checks
+- attach it to ELB, queries EC2 instance that is behind the LB -> "In service" / "Out of service"
+- LB will stop sending requests to an unhealthy instance, and resume when it's state is healthy again
+
 
 ## AWS Gateway
 - Serverless way of replacing your web service
