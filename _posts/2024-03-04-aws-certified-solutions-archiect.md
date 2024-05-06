@@ -322,6 +322,44 @@ Now I will go topic by topic/service by service.
     - the problem is missing -y at the apt-get, so it was not confirmed
   - `sudo systemctl enable mysql`
 
+### Installing Wordpress
+- create RDS DB
+- create EC2, inside:
+```bash
+sudo apt install apache2 libapache2-mod-php php-mysql
+# (install wordpress - skipped)
+cd /var/www/
+ls
+sudo mv /wordpress .
+cd wordpress
+sudo mv 000-default.conf /etc/apache2/sites-enabled/ #apache configuration, to serve from /var/www/wordpress
+sudo apache2ctl restart
+sudo nano wp-config.php
+```
+```
+...
+// ** MySQL settings - You can get this info from your web host ** //
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'wordpress' );
+
+/** MySQL database username */
+define( 'DB_USER', 'wordpress' );
+
+/** MySQL database password */
+define( 'DB_PASSWORD', 'wordpress' );
+
+/** MySQL hostname */
+define( 'DB_HOST', '<the RDS Endpoint>' );
+
+/** Database Charset to use in creating database tables. */
+define( 'DB_CHARSET', 'utf8' );
+
+/** The Database Collate type. Don't change this if in doubt. */
+define( 'DB_COLLATE', '' );\
+...
+```
+- Security Group -> add MySQL inbound rule, from that same SG
+
 ### EC2 Instance Profile
 - when you assign an IAM role to an EC2 instance, what happens, there is an Instance Profile created behind the scened
   - inside the instance there will also be temporary credentials created for the instance, but they are rotated automatically
@@ -1052,7 +1090,6 @@ Now I will go topic by topic/service by service.
 - 5G AWS endpoint, for ultra low latency, with compute and storage
 - mobile edge computing
 
-
 ## Route53
 - DNS service, registering domain names and pointing them at AWS webservice, DNS operates on port `53`
   - DNS converts domain names to IP addresses, which computers use to identify each other on the network
@@ -1134,50 +1171,11 @@ Now I will go topic by topic/service by service.
 - attach it to ELB, queries EC2 instance that is behind the LB -> "In service" / "Out of service"
 - LB will stop sending requests to an unhealthy instance, and resume when it's state is healthy again
 
-
-## AWS Gateway
+# AWS Gateway
 - Serverless way of replacing your web service
 
-## AWS Global Accelerator
+# AWS Global Accelerator
 - Accelerate your audiences against your application in the AWS
-
-## Installing Wordpress
-- create RDS DB
-- create EC2, inside:
-```bash
-sudo apt install apache2 libapache2-mod-php php-mysql
-# (install wordpress - skipped)
-cd /var/www/
-ls
-sudo mv /wordpress .
-cd wordpress
-sudo mv 000-default.conf /etc/apache2/sites-enabled/ #apache configuration, to serve from /var/www/wordpress
-sudo apache2ctl restart
-sudo nano wp-config.php
-```
-```
-...
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define( 'DB_NAME', 'wordpress' );
-
-/** MySQL database username */
-define( 'DB_USER', 'wordpress' );
-
-/** MySQL database password */
-define( 'DB_PASSWORD', 'wordpress' );
-
-/** MySQL hostname */
-define( 'DB_HOST', '<the RDS Endpoint>' );
-
-/** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
-
-/** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );\
-...
-```
-- Security Group -> add MySQL inbound rule, from that same SG
 
 # IAM
 - `us-east-1` is the region AWS rolls out their services first - but IAM is global
