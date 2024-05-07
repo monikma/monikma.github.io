@@ -57,6 +57,14 @@ Now I will go topic by topic/service by service.
   - OS boots up
   - User data script is run
   - Applications start
+- launch templates - better than old launch configuration
+  - configurations were immutable, only certain autoscaling features (also no networking settings possible), templates are versioned, leverage all autoscaling features => use templates
+  - creating launch templates: EC2 -> Launch Templates -> (you could base it on a source template to speed up), specify IAM, instance type, key pair, subnet (most things are optional), IAM instance profile, a lot of stuff.. including even user data!
+  - how to modify
+    -  EC2 -> Launch Templates -> pick your template -> Actions -> Modify template (the previous version will stay default)
+  - how to use it
+    - EC2 -> Launch Templates -> Launch instance from template (you can override settings still)
+  - 
 
 ### EC2 Hibernation
 - instance memory (RAM) is saved to EBS root volume, and any data volumes are persisted
@@ -1365,6 +1373,12 @@ define( 'DB_COLLATE', '' );\
   - data retention 150 days
 - works with VPC endpoints
 - pick this also for monitoring at scale
+
+# Scaling
+- horizontal scaling is good for availability
+
+## Auto Scaling Groups
+- Auto Scaling Group is a collection of EC2 instances treated as a collective group for scaling and management
 
 # AWS Gateway
 - Serverless way of replacing your web service
