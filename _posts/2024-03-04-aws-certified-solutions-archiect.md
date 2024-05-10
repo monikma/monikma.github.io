@@ -1480,6 +1480,53 @@ define( 'DB_COLLATE', '' );\
   - warm standby - in another region you have a copy of your system just scaled down
   - Active/Active fail over - most expensive, you have 2 productions in different regions/AZs
 
+# Loose coupling
+- having an ELB in front of your instances is already considered loose coupling
+- apart from it you can have:
+  - SQS
+  - SNS
+  - API Gateway
+- in the exam, always choose loose coupling, and make sure it is loose all the way
+
+## AWS SQS
+- Poll-Based Messaging - the consumer polls for messages
+- delivery delay - default 0, up to 15 mins
+- message size 256 KB by default
+- messages are encrypted at transit by default, but not at REST by default (you can enable it for HTTPS endpoints for free, also FIFO, it is called SSE-SQS, Server Side Encryption - actually this I see IS enabled by default, so it is a bit confusing..)
+- message retention, default 4 days, min 1 minute, max 14 days
+- polling
+  - short (default) - separate connection for each check, also billed for each API call
+  - long (better) - you specify connection time window, and the app waits a bit for messages
+- queue depth could be a trigger of autoscaling (of the consumer)
+- visibility timeout - message is locked for 30 seconds, when the message is in the queue, but no one can see it, as one instance already said it will process it, only when it is processed it will be deleted
+- DLQs - for failed messages, SQS & SNS, for debugging, you can redrive messages, a DLQ for FIFO must also be FIFO
+  - you can set Cloud Watch alarms
+  - DLQ would highlight missing permissions for consumer
+  - you can add some identifier to search in logs (did not get that)
+  - original message is wrapped in another message in DLQ
+  - how to create
+    - you create as a normal queue
+    - access policy - specify who can send and receive from the queue - only the owner, specific accounts/roles/users, or completely custom JSON
+      - seems you also need to configure role on that resource with proper policies
+    - redrive policy - which queues can use it as DQL - all, none or concrete queues
+    - when you create a normal queue, then you set in dead-letter-queue section the DQL for undeliverable messages
+      - max receives - how many times can I receive same message before I damn it undeliverable
+- remember to set up an alarm on DLQ depth
+
+## FIFO SQS
+- normal SQS offers best effort order, so they may be out of order
+- FIFO SQS is in order always
+- FIFO assures no duplicate messages (deduplication ids during deduplication interval, you have to turn it on)
+- but only 300 transactions/second (can use batching though, which can increase it to 3000/s), as compared to unlimited with normal SQS
+- you can enable FIFO High Throughput (any time), which is 9000 messages/s (even without batching)
+- batching is best practice
+- the name is suffixed with `.fifo`
+- you can set up deduplication scope (all messages or with same message group id) and FIFO throughput limit, but only if you did not enable FIFO High Throughput
+- a DQL has to be FIFO too
+- in the exam, if you see message ordering, it is probably FIFO
+- FIFO is more expensive
+- message group id can be used for ordering inside given groups
+
 # AWS Gateway
 - Serverless way of replacing your web service
 
