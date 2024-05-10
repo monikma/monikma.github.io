@@ -1513,7 +1513,7 @@ define( 'DB_COLLATE', '' );\
       - max receives - how many times can I receive same message before I damn it undeliverable
 - remember to set up an alarm on DLQ depth
 
-## FIFO SQS
+### FIFO SQS
 - normal SQS offers best effort order, so they may be out of order
 - FIFO SQS is in order always
 - FIFO assures no duplicate messages (deduplication ids during deduplication interval, you have to turn it on)
@@ -1526,6 +1526,32 @@ define( 'DB_COLLATE', '' );\
 - in the exam, if you see message ordering, it is probably FIFO
 - FIFO is more expensive
 - message group id can be used for ordering inside given groups
+
+## SNS
+- push-based messaging, sent to consumers (subscribes) immediately, one-to-many
+- subscribers can be: Kinesis Data Firehose, SQS, Lambda, email, HTTP(s), SMS, etc.
+- message size <=256 KB
+- can use SQS DLQ for failed messages
+- you can have FIFO topics, but only FIFO SQS can subscribe, they also offer deduplicatio
+- messages encrypted in transit by default, and can be encrypted at rest with AWS KMS keys
+- you can add resource policies to your SNS topic, e.g. needed for cross account access
+- Large Message Payloads - SNS Extended Library allows sending messages up to 2GB, by storing the payload on S3, and publishing the reference to it only
+- SNS Fanout - all subscribers are notified simultaneously
+- message filtering - by defining JSON filter policy you can filter for each subscriber, based on content and message attributes
+- creating SNS topic
+  - you also specify access policy like for SQS
+  - server side encryption is here not enabled by default indeed
+  - data protection policy - out of scope (hm)
+  - delivery policy - number of retries when sending to HTTP/S
+  - delivery status logging - log delivery (you would need to give permissions for SNS to write to Cloud Watch)
+  - you can enable active tracing - you can enable AWS X-Ray to trace the request and see how long SNS it taking 
+  - when you add subscription in the console, the permissions will be added automatically
+    - except email subscriber, then the email owner needs to confirm
+  - redrive policy - the DQL
+- custom retry policy is available only for HTTP(s) endpoints
+- in the exam
+  - real time alerting, push based message application -> SNS
+    
 
 # AWS Gateway
 - Serverless way of replacing your web service
