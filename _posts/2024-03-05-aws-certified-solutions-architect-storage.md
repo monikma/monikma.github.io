@@ -38,16 +38,13 @@ This section is about AWS Storage.
   - durability (9.9999999999%, *"eleven nines"*)
 - AWS CLI returns `HTTP 200` on successful upload (`PUT`)
 - Static website on S3 - good when you need to scale quick, when you are not sure about the demand
-    - on the bucket properties there's sth like *”host static website”*
-    - you specify the index and error html
-    - upload files
-    - then you need to make the bucket public (see *S3 Securing* below)
+  - on the bucket properties there's sth like *”host static website”*
+  - you specify the index and error html
+  - upload files
+  - then you need to make the bucket public (see *S3 Securing* below)
+- minimum **3 AZ**
 
-### S3 Tiers
-- Standard - default, minimum **3 AZ**, for frequently accessed data
-- With Lifecycle Management you can automatically move your objects to cheaper Tier, or delete
-
-### S3 Versioning
+## S3 Versioning
 - if enabled, versioning is there even for deletion
 - you cannot disable once enabled, only suspend
 - properties -> bucked versioning
@@ -58,7 +55,7 @@ This section is about AWS Storage.
 - another way to protect from accidental deletion is MFA
 - you pay per storage and access just like any other object (TODO verify)
 
-### S3 Securing
+## S3 Securing
 - You can have:
   - Server side encryption
   - Access Control lists (ACLs), per object, accounts and groups can have specified access type
@@ -88,10 +85,10 @@ This section is about AWS Storage.
       }
       ```
 
-### S3 Consistency Model
+## S3 Consistency Model
 - strong "read after write" consistency - it will not read outdated file, also list operations won't
       
-### S3 Storage Classes
+## S3 Storage Classes
 - S3 Standard - high availability and durability - >=AZs, 99.99% availability, 99.9999..999 (11 9s)
   - websites, videos
   - as of 2024 0.023$ per GB
@@ -127,12 +124,12 @@ This section is about AWS Storage.
 | S3 G. Deep Archive                          | 99.99%     | 11 9s  | >=3   | Rarely accessed, e.g. regulatory, retrieval from 12h                        |                                                              
 | S3 Intelligent Tiering                      | 99.99%     | 11 9s  | >=3   | Unpredictable access patterns                                               |
 
-### S3 Lifecycle Management
+## S3 Lifecycle Management
 - automatically move files to different tiers, e.g. after a period of not used (TODO how? i think this is wrong)
 - can move versions independently of each other
 - bucket -> Management -> Lifecycle rules
 
-### S3 Object Lock 
+## S3 Object Lock 
 - WORM model - write once, read many, not allowed to update for fixed amount of time - retention period
   - can be used for regulatory reqs
 - **retention period** is put on an object version - a timestamp is added to the metadata
@@ -141,7 +138,7 @@ This section is about AWS Storage.
 - Legal hold - like object lock, but no retention period, user just needs a permission `s3:PutObjectLegalHold` to add and remove legal hold
 - **Glacier Vault Lock** - is WORM model for Glacier vaults, the vault lock policy once locked cannot be changed
 
-### S3 Encryption
+## S3 Encryption
 - Encryption in Transit - to and from the bucket
   - SSL/TLS -> means you use HTTPS to access it, port `443`
 - Encryption at Rest - Server-Side encryption
@@ -156,7 +153,7 @@ This section is about AWS Storage.
     then the encryption will happen at the time of upload
   - you can also create an S3 bucket policy that denies any S3 upload without this header
 
-### S3 Performance
+## S3 Performance
 - S3 Prefix - are folders in our bucket, e.g. `mybucket/folder1/subfolder1/myfile.jpg` -> `/folder1/subfolder1` is the prefix
 - the S3 latency is already low, 200-300 milliseconds for first data out
 - the requests per second are per prefix, so spread your prefixes (`3 500`rps for updates and `5 000`rps for gets)
@@ -167,7 +164,7 @@ This section is about AWS Storage.
 - S3 Byte-Range Fetches
   - parallelize downloads, download in chunks in parallel
 
-### S3 Replication
+## S3 Replication
 - used to be cross region but now is even cross bucket, for resilience
 - do it for bucket
 - needs to be enabled on source and target buckets
@@ -180,7 +177,7 @@ This section is about AWS Storage.
   - there may be a **S3 Batch Job** created to replicate existing (or also future?) objects, its folder may be created in source bucket,
     and also replicated into destination bucket -> but I have not seen this in the lab, only course video
 
-## EBS - Elastic Block Store
+# EBS - Elastic Block Store
 - Virtual hard disc attached to VM
 - You can attach them to your EC2 instance
 - You can install OS there, install applications, database, etc.
@@ -190,13 +187,13 @@ This section is about AWS Storage.
 - Have to be in the same AZ as EC2 they are attached to
 - When you Stop an instance, the data is kept on EBS, but when you Terminate, the root device volume will also be terminated (by default)
 
-### IOPS vs Throughtput
+## IOPS vs Throughtput
 - IOPS (or PIOPS): read/write operations per second, quick transactions, low latency apps, transactions going on simultaneously, if you have transactional DB
   - best fit: Provisioned IOPS SSD (io1 or io2)
 - Throughput: read/written bits per second, large datasets, large IO sizes, complex queries, large datasets
   - best fit: Throughput Optimized HDD (st1)
 
-### EBS Types
+## EBS Types
 - `standard`
   - previous generation volume, for infrequent access
   - 1 GiB - 1 TiB
@@ -244,7 +241,7 @@ This section is about AWS Storage.
   - transactions -> Provisioned IOPS SSD if you have money (io2), otherwise General Purpose SSD (gp2)
   - lowest cost -> Cold HDD
 
-### EBS Volumes & Snapshots
+## EBS Volumes & Snapshots
 - an EBS Volume is virtual hard disk = root device volume, where stuff is installed
   - you need minimum 1 volume per EC2 instance
 - an EBS Snapshot is an incremental copy of the Volume, in a point in time, put on S3
@@ -257,7 +254,7 @@ This section is about AWS Storage.
     - go to the other region -> EC2 -> Elastic Block Store -> Snapshots -> Actions -> Create Image from Snapshot (not Volume)
     - EC2 -> Images -> AMIs -> Launch Instance from AMI
 
-### EBS Encryption
+## EBS Encryption
 - you can encrypt your Volume with an industry standard AES-256 algorithm
 - uses KMS's (Key Management Service) CMKs (Customer Master Keys)
 - when EBS is encrypted, it is end-to-end:
@@ -269,8 +266,7 @@ This section is about AWS Storage.
 - minimal impact on latency
 - you can enable it also while copying unencrypted snapshot, this is how you encrypt an unencrypted volume
 
-
-## EFS - Elastic File Service
+# EFS - Elastic File Service
 - Storing files centrally
 - Managed NAS filer based on NFS (Network File System), can be mounted on many EC2 instances at once, in multiple AZs
   - connected via Mount Target, which is in the services' VPC&Subnet, but the NFS is outside
@@ -309,7 +305,7 @@ This section is about AWS Storage.
     - `sudo mount -a`, and see `/data` is mounted
     - go to the Console and detach the Volume, and then delete Volume
   
-## FSx
+# FSx
 - FSx for Windows
   - centralized storage
   - built on Windows File Server, fully managed native Microsoft Windows file system
@@ -448,7 +444,3 @@ This section is about AWS Storage.
 
 ## RedShift
 - DB warehousing technology
-
-
-
-
