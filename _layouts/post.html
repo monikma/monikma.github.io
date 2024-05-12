@@ -18,14 +18,15 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     {% if page.emphasisColor %}
-    <stysle>
+    <style>
         code {
-            color: blue;
+            color: page.emphasisColor;
         }
         b {
-            color: blue;
+            color: page.emphasisColor;
+            font-weight: lighter;
         }
-    </stysle>
+    </style>
     {% endif %}
     <!-- jQuery -->
     <script src="/js/jquery.js"></script>
