@@ -10,8 +10,8 @@ tags:
 commentIssueId: 44
 type: certification
 customColor: true
-fgColor: #1b4bad
-bgColor: #cce6ff
+fgColor: "#1b4bad"
+bgColor: "#cce6ff"
 ---
 
 <div class="bg-info panel-body" markdown="1">
