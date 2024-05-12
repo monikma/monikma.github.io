@@ -26,9 +26,9 @@ This section is about AWS Storage.
 - TOC
 {:toc max_level=1}
   
-# S3 - Simple Storage Service
-- Buckets must be globally unique
-- But deployed to specific regions
+# Simple Storage Service (S3)
+- Buckets must be **globally unique**
+- But deployed to **specific regions**
 - *Secure, durable and highly scalable object storage* - scalable because available whenever/whatever and cheap
 - Only static flies, no running anything there
 - Unlimited storage, each object up to **5 TB**
@@ -36,204 +36,217 @@ This section is about AWS Storage.
   - Key is the key, object is the file; it's still called object-based not file-based
   - universal namespace - all bucket names must be unique across all AWS accounts
   - value is the actual data
-- also can have Version ID, metadata (content type, last modified, etc)
-- Data is **spread across multiple devices** to ensure: 
-  - availability (99.95%-99.99%) 
-  - durability (9.9999999999%, *"eleven nines"*)
+- also can have **Version ID**, **metadata** (content type, last modified, etc)
+- Data is **spread across multiple devices** (minimum **3 AZ**) to ensure: 
+  - availability (`99.95%-99.99%`) 
+  - durability (`9.9999999999%`, *"eleven nines"*)
 - AWS CLI returns `HTTP 200` on successful upload (`PUT`)
-- Static website on S3 - good when you need to scale quick, when you are not sure about the demand
-  - on the bucket properties there's sth like *”host static website”*
+- **consistency model**: strong "read after write" consistency - it will not read outdated file, also list operations won't
+    
+## Static website on S3
+- good when you need to scale quick, when you are not sure about the demand
+  - on the bucket properties there's sth like ”host static website”
   - you specify the index and error html
   - upload files
-  - then you need to make the bucket public (see *S3 Securing* below)
-- minimum **3 AZ**
+  - then you need to **make the bucket public** (see S3 Securing below)
 
 ## S3 Versioning
-- if enabled, versioning is there even for deletion
-- you cannot disable once enabled, only suspend
-- properties -> bucked versioning
+- if enabled, versioning is there **even for deletion**
+- you **cannot disable once enabled, only suspend**
+- properties -> bucket versioning
   - first version is null
   - previous versions are not public even if the bucket was made public
-  - how to recover deleted object - show versions, check the "delete marker" and delete this one (permanently)
+  - how to **recover deleted object** - show versions, check the "delete marker" and delete this one (permanently)
 - can be integrated with lifecycle rules
-- another way to protect from accidental deletion is MFA
+- another way to **protect from accidental deletion is MFA**
 - you pay per storage and access just like any other object (TODO verify)
-
-## S3 Securing
-- You can have:
-  - Server side encryption
-  - Access Control lists (ACLs), per object, accounts and groups can have specified access type
-  - Bucket policies, per operation, but bucket wide
-    - By default buckets are private. How to make a bucket public:
-      - you can enable this option on both the bucket and the object (option 1)
-        - uncheck “block public access” (that is done by a policy)
-        - pick “ACLs enabled” in Object Ownership tab
-        - bucket actions -> “make public using ACL”
-      - or you can enable it for the whole bucket: permissions -> bucket policy (option 2)
-      ```json
+      
+## How to make a bucket public
+1. you can enable this option on **both the bucket and the object** (option 1)
+  - uncheck “block public access” (that is done by a policy)
+  - pick “ACLs enabled” in Object Ownership tab
+  - bucket actions -> “make public using ACL”
+2. or you can **enable it for the whole bucket**: permissions -> bucket policy (option 2)
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
       {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-              "Sid": "PublicReadGetObject",
-              "Effect": "Allow",
-              "Principal": "*",
-              "Action": [
-                 "s3:GetObject"
-              ],
-              "Resource": [
-                 "arn:aws:s3:::BUCKET_NAME/*"
-              ]
-            }
+        "Sid": "PublicReadGetObject",
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": [
+           "s3:GetObject"
+        ],
+        "Resource": [
+           "arn:aws:s3:::BUCKET_NAME/*"
         ]
       }
-      ```
+  ]
+}
+```
 
-## S3 Consistency Model
-- strong "read after write" consistency - it will not read outdated file, also list operations won't
-      
 ## S3 Storage Classes
-- S3 Standard - high availability and durability - >=AZs, 99.99% availability, 99.9999..999 (11 9s)
-  - websites, videos
-  - as of 2024 0.023$ per GB
-  - S3 Standard-IA - infrequently accessed data, 2x cheaper
-    - still, rapid access
-    - you pay more per access (per GB) than for the storage
-    - long term storage: backups, disaster recovery
-  - S3 Standard-IA with 1 AZ
-    - 20% cheaper from above, for non critical data
-- S3 Intelligent Tiering - as much as Standard plus small fee for monitoring each object
+- what you pay for ([source](https://aws.amazon.com/s3/pricing/?p=pm&c=s3&z=4))
+  - *size of stored objects*, *storage time* during the month, and the *storage class*
+  - (mostly for Glacier only) *per-request* ingest charges when using PUT, COPY, or lifecycle rules to move data into any S3 storage class
+  - for S3 Intelligent-Tiering *monthly monitoring and automation* charge per object stored in the storage class, but no retrieval and moving between tiers charges
+- storage classes
+  - **S3 Standard** - high availability and durability
+    - websites, videos
+    - as of 2024 `0.023$` per GB
+    - **S3 Standard-IA** - infrequently accessed data
+      - `2x` cheaper
+      - still, rapid access
+      - you pay more per access (per GB) than for the storage
+      - long term storage: backups, disaster recovery
+    - **S3 Standard-IA with 1 AZ**
+      - `20%` cheaper from above, for non critical data
+  - **S3 Glacier** 
+    - pay more per access (per GB), storage cheap
+    - use only for archiving
+    - optimized for very infrequent access
+    - data stored in **archives and vaults, not buckets**
+    - S3 Glacier types
+      - **S3 Glacier Instant Retrieval**
+      - **S3 Glacier Flexible Retrieval**
+        - just a bit cheaper than Glacier
+        - retrieval is no cost, but you may have to wait `12` hours to access
+        - e.g. non critical backups
+      - **S3 Glacier Deep Archive**
+        - cheapest, more than `10x` cheaper than S3 Glacier
+        - `12-48` hours to access (single or bulk)
+        - retain data for `7-10` years
+        - e.g. legal and compliance documents
+  - **S3 Intelligent Tiering** 
+    - as much as Standard plus small fee for monitoring each object
     - automatically moves objects between tiers to make it cheaper, based on access patterns
-- S3 Glacier - >=AZs, 99.99% availability, 99.9999..999 (11 9s), 5x cheaper than S3 Standard
-  - pay per access (per GB), storage cheap
-  - use only for archiving
-  - optimized for very infrequent access (e.g. once a year)
-  - data stored in archives and vaults, not buckets
-- S3 Glacier Instant Retrieval
-- S3 Glacier Flexible Retrieval - just a bit cheaper than Glacier
-  - retrieval is no cost, but you may have to wait 12 hours to access
-  - e.g. non critical backups
-- S3 Glacier Deep Archive
-  - cheapest, more than 10x cheaper than S3 Glacier
-  - 12-48 hours to access
-  - retain data for 7-10 years
-  - e.g. legal and compliance documents
 
-| Storage Class                               | Availiabi. | Durabi.| AZs   | Use Case                                                                    |
-|---------------------------------------------|------------|--------|-------|-----------------------------------------------------------------------------|
-| S3 Standard                                 | 99.99%     | 11 9s  | >=3   | Most, websites, mobile&gaming apps, big data analytics                      |
-| S3 S. Infrequent Access                     | 99.99%     | 11 9s  | >=3   | Long term, infrequently accessed critical data (backups, disaster recovery) |                 
-| S3 One-Zone Inf. Access                     | **99.95%** | 11 9s  | **1** | Long term, infrequently accessed non-critical data                          |
-| S3 Glacier (aka Glacier Flexible Retrieval) | 99.99%     | 11 9s  | >=3   | Long term, very infrequently accessed, but quick retrieval                  |                                                        
-| S3 G. Deep Archive                          | 99.99%     | 11 9s  | >=3   | Rarely accessed, e.g. regulatory, retrieval from 12h                        |                                                              
-| S3 Intelligent Tiering                      | 99.99%     | 11 9s  | >=3   | Unpredictable access patterns                                               |
+| Storage Class                               | Availiabi. | Durabi.| AZs   | Use Case                                                                            |
+|---------------------------------------------|------------|--------|-------|-------------------------------------------------------------------------------------|
+| S3 Standard                                 | 99.99%     | 11 9s  | >=3   | Most, websites, mobile&gaming apps, big data analytics                              |
+| S3 S. Infrequent Access                     | 99.99%     | 11 9s  | >=3   | Long term, infrequently accessed critical data (backups, disaster recovery)         |                 
+| S3 One-Zone Infrequent Access               | **99.95%** | 11 9s  | **1** | Long term, infrequently accessed non-critical data                                  |
+| S3 Glacier Instant Retrieval                | 99.99%     | 11 9s  | >=3   | Long term, very infrequently accessed, but quick retrieval                          |
+| S3 Glacier (aka Glacier Flexible Retrieval) | 99.99%     | 11 9s  | >=3   | Like Glacier Instant R., slower but cheaper retrieval, up to **12h**, e.g. backups  |                                                        
+| S3 G. Deep Archive                          | 99.99%     | 11 9s  | >=3   | Rarely accessed, e.g. regulatory, retrieval from **12h**                            |                                                              
+| S3 Intelligent Tiering                      | 99.99%     | 11 9s  | >=3   | Unpredictable access patterns                                                       |
 
 ## S3 Lifecycle Management
 - automatically move files to different tiers, e.g. after a period of not used (TODO how? i think this is wrong)
 - can move versions independently of each other
-- bucket -> Management -> Lifecycle rules
+- bucket -> Management -> **Lifecycle rules**
 
-## S3 Object Lock 
-- WORM model - write once, read many, not allowed to update for fixed amount of time - retention period
+## WORM storage model
+- **WORM storage model** - write once, read many, not allowed to update for fixed amount of time - retention period
   - can be used for regulatory reqs
-- **retention period** is put on an object version - a timestamp is added to the metadata
-- Compliance mode - can't be deleted or modified by anyone, even root, no update of retention period
-- Governance mode - can be updated/deleted by users with permissions, also can update the retention period
-- Legal hold - like object lock, but no retention period, user just needs a permission `s3:PutObjectLegalHold` to add and remove legal hold
-- **Glacier Vault Lock** - is WORM model for Glacier vaults, the vault lock policy once locked cannot be changed
+- implementations
+  - **S3 Object Lock**
+    - **Compliance mode** - can't be deleted or modified by anyone, even root, for the duration of the **retention period**
+      - retention period is put on an **object version** - a timestamp is added to the metadata
+    - **Governance mode** - can be updated/deleted by users with permissions, they can also can update the retention period
+  - **Legal hold** - like Object Lock, but no retention period, user just needs a permission `s3:PutObjectLegalHold` to add and remove legal hold, also on an **object version**
+  - **Glacier Vault Lock** - is WORM model for Glacier vaults, the vault lock policy once locked cannot be changed
 
-## S3 Encryption
-- Encryption in Transit - to and from the bucket
-  - SSL/TLS -> means you use HTTPS to access it, port `443`
-- Encryption at Rest - Server-Side encryption
-  - SSE-S3 - S3 managed keys, AES-256, happens in the background (enabled by default)
-  - SSE-KMS - AWS Key Management Service
-  - SSE-C - customer provided keys
-- Encryption at Rest - Client-Side encryption
+## S3 Securing
+- You can have:
+  - **Encryption**
+  - **Access Control lists (ACLs)**, per object, accounts and groups can have specified access type
+  - **Bucket policies**, per operation, but bucket wide
+    - By default buckets are private.
+
+### S3 Encryption
+- **Encryption in Transit** - to and from the bucket
+  - SSL certificates/TLS -> means you use HTTPS to access it, port `443`
+- **Encryption at Rest: Server-Side encryption**
+  - **SSE-S3** - S3 manages the keys, AES-256, happens in the background (**enabled by default**)
+  - **SSE-KMS** - AWS Key Management Service
+  - **SSE-C** - customer provided keys
+- **Encryption at Rest: Client-Side encryption**
   - you do it yourself before uploading
-- If they ask you how to enforce server side encryption - is a wrong question as now it is by default enforced, but
+- If they ask you how to enforce server side encryption - is a wrong question as now **server side encryption is by default enforced**, but
   it may just be an old question
   - `x-amz-server-side-encryption` parameter should be included in the `PUT` HTTPS request header, with value `AES256` or `aws:kms`, 
     then the encryption will happen at the time of upload
   - you can also create an S3 bucket policy that denies any S3 upload without this header
 
 ## S3 Performance
-- S3 Prefix - are folders in our bucket, e.g. `mybucket/folder1/subfolder1/myfile.jpg` -> `/folder1/subfolder1` is the prefix
 - the S3 latency is already low, 200-300 milliseconds for first data out
-- the requests per second are per prefix, so spread your prefixes (`3 500`rps for updates and `5 000`rps for gets)
-- KMS also has limit though, `GenerateDataKey` for upload, and `Decrypt` for download, `5 500`rps, `10 000`rps, or `30 000`rps depending on region, no quota increase is possible
-- Multipart upload
+- **the requests per second are per prefix, so spread your prefixes** (`3 500`rps for updates and `5 000`rps for gets)
+  - in our bucket, e.g. `mybucket/folder1/subfolder1/myfile.jpg` -> `/folder1/subfolder1` is the prefix
+- **KMS also has limit though**, `GenerateDataKey` operation for upload, and `Decrypt` operation for download, `5 500`rps, `10 000`rps, or `30 000`rps depending on region, no quota increase is possible
+- **Multipart upload**
   - recommended for >`100 MB`, required for >`5 GB`
   - multipart parallelizes the uploads
-- S3 Byte-Range Fetches
+- **S3 Byte-Range Fetches** for downloads
   - parallelize downloads, download in chunks in parallel
 
-## S3 Replication
-- used to be cross region but now is even cross bucket, for resilience
-- do it for bucket
-- needs to be enabled on source and target buckets
-- did not work retrospectively, but now you get a prompt if you want to do it when you create the rule
-- versioning is required on both buckets
-- delete markers are not replicated by default, you need to enable it
+## S3 Replication (backup)
+- used to be cross region but now is even cross bucket
+- do it **for bucket**
+- needs to be **enabled on source and target buckets**
+- did **not work retrospectively**, but now you get a prompt if you want to do it when you create the rule
+- **versioning is required** on both buckets
+- **delete markers are not replicated** by default, you need to enable it
 - Management -> Replication rules
   - you need to specify AIM role (why?)
   - specify path to completion report, e.g. `s3//sourcebucket343425`
   - there may be a **S3 Batch Job** created to replicate existing (or also future?) objects, its folder may be created in source bucket,
     and also replicated into destination bucket -> but I have not seen this in the lab, only course video
 
-# EBS - Elastic Block Store
+# Elastic Block Store (EBS)
 - Virtual hard disc attached to VM
 - You can attach them to your EC2 instance
-- You can install OS there, install applications, database, etc.
-- For mission critical data, production, highly available, automatically replicated within 1 AZ
+- **You can install OS there, install applications, database, etc.**
+- **For mission critical data, production, highly available, automatically replicated within 1 AZ**
 - Scalable: can dynamically adjust capacity without downtime, you just have to extend the filesystem in the OS, so that it can see it
   - you can also freely change instance type on-the-fly
-- Have to be in the same AZ as EC2 they are attached to
-- When you Stop an instance, the data is kept on EBS, but when you Terminate, the root device volume will also be terminated (by default)
+- Have to be in the **same AZ as EC2** they are attached to
+- When you **Stop an instance, the data is kept on EBS, but when you Terminate, the root device volume will also be terminated** (by default)
 
-## IOPS vs Throughtput
-- IOPS (or PIOPS): read/write operations per second, quick transactions, low latency apps, transactions going on simultaneously, if you have transactional DB
+## IOPS vs Throughput
+- **IOPS** (or PIOPS): read/write operations per second, quick transactions, low latency apps, transactions going on simultaneously, if you have transactional DB
   - best fit: Provisioned IOPS SSD (io1 or io2)
-- Throughput: read/written bits per second, large datasets, large IO sizes, complex queries, large datasets
+- **Throughput**: read/written bits per second, large datasets, large IO sizes, complex queries, large datasets
   - best fit: Throughput Optimized HDD (st1)
 
 ## EBS Types
-- `standard`
+- **Standard**
   - previous generation volume, for infrequent access
   - 1 GiB - 1 TiB
   - IOPS 40-200
   - Throughput 40-90 MiB/s
-- `General Purpose SSD (gp2)`
+- **General Purpose SSD (gp2)**
   - balance of price & performance
   - 3 IOPS / GiB, `<16k IOPS` per volume
   - for < 1TB, <3k IOPS
   - 99.9% durability
   - good for boot volumes, or development and test applications that are not latency sensitive
-- `General Purpose SSD (gp3)`
+- **General Purpose SSD (gp3)**
   - max performance **4 times faster than gp2**
   - predictable 3k IOPS performance and 125 MiB/s regardless of size
   - 99.9% durability
   - for apps requiring high performance at low cost, e.g. MySQL, Cassandra, virtual desktops, Hadoop analytics
   - can get 16k IOPS and 1k MiB/s for extra fee
   - you don't have to remember numbers, choose gp3 over gp2 always
-- `Provisioned IOPS SSD (io1 legacy)`
+- **Provisioned IOPS SSD (io1 legacy)**
   - most expensive, high performance
   - `< 64k IOPS` per volume, 50 IOPS / GiB
   - use if you need more than 16k OIPS
   - for IO intensive applications, large databases, latency sensitive workloads
-- `Provisioned IOPS SSD (io2)`
+- **Provisioned IOPS SSD (io2)**
   - same price as io1
   - `< 64k IOPS` per volume, 500 IOPS / GiB
   - `99.9999%` durability
   - usage like io1 but high durability
-- `Throughput optimized HDD (st1)`
+- **Throughput optimized HDD (st1)**
   - low cost hard disk drive, a lot of data
   - baseline throughput of 40 MB/s per TB, spiking up to 250 MB/s per TB
   - max throughput 500 MB/s per volume
   - 99.9% durability
   - frequently accessed, throughput intensive workloads, e.g. big data, data warehouses, ETL, log processing
   - cannot be a boot volume
-- `Cold HDD (SC1)`
+- **Cold HDD (SC1)**
   - cheapest
   - 12 MB/s per TB, spiking up to 80 MB/s per TB
   - max throughput 250 MB/s per volume
@@ -241,9 +254,9 @@ This section is about AWS Storage.
   - for data requiring fewer scans per day, performance not a factor, e.g. file server
   - cannot be a boot volume
 - Summary:
-  - big data, data warehouse, ETLs -> Throughput Optimized HDD
-  - transactions -> Provisioned IOPS SSD if you have money (io2), otherwise General Purpose SSD (gp2)
-  - lowest cost -> Cold HDD
+  - big data, data warehouse, ETLs -> **Throughput Optimized HDD**
+  - transactions -> **Provisioned IOPS SSD if you have money (io2), otherwise General Purpose SSD (gp2)**
+  - lowest cost -> **Cold HDD**
 
 ## EBS Volumes & Snapshots
 - an EBS Volume is virtual hard disk = root device volume, where stuff is installed
