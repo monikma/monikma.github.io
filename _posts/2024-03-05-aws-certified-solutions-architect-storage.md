@@ -22,6 +22,8 @@ Note that the course content changes as the AWS changes. The notes are from Marc
 This section is about AWS Storage.
 </div>
 
+![][1]
+
 <h3>Table of contents</h3>
 - TOC
 {:toc max_level=1}
@@ -284,9 +286,10 @@ This section is about AWS Storage.
 - minimal impact on latency
 - you can enable it also while copying unencrypted snapshot, this is **how you encrypt an unencrypted volume**
 
-# EFS - Elastic File Service
+# Elastic File Service (EFS)
 - storing files **centrally**
-- based on **Network File System (NFS)**, can be mounted on many EC2 instances at once, in **multiple AZs**
+- uses **Network File System v4 (NFSv4)** protocol, **only Linux**, no Windows    
+- can be mounted on many EC2 instances at once, in **multiple AZs**
   - connected via **Mount Target**, which is in the services' VPC & Subnet, but the the file system is outside
 - use cases: content management, web servers
 - highly available, scalable and expensive
@@ -298,8 +301,6 @@ This section is about AWS Storage.
     - **General Purpose** - web server, CMS, etc 
     - **Max I/O** - big data, media processing
 - **Read after write consistency**
-
-- uses **Network File System v4 (NFSv4)** protocol, **only Linux**, no Windows
 - **Encryption at Rest using KMS**
 - file system scales automatically
 - Storage Tiers, also has **lifecycle management** (move to another tier after `x` days)
@@ -332,7 +333,7 @@ This section is about AWS Storage.
 - FSx **for Windows**
   - **centralized** storage
   - built on **Windows File Server**, fully managed native Microsoft Windows file system
-  - Runs **Windows Server Message Block (SMB)** based file services
+  - runs **Windows Server Message Block (SMB)** based file services
   - supports AD users, access control lists, groups, security policies, Distributed File System (DFS) namespaces, and replication
   - offers encryption with KMS
   - e.g. **SharePoint, Workspaces, IIS Web Server are also native Microsoft applications**
@@ -446,7 +447,7 @@ This section is about AWS Storage.
 - replication latency ~< `1`s
 - **how to spread your table across multiple regions**
   - DynamoDB -> Create table -> PK -> Open the table -> Global Tables -> Create replica -> pick region (streams will be automatically enabled)
-/
+
 ## DocumentDB
 - is **MongoDB on AWS** - document database
 - only if you already have MongoDB on premise and want to move it to the Cloud, otherwise DynamoDB is better
@@ -461,7 +462,7 @@ This section is about AWS Storage.
 - is a **graph database**
 - use cases: **social graphs, ad targeting, personalisation, analytics, product database, model general information, fraud detection, security risk detection**
 
-## QLDB (Amazon Quantuum Ledger Database)
+## QLDB  (Amazon Quantuum Ledger Database)
 - nothing to do with quantuum computing
 - **ledger database** - changelog where records cannot be modified, you don't update, only insert
   - **cryptographically verifiable**
@@ -475,3 +476,5 @@ This section is about AWS Storage.
 
 ## RedShift
 - DB warehousing technology
+
+[1]: http://monikma.github.io/pictures/2024-03-05-aws-certified-solutions-architect-storage/mindmap-storage.jpg
