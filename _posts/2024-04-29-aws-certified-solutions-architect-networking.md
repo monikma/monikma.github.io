@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS SAA-C03: Networking
+title: AWS SAA-C03 - Networking
 date: '2024-04-29'
 author: monikma
 tags:

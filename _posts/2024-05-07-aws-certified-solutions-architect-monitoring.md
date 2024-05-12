@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS SAA-C03: Monitoring
+title: AWS SAA-C03 - Monitoring
 date: '2024-05-07'
 author: monikma
 tags:
