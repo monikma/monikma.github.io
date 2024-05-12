@@ -9,6 +9,7 @@ tags:
 - Cloud
 commentIssueId: 44
 type: certification
+emphasisColor: blue
 ---
 
 <div class="bg-info panel-body" markdown="1">
@@ -98,7 +99,7 @@ This section is about AWS Storage.
     - long term storage: backups, disaster recovery
   - S3 Standard-IA with 1 AZ
     - 20% cheaper from above, for non critical data
-  - S3 Intelligent Tiering - as much as Standard plus small fee for monitoring each object
+- S3 Intelligent Tiering - as much as Standard plus small fee for monitoring each object
     - automatically moves objects between tiers to make it cheaper, based on access patterns
 - S3 Glacier - >=AZs, 99.99% availability, 99.9999..999 (11 9s), 5x cheaper than S3 Standard
   - pay per access (per GB), storage cheap
