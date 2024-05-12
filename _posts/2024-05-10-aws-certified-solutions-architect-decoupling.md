@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS Certified Solutions Architect - Associate (SAA-C03) - Decoupling
+title: AWS (SAA-C03) - Decoupling
 date: '2024-05-10'
 author: monikma
 tags:

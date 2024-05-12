@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS Certified Solutions Architect - Associate (SAA-C03) - AWS Storage
+title: AWS (SAA-C03) - AWS Storage
 date: '2024-03-05'
 author: monikma
 tags:

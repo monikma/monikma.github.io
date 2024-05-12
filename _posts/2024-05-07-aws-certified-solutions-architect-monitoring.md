@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS Certified Solutions Architect - Associate (SAA-C03) - AWS Monitoring
+title: AWS (SAA-C03) - AWS Monitoring
 date: '2024-05-07'
 author: monikma
 tags:

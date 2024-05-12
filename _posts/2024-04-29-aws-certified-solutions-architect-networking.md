@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS Certified Solutions Architect - Associate (SAA-C03) - AWS Networking
+title: AWS (SAA-C03) - AWS Networking
 date: '2024-04-29'
 author: monikma
 tags:
