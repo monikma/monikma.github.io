@@ -11,7 +11,7 @@ commentIssueId: 47
 type: certification
 draft: true
 customColor: true
-fgColor: "#0000e6"
+fgColor: "#6600cc"
 bgColor: "#ccccff"
 ---
 
