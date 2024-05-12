@@ -22,7 +22,10 @@
         .bg-info {
           background-color: {{ page.bgColor }};
         }
-        h1, h2, h3, h4, h5, h6, code, a, a:visited, a:hover, .label-primary {
+        .label-primary {
+            background-color: {{ page.fgColor }};
+        }
+        h1, h2, h3, h4, h5, h6, code, a, a:visited, a:hover {
             color: {{ page.fgColor }};
         }
         b, strong {
