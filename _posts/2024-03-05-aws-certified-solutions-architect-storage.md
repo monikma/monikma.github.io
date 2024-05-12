@@ -477,4 +477,4 @@ This section is about AWS Storage.
 ## RedShift
 - DB warehousing technology
 
-[1]: http://monikma.github.io/pictures/2024-03-05-aws-certified-solutions-architect-storage/mindmap-storage-smaller.jpg
+[1]: http://monikma.github.io/pictures/2024-03-05-aws-certified-solutions-architect-storage/mindmap-storage-smaller.png
