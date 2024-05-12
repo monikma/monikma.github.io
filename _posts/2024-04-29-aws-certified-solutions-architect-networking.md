@@ -9,6 +9,7 @@ tags:
 - Cloud
 commentIssueId: 46
 type: certification
+draft: true
 ---
 
 <div class="bg-info panel-body" markdown="1">
