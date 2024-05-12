@@ -273,13 +273,13 @@ This section is about AWS Storage.
     - EC2 -> Images -> AMIs -> Launch Instance from AMI
 
 ## EBS Encryption
-- you can **encrypt your Volume with an industry standard `AES-256` algorithm**
+- you can **encrypt your volume with an industry standard `AES-256` algorithm**
   - uses KMS's (Key Management Service) CMKs (Customer Master Keys)
 - when EBS is encrypted, it is **end-to-end**:
-  - => data inside the Volume is encrypted
-  - => data in transit between instance and Volume is encrypted
+  - => data inside the volume is encrypted
+  - => data in transit between instance and volume is encrypted
   - => all snapshots are encrypted
-  - => all Volumes created from those snapshots are encrypted
+  - => all volumes created from those snapshots are encrypted
 - handled transparently
 - minimal impact on latency
 - you can enable it also while copying unencrypted snapshot, this is **how you encrypt an unencrypted volume**
@@ -427,50 +427,51 @@ This section is about AWS Storage.
 
 ### DynamoDB Backups
 - on demand backups at any time, no impact on performance / availability
-- Same region as the source table
-- PITR - Point In Time Recovery
-- Restore to any point in last 35 days down to 5 minutes, incremental backups, needs to be explicitly enabled
+- **same region as the source table**
+- you can enable **Point In Time Recovery (PITR)** 
+  - it will allow restoring to between `5` minutes ago and `35` days
+  - incremental backups
 
 ### DynamoDB Streams
-- Time ordered sequence of item-level changes in a table, FIFO
-- Each change has a sequence number, stored for 24h
-- Streams divided into records (1 record = 1 change?), grouped into shards, with ids, probably by item key
-- Can add lambdas, which kinda work as stored procedures
+- **time ordered sequence of item-level changes in a table, FIFO**
+- each change has a **sequence number**, **stored for 24h**
+- streams divided into **records (1 record = 1 change?)**, grouped into **shards**, with ids, probably by item key
+- can add lambdas, which kinda work as stored procedures
 
-### Global tables
-- Multi region tables, for globally distributed applications, offers disaster recovery and high availability
-- Can be turned on without need to make code changes
-- Based on DynamoDB streams, you need to enable them first
-- Multi master
-- Replication latency ~< 1s
-- How to spread your table across multiple regions
+### DynamoDB Global tables
+- **multi region tables**, for globally distributed applications, offers disaster recovery and high availability
+- can be turned on without need to make code changes
+- **based on DynamoDB streams, you need to enable them first**
+- **multi master**
+- replication latency ~< `1`s
+- **how to spread your table across multiple regions**
   - DynamoDB -> Create table -> PK -> Open the table -> Global Tables -> Create replica -> pick region (streams will be automatically enabled)
-
+/
 ## DocumentDB
-- is MongoDB on AWS - document database
+- is **MongoDB on AWS** - document database
 - only if you already have MongoDB on premise and want to move it to the Cloud, otherwise DynamoDB is better
-- will add scalability and durability, backups, all ops overhread
-  - you use AWS Migration Service
+- will add scalability and durability, backups, all ops overhead
+  - you use **AWS Migration Service**
 
 ## Amazon Keyspaces
-- is Cassandra on AWS - distributed noSQL DB for Big Data
+- is **Cassandra on AWS** - distributed noSQL DB for **Big Data**
 - is serverless
 
 ## Amazon Neptune
-- is a graph database
-- use cases: social graphs, ad targeting, personalisation, analytics, product database, model general information, fraud detection, security risk detection
+- is a **graph database**
+- use cases: **social graphs, ad targeting, personalisation, analytics, product database, model general information, fraud detection, security risk detection**
 
 ## QLDB (Amazon Quantuum Ledger Database)
 - nothing to do with quantuum computing
-- ledger database - changelog where records cannot be modified, you don't update, only insert
-  - cryptographically verifiable
+- **ledger database** - changelog where records cannot be modified, you don't update, only insert
+  - **cryptographically verifiable**
   - owned by 1 authority
-- usages: crypto, blockchain, shipping tracking, deliveries, pharmaceutical companies tracking drug distribution, financial transactions, claims history
+- usages: **crypto, blockchain, shipping tracking, deliveries, pharmaceutical companies tracking drug distribution, financial transactions, claims history**
 
 ## Amazon Timestream
-- DB for data points logged over series of time
-- trillions of events per day, up to 1k faster and 10x cheaper than RDS
-- uses: IoT, weather stations, web traffic analysis, devops monitoring
+- DB for **data points logged over series of time**
+- `trillions` of events per day, up to `1`k faster and `10`x cheaper than RDS
+- uses: **IoT, weather stations, web traffic analysis, devops monitoring**
 
 ## RedShift
 - DB warehousing technology
