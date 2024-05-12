@@ -10,6 +10,9 @@ tags:
 commentIssueId: 46
 type: certification
 draft: true
+customColor: true
+fgColor: "#e67300"
+bgColor: "#ffe6cc"
 ---
 
 <div class="bg-info panel-body" markdown="1">
