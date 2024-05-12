@@ -211,46 +211,47 @@ This section is about AWS Storage.
   - best fit: Throughput Optimized HDD (st1)
 
 ## EBS Types
-- **Standard**
-  - previous generation volume, for infrequent access
-  - 1 GiB - 1 TiB
-  - IOPS 40-200
-  - Throughput 40-90 MiB/s
-- **General Purpose SSD (gp2)**
-  - balance of price & performance
-  - 3 IOPS / GiB, `<16k IOPS` per volume
-  - for < 1TB, <3k IOPS
-  - 99.9% durability
-  - good for boot volumes, or development and test applications that are not latency sensitive
 - **General Purpose SSD (gp3)**
   - max performance **4 times faster than gp2**
-  - predictable 3k IOPS performance and 125 MiB/s regardless of size
-  - 99.9% durability
-  - for apps requiring high performance at low cost, e.g. MySQL, Cassandra, virtual desktops, Hadoop analytics
-  - can get 16k IOPS and 1k MiB/s for extra fee
-  - you don't have to remember numbers, choose gp3 over gp2 always
-- **Provisioned IOPS SSD (io1 legacy)**
-  - most expensive, high performance
-  - `< 64k IOPS` per volume, 50 IOPS / GiB
-  - use if you need more than 16k OIPS
-  - for IO intensive applications, large databases, latency sensitive workloads
+  - predictable `3k` IOPS performance and `125` MiB/s regardless of size
+  - `99.9%` durability
+  - for apps requiring **high performance at low cost**, e.g. MySQL, Cassandra, virtual desktops, Hadoop analytics
+  - can get `16k` IOPS and `1k` MiB/s for extra fee
+  - unlikely to be chosen against gp3
+    - Standard
+      - previous generation volume, for infrequent access
+      - 1 GiB - 1 TiB
+      - IOPS 40-200
+      - Throughput 40-90 MiB/s
+    - General Purpose SSD (gp2)
+      - balance of price & performance
+      - 3 IOPS / GiB, <16k IOPS per volume
+      - for < 1TB, <3k IOPS
+      - 99.9% durability
+      - good for boot volumes, or development and test applications that are not latency sensitive
 - **Provisioned IOPS SSD (io2)**
   - same price as io1
-  - `< 64k IOPS` per volume, 500 IOPS / GiB
+  - `< 64k IOPS` per volume, `500` IOPS / GiB
   - `99.9999%` durability
-  - usage like io1 but high durability
+  - for IO intensive applications, large databases, latency sensitive workloads
+  - unlikely to be chosen against io2
+    - Provisioned IOPS SSD (io1 legacy)
+      - most expensive, high performance
+      - < 64k IOPS per volume, 50 IOPS / GiB
+      - use if you need more than 16k OIPS
+      - usage like io1 but without high durability
 - **Throughput optimized HDD (st1)**
   - low cost hard disk drive, a lot of data
-  - baseline throughput of 40 MB/s per TB, spiking up to 250 MB/s per TB
-  - max throughput 500 MB/s per volume
-  - 99.9% durability
+  - baseline throughput of `40` MB/s per TB, spiking up to `250` MB/s per TB
+  - max throughput `500` MB/s per volume
+  - `99.9%` durability
   - frequently accessed, throughput intensive workloads, e.g. big data, data warehouses, ETL, log processing
   - cannot be a boot volume
 - **Cold HDD (SC1)**
   - cheapest
-  - 12 MB/s per TB, spiking up to 80 MB/s per TB
+  - `12` MB/s per TB, spiking up to `80` MB/s per TB
   - max throughput 250 MB/s per volume
-  - 99.9% durability
+  - `99.9%` durability
   - for data requiring fewer scans per day, performance not a factor, e.g. file server
   - cannot be a boot volume
 - Summary:
@@ -260,50 +261,55 @@ This section is about AWS Storage.
 
 ## EBS Volumes & Snapshots
 - an EBS Volume is virtual hard disk = root device volume, where stuff is installed
-  - you need minimum 1 volume per EC2 instance
-- an EBS Snapshot is an incremental copy of the Volume, in a point in time, put on S3
+  - **you need minimum 1 volume per EC2 instance**
+- an **EBS Snapshot is an incremental copy of the Volume**, in a point in time, put on S3
   - first Snapshot is going to take longer
   - recommended to take a Snapshot on a stopped instance, to avoid missing data cached in memory
-  - taking a Snapshot of an encrypted Volume will be automatically encrypted
-  - you can share Snapshot within same region, otherwise you have to copy it to another region (that's how you copy EC2 between regions!)
+  - taking a Snapshot of an **encrypted Volume will be automatically encrypted**
+  - you can share Snapshot within same region, otherwise you have to copy it to another region (**that's how you copy EC2 between regions**)
     - EC2 -> Elastic Block Store -> Volumes -> Actions -> Create Snapshot
     - EC2 -> Elastic Block Store -> Snapshots -> Actions -> Copy Snapshot - pick another region (you can extra encrypt it)
     - go to the other region -> EC2 -> Elastic Block Store -> Snapshots -> Actions -> Create Image from Snapshot (not Volume)
     - EC2 -> Images -> AMIs -> Launch Instance from AMI
 
 ## EBS Encryption
-- you can encrypt your Volume with an industry standard AES-256 algorithm
-- uses KMS's (Key Management Service) CMKs (Customer Master Keys)
-- when EBS is encrypted, it is end-to-end:
+- you can **encrypt your Volume with an industry standard `AES-256` algorithm**
+  - uses KMS's (Key Management Service) CMKs (Customer Master Keys)
+- when EBS is encrypted, it is **end-to-end**:
   - => data inside the Volume is encrypted
   - => data in transit between instance and Volume is encrypted
   - => all snapshots are encrypted
   - => all Volumes created from those snapshots are encrypted
 - handled transparently
 - minimal impact on latency
-- you can enable it also while copying unencrypted snapshot, this is how you encrypt an unencrypted volume
+- you can enable it also while copying unencrypted snapshot, this is **how you encrypt an unencrypted volume**
 
 # EFS - Elastic File Service
-- Storing files centrally
-- Managed NAS filer based on NFS (Network File System), can be mounted on many EC2 instances at once, in multiple AZs
-  - connected via Mount Target, which is in the services' VPC&Subnet, but the NFS is outside
-- Highly available, scalable and expensive
+- storing files **centrally**
+- based on **Network File System (NFS)**, can be mounted on many EC2 instances at once, in **multiple AZs**
+  - connected via **Mount Target**, which is in the services' VPC & Subnet, but the the file system is outside
+- use cases: content management, web servers
+- highly available, scalable and expensive
   - pay per use
-  - thousands of concurrent connections (EC2 instances)
-  - 10 GB/s throughput
-  - up to Petabytes of storage
-  - you can pick: General Purpose (web server, CMS, etc) or Max I/O (big data, media processing)
-- Read after write consistency
-- Use cases: content management, web servers
-- Uses NFSv4 (Network File System v4) protocol, only Linux, no Windows
-- Encryption at rest using KMS
-- File system scales automatically
-- Storage Tiers, also has lifecycle management
-  - Standard
-  - Infrequently Accessed
-- By default Encrypted, by default tiny size
-- You can choose backups, performance settings (Enhances, Bursting, Provisioned, ..)
-- Lab: each web server had EBS storage containing identical data, replace 3 EBSs with one EFS -> cost reduction
+  - `thousands` of concurrent connections (EC2 instances)
+  - `10 GB/s` throughput
+  - up to `Petabytes` of storage
+  - you can pick
+    - **General Purpose** - web server, CMS, etc 
+    - **Max I/O** - big data, media processing
+- **Read after write consistency**
+
+- uses **Network File System v4 (NFSv4)** protocol, **only Linux**, no Windows
+- **Encryption at Rest using KMS**
+- file system scales automatically
+- Storage Tiers, also has **lifecycle management** (move to another tier after `x` days)
+  - **Standard**
+  - **Infrequently Accessed**
+- by default **encrypted**, by **default tiny size**, by default **backup** is on
+- you can choose performance settings (Enhances, Bursting, Provisioned, ..), but it is out of scope
+  
+### EFS Lab: replace EBSs with single EFS 
+- each web server had EBS storage containing identical data, replace 3 EBSs with one EFS -> cost reduction
   - to see mounted drives -> `df -h`, there you can also see the sizes, or `lsblk`
   - you need to set same security group for the mount point as EC2 is in, and add an Inbound Rule for NFS (`0.0.0.0/0`)
   - to mount the EFS:
@@ -323,16 +329,16 @@ This section is about AWS Storage.
     - go to the Console and detach the Volume, and then delete Volume
   
 # FSx
-- FSx for Windows
-  - centralized storage
-  - built on Windows File Server, fully managed native Microsoft Windows file system
-  - Runs SMB (Windows Server Message Block) based file services
-  - Supports AD users, access control lists, groups, security policies, DFS (Distributed File System) namespaces and replication
-  - Offers encryption with KMS
-  - E.g. SharePoint, Workspaces, IIS Web Server are also native Microsoft applications
-- FSx for Lustre
-  - optimized for compute intensive workloads, HPC (High Performance Computing), AI, machine learning, financial modelling
-  - hundreds of GiB/s, millions of IOPS, sub-milliseconds latencies
+- FSx **for Windows**
+  - **centralized** storage
+  - built on **Windows File Server**, fully managed native Microsoft Windows file system
+  - Runs **Windows Server Message Block (SMB)** based file services
+  - supports AD users, access control lists, groups, security policies, Distributed File System (DFS) namespaces, and replication
+  - offers encryption with KMS
+  - e.g. **SharePoint, Workspaces, IIS Web Server are also native Microsoft applications**
+- FSx **for Lustre**
+  - optimized for **compute intensive workloads, HPC (High Performance Computing), AI, machine learning, financial modelling**
+  - `hundreds` of GiB/s, `millions` of IOPS, `sub-milliseconds` latencies
   - can store data directly on S3
 
 # Databases
@@ -341,79 +347,86 @@ This section is about AWS Storage.
 - data organized into tables
 - SQLServer, PostgreSQL, Oracle, MariaDB, MySQL, Aurora
 - RDS is an EC2 instance where you don't have access to OS, only the DB
-- Multi AZ support - primary can be in different AZ than secondary (stand-by), automated failover
+- **multi AZ support** - primary can be in **different AZ than secondary (stand-by), automated failover**
   - this is not used for lessening load on writer instance, only failover/disaster recovery! 
     - everything happens in the background, stand-by database will be promoted to primary one, DNS address will point to the new one
   - multi AZ deployment clusters offer 2 stand-by instances
-  - Aurora is always multi AZ by default
-- Automated backups
-- used for OLTP processing (online transaction processing)
-  - as opposed to OLAP (online analytical processing), where RDS is not suitable (e.g. complex queries, analysis, Big Data), where RedShift is more appropriate
-- Read replica - for read queries (e.g BI), same be multi AZ or even cross region
-  - must have automated backups enabled to deploy one
-  - up to 5 read replicas per DB, can be different DB type
+  - **Aurora is always multi AZ by default**
+- **automated backups**
+- RDS is used for **online transaction processing (OLTP processing)**, as opposed to online analytical processing (OLAP processing), where RDS is not suitable (e.g. complex queries, analysis, Big Data) - there RedShift is more appropriate
+- **Read replica** - for read queries (e.g BI), **can be multi AZ or even cross region**
+  - **must have automated backups** enabled to deploy one
+  - up to `5` read replicas per DB, can be different DB type
   - has a separate DNS endpoint
   - can also be promoted to be its own database, useful e.g. before a big querying party
   - RDS -> DB -> Actions -> Create read replica
-  - max 40 Amazon RDS DB instances per account
+  - **max 40 Amazon RDS DB instances per account**
 
 ### Provisioning RDS
 - RDS -> Create Database
   - you can put your credentials into Secret Manager automatically
-  - pick VPC and Subnet (will show many subnets after creation, why?)
+  - **pick VPC and Subnet** (will show many subnets after creation, why?)
   - Public access usually No
   - Security groups
-  - after creating there is a popup View credential details - you only see it once
+  - after creating there is a **popup View credential details** - you only see it once
 
 ### Amazon Aurora
 - is Amazon's DB
 - MySQL and PostgreSQL compatible
-- 5 times better performance than MySQL and 3 times better than PostgreSQL, also cheaper
+- `5` times better performance than MySQL and `3` times better than PostgreSQL, also cheaper
 - starts with `10 GB` and goes up to `128 TB`, in 10 GB increments
 - up to `96 vCPUs` and `768 GB` memory
-- in minimum 3 AZ, 2 copies each -> `6` copies!
-  - can handle losing up to 2 copies for writes and 3 copies for reads, with no downtime
-  - max 15 replicas, with Aurora (with automated failover), MySQL or PostgreSQL
-- self healing - data blocks and discs scanned and repaired automatically
+- in **minimum 3 AZs**, **2 copies each** -> `6` copies!
+  - can handle losing up to 2 copies for writes and 3 copies for reads with no downtime
+  - max `15` replicas, with Aurora (with automated failover), MySQL or PostgreSQL
+- **self healing** - data blocks and discs scanned and repaired automatically
 - automated backups enabled automatically
-- you can take snapshots and share with other accounts
+- you can take **snapshots** and share with other accounts
 
 ### Aurora Serverless
 - scales up and down according to the needs
-- for infrequent, intermittent or unpredictable workflows
+- for **infrequent, intermittent or unpredictable workflows**
 
 ## DynamoDB
-- Fast flexible non relational, with consistent millisecond latency
-- Supports both documents and key value data models
-- IoT, gaming, mobile
-- Spread across 3 geographically different data centers, on SSD
-- Eventually consistent reads (default, ~<1s) / strongly consistent reads / transactional reads
-- Standard / transactional writes
-- DAX - in memory cache, down to microseconds (<10x) (with ttl)
-  - You then connect only to DAX
-  - Pay per request
+- fast flexible non relational, with **consistent millisecond latency**
+- supports both **documents and key value data models**
+- **IoT, gaming, mobile**
+- spread across **3 geographically different data centers, on SSD**
+- you can have 3 types of reads
+  - **eventually consistent reads** (default, ~<`1`s) 
+  - **strongly consistent reads** 
+  - **transactional reads** (with transactions enabled)
+- you can have 2 types of writes
+  - **standard**
+  - **transactional writes** (with transactions enabled)
+- **partition key (PK), sort key (SK)**
+- pricing models
+  - **On-Demand** (pay per request) 
+  - **provisioned**
+- has **CloudWatch and CloudTrail integration**
+- if they ask how to spread data across multiple regions - **enable Global tables**, it’s a tab in your table -> create replica, choose region
+  - "no application rewrites" - they mean you don’t have to change the code, refactor to enable global tables
+- if they ask about **high performance DB** -> is DynamoDB
+
+### DynamoDB DAX
+- in memory cache, down to microseconds (<`10`x), **with ttl**
+  - **pay per request**
   - you connect to DAX, everything else in the background
-- Partition key (PK), sort key
-- "no application rewrites" - they mean you don’t have to change the code, refactor to enable global tables
-- On-Demand (pay per request) or provisioned
-- if they ask how to spread data across multiple regions - enable Global tables, it’s a tab in your table -> create replica, choose region
-- if they ask about high performance DB -> is DynamoDB
-
+  
 ### DynamoDB Security
-- Encryption at rest with KMS
-- Site to site VPN
-- Direct Connect (DC)
-- IAM policies and roles, fine grained access
-- CloudWatch and CloudTrail integration
-- VPC endpoints (traffic stays in AWS)
+- **encryption at rest with KMS**
+- **Site-to-site VPN**
+- **Direct Connect (DC)**
+- **IAM policies and roles** for fine grained access
+- **VPC endpoints** (traffic stays in AWS)
 
-### DynamoDB transactions
-- ACID
-- Across many tables
-- <100 items or <4MB data per transaction
+### DynamoDB Transactions
+- they are ACID
+- across many tables
+- <`100` items or <`4` MB data per transaction
 
 ### DynamoDB Backups
-- On demand, no impact on performance / availability
+- on demand backups at any time, no impact on performance / availability
 - Same region as the source table
 - PITR - Point In Time Recovery
 - Restore to any point in last 35 days down to 5 minutes, incremental backups, needs to be explicitly enabled
