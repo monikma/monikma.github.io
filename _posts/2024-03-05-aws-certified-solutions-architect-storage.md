@@ -9,7 +9,7 @@ tags:
 - Cloud
 commentIssueId: 44
 type: certification
-emphasisColor: 204082
+emphasisColor: 1b4bad
 emphasisColorBg: d9edf7
 ---
 
