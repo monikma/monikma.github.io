@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS (SAA-C03) - AWS Compute
+title: AWS SAA-C03: Compute
 date: '2024-04-17'
 author: monikma
 tags:
