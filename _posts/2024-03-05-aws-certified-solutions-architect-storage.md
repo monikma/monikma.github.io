@@ -9,7 +9,8 @@ tags:
 - Cloud
 commentIssueId: 44
 type: certification
-emphasisColor: red
+customColor: true
+fgColor: #1b4bad
 bgColor: #cce6ff
 ---
 
