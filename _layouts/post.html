@@ -19,7 +19,10 @@
     <link rel="manifest" href="/site.webmanifest">
     {% if page.emphasisColor %}
     <style>
-        code {
+        .bg-info {
+          background-color:  #{{ page.emphasisColorBg }};
+        }
+        h1, h2, h3, h4, h5, h6, code, a, a:visited, a:hover  {
             color:  #{{ page.emphasisColor }};
         }
         b, strong {
@@ -27,25 +30,8 @@
             background-color:  #{{ page.emphasisColorBg }} !important;
             font-weight: lighter !important;
         }
-        h1, h2, h3, h4, h5, h6 {
-            color:  #{{ page.emphasisColor }};
-        }
-        .bg-info {
-          background-color:  #{{ page.emphasisColorBg }};
-        }
-        /* Unvisited links */
-        a {
-            color: #{{ page.emphasisColor }};
-        }
-
-        /* Visited links */
-        a:visited {
-            color: #{{ page.emphasisColor }};
-        }
-
-        /* Hovered links */
-        a:hover {
-            color: #{{ page.emphasisColor }};
+        i {
+            font-color:  #{{ page.emphasisColor }} !important;
         }
     </style>
     {% endif %}
