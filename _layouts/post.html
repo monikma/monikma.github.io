@@ -19,10 +19,10 @@
     <link rel="manifest" href="/site.webmanifest">
     {% if page.emphasisColor %}
     <style>
-        .bg-info, .label-primary {
+        .bg-info {
           background-color: {{ page.bgColor }};
         }
-        h1, h2, h3, h4, h5, h6, code, a, a:visited, a:hover  {
+        h1, h2, h3, h4, h5, h6, code, a, a:visited, a:hover, .label-primary {
             color: {{ page.emphasisColor }};
         }
         b, strong {
