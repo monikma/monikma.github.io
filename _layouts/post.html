@@ -20,18 +20,18 @@
     {% if page.emphasisColor %}
     <style>
         code {
-            color:  {{ page.emphasisColor }};
+            color:  #{{ page.emphasisColor }};
         }
         b {
-            font-color:  {{ page.emphasisColor }};
-            background-color:  {{ page.emphasisColorBg }};
+            font-color:  #{{ page.emphasisColor }};
+            background-color:  #{{ page.emphasisColorBg }};
             font-weight: lighter;
         }
         h1, h2, h3, h4, h5, h6 {
-            color:  {{ page.emphasisColor }};
+            color:  #{{ page.emphasisColor }};
         }
         .bg-info {
-          background-color:  {{ page.emphasisColorBg }};
+          background-color:  #{{ page.emphasisColorBg }};
         }
     </style>
     {% endif %}
