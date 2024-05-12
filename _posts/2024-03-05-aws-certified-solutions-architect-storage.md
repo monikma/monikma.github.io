@@ -10,7 +10,7 @@ tags:
 commentIssueId: 44
 type: certification
 emphasisColor: afb4d4
-emphasisColorBg: b1c0ed
+bgColor: b1c0ed
 ---
 
 <div class="bg-info panel-body" markdown="1">
