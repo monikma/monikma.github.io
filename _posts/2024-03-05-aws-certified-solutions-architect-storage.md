@@ -22,7 +22,7 @@ Note that the course content changes as the AWS changes. The notes are from Marc
 This section is about AWS Storage.
 </div>
 
-![][1]
+![][1]{: style="max-width: 100%; height: auto; box-shadow: none"}
 
 <h3>Table of contents</h3>
 - TOC
@@ -475,6 +475,20 @@ This section is about AWS Storage.
 - uses: **IoT, weather stations, web traffic analysis, devops monitoring**
 
 ## RedShift
-- DB warehousing technology
+- 3 Vs of Big Data
+  - **Volume: tera- to petabytes**
+  - **Variety**: wide range of sources
+  - **Velocity**: collection and analysis has to happen quick
+- RedShift is a petabyte-scale data warehouse AWS service, for **Big Data**
+- **relational** DB, **based on PostgreSQL**, but meant to be used **for OLAP workloads**
+- up to `16` PB of data
+- high performance, 10x better than other offerings
+- **column-based** instead of **row-based** => allows efficient parallel queries
+- **multi AZ** (for now only 2 AZ), but you have to set it from the start
+- **incremental backups** manual or automated, S3 used behind the scenes (you can't control the backup)
+- always **favor large batch inserts**
+- **Redshift Spectrum - retrieve Redshift data from S3 directly - allows parallel queries**, uses Redshift servers independent from your cluster
+- **Enhanced VPC routing - all `COPY` and `UNLOAD` traffic between your clusters and data repositories is forced through your VPC**, enables you to use VPC Endpoints, VPC Flow Logs, etc.
+- you can use **Snaphots** for PITR, or **restoration to other regions**
 
-[1]: http://monikma.github.io/pictures/2024-03-05-aws-certified-solutions-architect-storage/mindmap-storage-2.png
+[1]: http://monikma.github.io/pictures/2024-03-05-aws-certified-solutions-architect-storage/storage-mindmap.png
