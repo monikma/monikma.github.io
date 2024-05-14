@@ -407,6 +407,7 @@ This section is about AWS Storage.
 - if they ask how to spread data across multiple regions - **enable Global tables**, it’s a tab in your table -> create replica, choose region
   - "no application rewrites" - they mean you don’t have to change the code, refactor to enable global tables
 - if they ask about **high performance DB** -> is DynamoDB
+- supports batch updates with `BatchWriteItem`
 
 ### DynamoDB DAX
 - in memory cache, down to microseconds (<`10`x), **with ttl**
