@@ -383,7 +383,7 @@ This section is about AWS Storage.
 - automated backups enabled automatically
 - you can take **snapshots** and share with other accounts
 
-### Aurora Serverless
+### Aurora Serverless #serverless
 - scales up and down according to the needs
 - for **infrequent, intermittent or unpredictable workflows**
 
@@ -454,7 +454,7 @@ This section is about AWS Storage.
 - will add scalability and durability, backups, all ops overhead
   - you use **AWS Migration Service**
 
-## Amazon Keyspaces
+## Amazon Keyspaces #serverless
 - is **Cassandra on AWS** - distributed noSQL DB for **Big Data**
 - is serverless
 
@@ -484,7 +484,7 @@ This section is about AWS Storage.
 - up to `16` PB of data
 - high performance, 10x better than other offerings
 - **column-based** instead of **row-based** => allows efficient parallel queries
-- **multi AZ** (for now only 2 AZ), but you have to set it from the start
+- **multi AZ** (for now only 2 AZ), but you have to set it from the start (or copy using Snapshot)
 - **incremental backups** manual or automated, S3 used behind the scenes (you can't control the backup)
 - always **favor large batch inserts**
 - **Redshift Spectrum - retrieve Redshift data from S3 directly - allows parallel queries**, uses Redshift servers independent from your cluster

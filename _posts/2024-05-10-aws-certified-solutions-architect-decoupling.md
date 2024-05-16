@@ -102,7 +102,7 @@ This section is about everything AWS that has to do with decoupling: SQS, SNS, A
 - in the exam
   - **real time alerting, push based message application -> SNS**
 
-# AWS Gateway
+# AWS Gateway #serverless
 - serverless service to create APIs for your services
 - supports **versioning**
 - API types:
@@ -166,7 +166,7 @@ This section is about everything AWS that has to do with decoupling: SQS, SNS, A
   - use Amazon MQ only for migrating **existing** app, from scratch better use SQS+SNS
   - **Amazon MQ requires private networking, like VPC, Direct Connect or VPN**
   
-# Step Functions
+# Step Functions #serverless
 - is a serverless orchestration service, combining many AWS services, with a graphical console
 - meant for **  event driven task executions**
 - defined in **Amazon States Language**
