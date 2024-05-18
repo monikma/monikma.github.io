@@ -382,10 +382,7 @@ This section is about AWS Storage.
 - **self healing** - data blocks and discs scanned and repaired automatically
 - automated backups enabled automatically
 - you can take **snapshots** and share with other accounts
-
-### Aurora Serverless #serverless
-- scales up and down according to the needs
-- for **infrequent, intermittent or unpredictable workflows**
+- note there is also **Aurora Serverless**, see the serverless section (this would be **Provisioned**)
 
 ## DynamoDB
 - fast flexible non relational, with **consistent millisecond latency**
