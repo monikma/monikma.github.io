@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS SAA-C03 - Monitoring
+title: AWS SAA-C03 - Monitoring and Security
 date: '2024-05-07'
 author: monikma
 tags:
@@ -19,7 +19,7 @@ bgColor: "#ccccff"
 Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
-This section is about AWS Monitoring.
+This section is about AWS Monitoring and Security.
 </div>
 
 <h3>Table of contents</h3>
@@ -218,3 +218,64 @@ This section is about AWS Monitoring.
   - data retention 150 days
 - works with VPC endpoints
 - pick this also for monitoring at scale
+
+
+# Distributed Denial of Service (DDoS) attack
+- attempt to make the application unavailable to your users
+- **SYN flood** - is a DDoS at TCP layer (Layer 4), the server waits for not arriving SYN-ACKs from too many clients, new client can't connect because of open TCP connections limit
+- **Amplification attack** - also Layer 4, uses 3rd party service like NTP, SSDP, DNS, CharGEN, SNMP - the attacker is pretending to have the victim's IP address (IP spoofing), takes advantage of the fact that 3rd party response is 28-54 times larger than the request, keeps sending bigger requests, can coordinate from multiple servers
+- **Layer 7 attack** - simply flooding the server with too many GET or POST requests
+
+# CloudTrail
+- records the AWS Console actions and API calls, except **RDP and SSH traffic**
+- logs the following: **caller identity & IP, request & response elements, request metadata & parameters, timestamp**
+  - log are stored in **S3**
+- used for **investigation after the fact**, or **monitoring real time intrusion** (can integrate e.g. with Lambda)
+- can also serve **compliance** purpose
+
+# AWS Shield
+- is DDoS protection, **Layers 3 and 4: on ELBs, CloudFront and Route53**
+- protects against **SYN/UDP floods**, **reflection attacks**, and others
+- is free and enabled by default
+- **AWS Shield Advanced** - `$3000` per month
+  - protects against more sophisticated attacks
+  - always-on, flow-based monitoring, near **real time** DDoS notifications
+  - 24/7 access to **DDoS Response Team (DRT)** at AWS
+  - protects your **AWS bill** against higher fees due to a DDOS attack
+  - how to turn on:
+    - WAF & Shield -> AWS Shield -> Subscribe to Shield Advanced
+
+# AWS Web Application Firewall (WAF)
+- **monitoring HTTP(s) requests against DDoS attacks**, also **control access to your content** (responds with `403` when not allowed)
+- happens on **Layer 7: CloudFront or ALBs**
+- you can set up conditions based on:
+  - **source IP, country**
+  - **query parameters**
+  - **SQL code / scripts present in the request**
+  - you can use **regular expressions**
+- modes:
+  - **allow** specified requests
+  - **block** specified requests
+  - **count** specified requests
+
+# AWS Firewall Manager
+- cross-account security manager, for **both WAF and AWS Shield**, in **AWS Organisations**
+- set security **rules and policies centrally**, also **automatically apply to new resources**
+
+# Amazon GuardDuty
+- uses ML to monitor unusual/malicious behavior
+  - takes `7-14` days to set a baseline
+- monitors **CloudTrail logs**, **VPC FLow logs**, **DNS logs**
+- centralized **across multiple AWS accounts**
+- alerts you in GuardDuty console and via **CloudWatch Events** that can trigger **Lambdas**
+- receives feeds from **3rd party** (e.g. Proofpoint, CrowdStrike), about **known malicious domains and IP addresses**
+- **pricing based on amount of CloudTrail events and log volume**
+- in the exam: **using AI to monitor your whole AWS account**
+
+# AWS Macie
+- for **detecting PII, PHI, and financial data in S3 buckets with ML**
+  - also alerts of buckets that are **unencrypted, public, or shared with account outside of your AWS Organisation**
+- great for **GDPR and HIPAA** regulations
+- alerts you see in Macie AWS Console, and also they are sent to **EventBridge**
+  - you can then integrate them with your **security incident and security management system (SIEM)**
+  
