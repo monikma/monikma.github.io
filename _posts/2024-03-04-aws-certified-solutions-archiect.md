@@ -16,7 +16,7 @@ draft: true
 Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
-This section is about some general exam information as well as AWS IAM and AWS infrastructure.
+This section is about some general exam information as well some topics that did not fit in other sections.
 </div>
 
 <h3>Table of contents</h3>
@@ -52,9 +52,6 @@ Now I will go topic by topic/service by service.
 - why to use it - you can backup many things in one place, consistency (mostly EC2 stuff with their various storage options)
 - can create automations, lifecycle policies to expire backups, encryption of backup, overview for audits 
 - can be used with AWS Organizations (multiple accounts)
-
-# Lambda
-# Elastic Beanstalk
 
 ## ELB (Elastic Load Balancing)
 - automatically distributing traffic across multiple targets, can be across multiple AZs
@@ -206,65 +203,6 @@ Now I will go topic by topic/service by service.
 # AWS Global Accelerator
 - Accelerate your audiences against your application in the AWS
 
-# IAM
-- `us-east-1` is the region AWS rolls out their services first - but IAM is global
-- by default: 0 users, 0 user groups, 2 roles, 0 policies, 0 identity providers 
-- one user per person
-- least privilege principle
-
-## Securing root account
-- add MFA, and
-- create user group ‘admin’ and add users
-
-## Creating users
-- By default the user has no permissions, can only change their password
-- Access Key is for command line access
-- password policy you can set up in Account Settings
-- the user can also login with SSO via Identity Center - e.g. active directory and stuff like this (SAML), need to set up e.g. ‘Azure Identity Federation’, or OpenID (not needed to know more here)
-
-## IAM policy document
-It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) looks like this:
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": ["*"],
-            "Resource": ["*"]
-        }
-    ]
-}
-```
-  - **action** is the AWS API request
-  - **effect** is either **Allow** or **Deny**
-  - **resource** is the ARN
-- can be attached to: **user (not encouraged), user group or role**
-  - assign policies to groups not single users (by job function)
-- some are **managed by AWS** (`1115` of them)
-- **Amazon Resource Name (ARN)**
-  - syntax: `arn:partition:service:region:account_id:...`
-  - partition is `aws` or `aws-cn` (AWS China)
-  - for global resources you omit the region
-  - can use **wildcards** `*` to match more resources
-- IAm Policies can be:
-  - **identity policies**
-  - **resource policies**
-- **everything not explicitly allowed is implicitly denied**
-  - **explicit deny overrides anything else**
-
-## Roles
-- an IAM role is an AWS identity, with permissions
-- user groups are for users, assigned permanently; roles are assumed temporarily (temporary security credentials), and can be assumed by users or AWS architecture
-- role consists of 
-  - permissions 
-  - trust policy, which controls who can assume the role 
-- the role is assigned / attached permanently but the users/AWS architecture have to assume it
-  - you assign the users to the role in "add principal", this is the "role-trust relationship"
-- roles can allow cross-account access
-
-# Big Data
-
 ## Elastic MapReduce (EMR)
 - **ETL stands for "extract, transform and load"** and are critical components of data management and analysis
   - extraction from various sources
@@ -382,3 +320,12 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
 - integrates with **CloudWatch, CloudTrail, S3, Kinesis**
 - you can feed data from various services to it and then analyse, even real time insights
 - good for **visualising logs for BI**
+
+# CloudFormation
+- **infrastructure as code**
+
+# ElasticBeanstalk
+- deploying and scaling web applications
+
+# Systems Manager
+- maintain EC2 instances, including on-premise
