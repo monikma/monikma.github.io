@@ -223,7 +223,7 @@ Now I will go topic by topic/service by service.
 - the user can also login with SSO via Identity Center - e.g. active directory and stuff like this (SAML), need to set up e.g. ‘Azure Identity Federation’, or OpenID (not needed to know more here)
 
 ## IAM policy document
-It defines the permissions, e.g. full access (aka `AdministratorAccess`) looks like this:
+It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) looks like this:
 ```
 {
     "Version": "2012-10-17",
@@ -236,10 +236,22 @@ It defines the permissions, e.g. full access (aka `AdministratorAccess`) looks l
     ]
 }
 ```
-- can be assigned to: user (not encouraged), user group or role
+  - **action** is the AWS API request
+  - **effect** is either **Allow** or **Deny**
+  - **resource** is the ARN
+- can be attached to: **user (not encouraged), user group or role**
   - assign policies to groups not single users (by job function)
-- Some are managed by AWS (1115 of them)
-- policy can be shared on inline (just in place of 1 group)
+- some are **managed by AWS** (`1115` of them)
+- **Amazon Resource Name (ARN)**
+  - syntax: `arn:partition:service:region:account_id:...`
+  - partition is `aws` or `aws-cn` (AWS China)
+  - for global resources you omit the region
+  - can use **wildcards** `*` to match more resources
+- IAm Policies can be:
+  - **identity policies**
+  - **resource policies**
+- **everything not explicitly allowed is implicitly denied**
+  - **explicit deny overrides anything else**
 
 ## Roles
 - an IAM role is an AWS identity, with permissions

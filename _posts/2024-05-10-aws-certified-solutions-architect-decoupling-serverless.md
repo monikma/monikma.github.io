@@ -239,6 +239,7 @@ This section is about everything AWS that has to do with decoupling and serverle
 - use cases:
   - **invoke lambda when a file is put in S3** (remember IAM Role)
   - **create EventBridge rule to trigger lambda (CRON)**, and e.g. shut down dev instances
+- in AWS Console: you also have **Layers**, and **Applications**
 
 # AWS Serverless Application Repository
 - users can **find, deploy and publish serverless applications, within the AWS account (this is the default private)**
