@@ -407,10 +407,13 @@ This section is about AWS Storage.
 - supports batch updates with `BatchWriteItem`
 
 ### DynamoDB DAX
-- in memory cache, down to microseconds (<`10`x), **with ttl**
+- **in memory cache**, down to microseconds (<`10`x), **with ttl**
   - **pay per request**
   - you connect to DAX, everything else in the background
-  
+  - lives **inside a VPC**
+  - you control node size, cluster count, TTL and maintenance windows
+- does not support **backups**
+
 ### DynamoDB Security
 - **encryption at rest with KMS**
 - **Site-to-site VPN**

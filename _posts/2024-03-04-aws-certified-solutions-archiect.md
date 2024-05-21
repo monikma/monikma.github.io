@@ -391,3 +391,49 @@ Now I will go topic by topic/service by service.
     - select targets: EC2 instances, by tags or by resurce group
     - timeout, rate control, you can enable S3 and/or CloudWatch logs
     - -> Run, you will get an **execution id**
+  
+# CloudFront
+- in general, **caching can be internally (e.g. DB) or externally (e.g. CDN)**, this is **external one**
+- **CloudFront is a Content Delivery Network (CDN)**, and is using **AWS edge locations (100+ of them)**
+- **defaults to HTTPS connection**, allows **custom SSL certificate**
+  - note this way you get a **secure connection** on your S3 buckets for example, e.g. **static website**
+- you can pick **general areas** but not specific countries to distribute your content to (**groups of continents**)
+- can be used with **non AWS endpoints**, can be used with **on-premise**
+- can **force expiring** the cache before TTL
+- you can **restrict access to your content** using CloudFront, by using **pre-signed URLs or cookies** (only S3?)
+- you can **attach a WAF to your CloudFront distribution** (the input is called WAF web ACL)
+  - note this is a **valid use case for security** even if the performance was not the requirement
+- AWS Console:
+  - CloudFront -> distribution -> create 
+    - pick **origin** e.g. S3 bucket
+    - after creation you can see the **distribution domain name**, which you can open in the browser
+- in the exam, use for any **customer website performance issues**
+
+# ElastiCache (Memcached / Redis)
+- managed version of 2 opensource technologies: **Memcached** and **Redis**
+- for **caching DB queries** (works best with **RDS**)
+- **Memcached is just a cache
+- **Redis** can also work as a **standalone NoSQL database**, including:
+  - **failover**
+  - **multi A-z**
+  - **backups**
+- **Redis** is another in-memory database, next to **DynamoDB** (bur **DynamoDB is usually preferred as standalone**)
+  
+# Global Accelerator (GA)
+- sends user's traffic through **AWS global network infrastructure** via **accelerators** (aka routing points)
+  - much faster
+  - **UDP and TCP traffic**, not HTTP like CloudFront - **e.g. gaming and IoT**
+- terms:
+  - **Accelerator** - directs the traffic to the optimal AWS **Endpoints**
+  - **Listener** - processes inbound connection based on ports and protocols
+- routing type:
+  - **Standard** - based on location, health checks and weights
+  - **Custom** - traffic routed to specified EC2 instances and ports in a VPC, in the application logic - for gaming, where there are groups of users interacting in a session
+- **AWS GA** will create **2 global accelerators** across the globe
+  - an accelerator leverages a **point of presence** or an **edge location**
+  - you get **2 Anycast IP  addresses assigned**, to be used within your routing logic and DNS configuration
+  - you are provided **two Anycast IP addresses** or with dual stack **four: 2 IPv4 and 2 IPv6**
+  - **static IPs act as a single**, fixed entry point for ALL client traffic
+    - the client can therefore use a **IP caching**, and you are still free to change what's behind (also relevant for **failover**)
+  - the accelerators direct traffic to the most optimal UPD / TCP endpoint of your application (according to the routing type)
+  
