@@ -322,10 +322,72 @@ Now I will go topic by topic/service by service.
 - good for **visualising logs for BI**
 
 # CloudFormation
-- **infrastructure as code**
-
+- **infrastructure as code**, and all the well known pros of it, and pros of automation
+  - **immutable infrastructure**
+  - has UI called **CloudFormation Designer**
+- not all resources are supported
+- **templates are** in `yaml` or `json`
+  - you then deploy them as **Stack** or **Stack Set** (multi region/account)
+  - you can have first just a **preview** of a Stack
+  - a Stack can **be replicated to multiple regions and even accounts** (**portable Stack**)
+- **tags** help you track what was created by which Stack
+- **template sections**:
+  - `AWSTemplateFormatVersion` (optional), now `2010-09-09`
+  - `Parameters` (optional), to dynamically create resources based on input values
+  - `Mappings` (optional), to look up values, e.g. to map regions to AMI ids
+  - `Resources`, the actual resource definition and their configuration
+  - `Outputs` (optional), values to reference to by other Stacks in your account
+  - `Transform` (optional), to specify **macros (transforms)** that modify the template before it is processed
+- in AWS Console:
+  - CloudFormation -> Stacks -> Create stack (**you can import from existing resources**) 
+  - you can upload a template (with S3), or use the Designer (pick it)
+    - in the Designer, click **Validate**, and **Upload** (will **store the Template in S3**)
+  - you can next pass **Parameters**
+  - you can add tags
+  - you can attach an **IAM Role**
+  - pick **Stack failure options** - roll back all or keep the ones which succeeded
+  - Advanced Options 
+    - add **stack policy**, to ignore certain changes to some resources, to protect them
+    - **rollback configuration** - can add CloudWatch alarms on failure
+    - **notification options** - add notifications, SNS topic
+    - **Timeout** - stack creation timeout
+    - **Termination protection** - protect Stack from deletion by accident
+  - you can then see the progress in **Events** tab, resources in **Resources** tab, also **Outputs**, **Parameters** that were passed in, **Template**, and view **Change sets**
+  
 # ElasticBeanstalk
-- deploying and scaling web applications
+- automated deploying and scaling web applications
+- it's **PaaS - you only supply the code**, the provider takes care of deploying and managing it
+- supports
+  - languages: **Java, .NET, PHP, Node.js, Python, Ruby, Go**
+  - platforms: **Apache Tomcat and Docker**
+- provisions also resources like ELBs, Auto Scaling Groups
+- **automatic updates of app servers**, **monitoring**, **metrics**, **health checks** are included
+- you can choose **how much administrative control you want to take**
+- for simpler scenarios than CloudFormation
 
-# Systems Manager
-- maintain EC2 instances, including on-premise
+# Systems Manager (SSM)
+- **manage and maintain EC2 instances**, including **on-premise**
+- **System Manager Agent** - installed on the instance
+- SSM capabilities:
+  - **automation** - streamlines resource management
+  - **Run Command** - remotely execute SSH scripts, without SSH
+  - **Session Manager** - securely connect to the compute without SSH access
+  - **Patch Manager** - automates OS and application patches
+  - **Parameter Store** - for secrets and configurations
+  - **maintenance windows** - can be scheduled by you, e.g. for patch updates
+- **Session Manager**
+  - **logs all connections and commands run on instance** to CloudWatch & CloudTrail
+  - **SSM Agent** - **both Linux and Windows**, the plus is you don't have to open any ports
+    - supports **EC2, edge devices (AWS and non-AWS IoT), on-premise servers, custom VMs**
+    - **preinstalled** on many AMIs
+    - need to ensure you have the right **IAM permissions**
+- AWS Console: 
+  - notice we will connect without SSH, even without inbound Security Groups
+  - but we **need IAM permissions**: EC2 instance profile has `AmazonSSMManagedINstanceCore` policy attached
+  - then you click in EC2 on **Connect -> Session Manager**
+  - Systems Manager -> Run Command - there you can see a lot of command types, select shell script
+    - enter your script and working directory
+    - how to reference a parameter: `{{ssm:/dev/squid_conf}}`
+    - select targets: EC2 instances, by tags or by resurce group
+    - timeout, rate control, you can enable S3 and/or CloudWatch logs
+    - -> Run, you will get an **execution id**

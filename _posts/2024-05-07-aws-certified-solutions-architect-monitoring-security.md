@@ -399,6 +399,12 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
 - **plain text or encrypted**
   - **no automatic key rotation**
 - **free**, but `<10000` parameters
+- **parameter policies** - can have expiration date
+- types:
+  - **String**
+    - has data types "text" or "**ec2 image id**" (no idea what it is)
+  - **StringList** - comma separated
+  - **SecureString**
 
 # S3 Pre-signed URLs
 - can **share a private S3 object** by creating a pre-signed URL, using their **own security credentials**, to allow a download for a **limited amount of time**
