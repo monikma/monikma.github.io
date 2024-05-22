@@ -122,4 +122,33 @@ This section is about everything AWS that has to do with governance: AWS Organis
 - **plan** for Organizations costs
 - create **alerts when spendings get too high**
 - budget types:
-  - 
+  - Cost Budget - how much to spend on a service
+  - Usage Budget - how many resources to use on one or many services 
+  - RI Utilization Budget - utilization threshold (birth directions)
+  - RI Coverage Budget - how much of insurance is covered by reservation
+  - Savings Plans Utilization/Coverage Budget - like with RI but for Savings Plans
+
+# AWS Cost and Usage Reports (CUR)
+- most comprehensive cost and usage data available for AWS spending 
+- publishes billing reports to S3
+  - in CSV format
+  - updates at least once a day, but you can't exactly control it, only enable the refresh or not
+    - pick if a new report version will be uploaded on update or overwritten
+- costs broken down by hour, month, service, tag, etc 
+- integrations with Athena, RedShift, QuickSight
+- use cases: 
+  - AWS Organizations for accounts or OU
+  - tracking of Savings Plans, Reserved Instances
+  - break down your AWS data transfer charges (external and inter-region), e.g. if too high you'd implement VPC endpoints
+    - days transfer charges are there in many services that send days from and to the internet, even EC2 HTTP requests are charged!
+- how to enable: 
+  - Billing -> Cost § Usage Reports 
+  - put report name, content
+  - delivery options - data granularity
+  - pick bucket and path prefix
+  - pick integrations, they affect how the data is stored
+  - pick file compression, if you're using 3rd party SaaS for analysis, can be useful to consider
+- exam: look for detailed cost breakdowns, daily delivery of usage reports, tracking Savings Plans utilizations
+
+# AWS Compute Optimizer
+- 
