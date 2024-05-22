@@ -274,7 +274,8 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
   - **trust policy**, which controls who can assume the role
 - the role **is assigned / attached permanently but the users/AWS architecture have to assume it**
   - you assign the users to the role in **"add principal", this is the "role-trust relationship"**
-- roles can allow **cross-account acces**s
+- roles can allow **cross-account access**
+- **role assumption expires**
 
 # Distributed Denial of Service (DDoS) attack
 - attempt to make the application unavailable to your users
