@@ -34,6 +34,20 @@ In nutshell:
 
 Now I will go topic by topic/service by service.
 
+
+# AWS Well-Architected Tool
+- the Well-Architected Framework has 6 pillars:
+  - **Operational Excellence**
+  - **Reliability**
+  - **Security**
+  - **Performance Efficiency**
+  - **Cost Optimization**
+  - **Sustainability**
+- AWS Well-Architected Tool is **measuring your architecture according to AWS best practices**
+- enables **assistance with documenting workloads and architecture**
+- comes with guides for making workloads **reliable, secure, efficient and cost effective**
+- intended for **technical teams, CTOs, architecture and operational teams**
+
 # General knowledge
 
 ## Global Infrastructure

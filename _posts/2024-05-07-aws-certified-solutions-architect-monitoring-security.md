@@ -461,6 +461,7 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
   - **triage security findings**, can create visualisations for you
   - **thread hunting** - proactively, create visualisations for you
 - in the exam often a distractor, look for **root cause** term
+- **use AWS SSO for internal user management, and AWS Cognito for external**
 
 # AWS Security Hub
 - single place to view all security alerts from various sources, e.g. **Amazon GuardDuty, Inspector, Macie and Firewall Manager**

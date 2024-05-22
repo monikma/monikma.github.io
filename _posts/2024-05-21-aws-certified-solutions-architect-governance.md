@@ -122,33 +122,130 @@ This section is about everything AWS that has to do with governance: AWS Organis
 - **plan** for Organizations costs
 - create **alerts when spendings get too high**
 - budget types:
-  - Cost Budget - how much to spend on a service
-  - Usage Budget - how many resources to use on one or many services 
-  - RI Utilization Budget - utilization threshold (birth directions)
-  - RI Coverage Budget - how much of insurance is covered by reservation
-  - Savings Plans Utilization/Coverage Budget - like with RI but for Savings Plans
+  - **Cost Budget** - how much to **spend** on a service
+  - **Usage Budget** - **how many resources** to use on one or many services 
+  - **RI Utilization Budget** - **utilization threshold** (both directions)
+  - **RI Coverage Budget** - how much of instance is **covered by reservation**
+  - **Savings Plans Utilization/Coverage Budget** - like with RI but for Savings Plans
 
 # AWS Cost and Usage Reports (CUR)
-- most comprehensive cost and usage data available for AWS spending 
-- publishes billing reports to S3
-  - in CSV format
-  - updates at least once a day, but you can't exactly control it, only enable the refresh or not
-    - pick if a new report version will be uploaded on update or overwritten
-- costs broken down by hour, month, service, tag, etc 
-- integrations with Athena, RedShift, QuickSight
+- **most comprehensive cost and usage data available for AWS spending** 
+- publishes billing reports to **S3**
+  - in `CSV` format
+  - updates **at least once a day**, but you can't exactly control it, only enable the refresh or not
+    - pick if a **new report version will be uploaded on update or overwritten**
+- costs broken down by **hour, month, service, tag**, etc 
+- integrations with **Athena, RedShift, QuickSight**
 - use cases: 
-  - AWS Organizations for accounts or OU
+  - in AWS Organizations, for accounts or OU
   - tracking of Savings Plans, Reserved Instances
-  - break down your AWS data transfer charges (external and inter-region), e.g. if too high you'd implement VPC endpoints
-    - days transfer charges are there in many services that send days from and to the internet, even EC2 HTTP requests are charged!
+  - break down your **AWS data transfer charges** (external and inter-region), e.g. if too high you'd implement VPC endpoints
+    - **data transfer charges are there in many services** that send data from and to the internet, even EC2 HTTP requests are charged!
 - how to enable: 
   - Billing -> Cost § Usage Reports 
   - put report name, content
   - delivery options - data granularity
   - pick bucket and path prefix
   - pick integrations, they affect how the data is stored
-  - pick file compression, if you're using 3rd party SaaS for analysis, can be useful to consider
-- exam: look for detailed cost breakdowns, daily delivery of usage reports, tracking Savings Plans utilizations
+  - pick **file compression**, if you're using 3rd party SaaS for analysis, can be useful to consider
+- exam: look for **detailed cost breakdowns**, **daily delivery of usage reports**, **tracking Savings Plans utilizations**
 
 # AWS Compute Optimizer
-- 
+- analyses **configuration and utilisation metrics** or your AWS resources
+- reports usage **optimizations and recommendations**
+- visualises data as **graph** with **history**
+- provides **projected utilization metrics**
+- works with: **EC2, Auto Scaling Groups, EBS, Lambda**, and also with **single accounts, Member Accounts, as well as Management Account** (there you can apply it to the whole Organization)
+- **disabled by default**, after enabling you sill have to **enable activation of recommendation preferences**, for more accurate recommendation
+
+# AWS Savings Plans
+- **flexible pricing models** to give savings for your AWS usage
+- up to `72`% savings!
+- for **EC2**, all instance types, **Fargate**, **Lambda**, also **SageMaker** (ML)
+- `1` year or `3` year pricing options, with:
+  - **all upfront**
+  - **partial upfront**
+  - **no upfront**
+- Savings Plans types:
+  - **Compute Savings Plans** - EC2, Fargate and Lambda, up to `66`% savings
+  - **EC2 Instance Savings Plans** - for specific EC2 family in specific region, up to `72`%
+  - **SageMaker Savings Plans** - any region, family and components, up to `64`% savings
+- note that Savings Plans:
+  - only take effect **after your Reserved Instances are exhausted**
+  - are applied to **account owner** first
+- how to come up with a Savings Plan idea:
+  - view recommendations in the **Billing Console**
+  - you can add to cart from there
+  
+# Trusted Advisor
+- industry and customer-established **best-practices auditing tool**, covering:
+  - **Pperformance**
+  - **Cost Optimization**
+  - **Security**
+  - **Fault tolerance** - resiliency and availability
+  - **Service limits** - let you know when you are approaching service limits, e.g. **VPC count**
+  - **Operational Excellence** - best practices
+- works at an **account level**, just the service (so service or account)
+- **Basic/Developer support** has only `6` checks in Security category
+- **Business/Enterprise On-Ramp/Enterprise support** get al checks, as well as **EventBridge** automation
+- AWS Console: Trusted Advisor - shows recommendations
+
+# AWS Control Tower
+- **extension to AWS Organizations**
+- straightforward way to set up and govern AWS multi-account environment
+- orchestrates other AWS services
+- users can provision new AWS accounts using **central admin established compliance services** (**Account Factory**)
+- **secure and compliant** multi-account environment
+- terms:
+  - **Landing Zone** - holds all accounts and OUs
+  - **Guardrails** - governance rules, can be enabled or disabled
+    - **preventative** - **service control policies** disable stuff
+    - **detective** - detect non compliant resources **leverages AWS Config rules**, **available only in ertain regions**
+    - **proactive** - prevent non compliant resources from being created, using AWS CloudFormation hooks
+  - **Account Factory** - account template
+  - **CloudFormation StackSet** - automated deployment of templates for resources
+  - **Shared accounts** - created during Landing Zone creation
+- **Account types**:
+  - Management
+  - Log Archive (shared) - for config and CloudTrail logs
+  - Audit (shared) - SNS, governance notifications, configuration security and drift notifications
+
+# AWS License Manager
+- **managing software licenses**, with many vendors
+- **across accounts**, and also **on-premise**, **hybrid**
+- allows to set usage limits on the licenses, to **reduce overages penalties**
+- versatile, many software types
+
+# AWS Personal Health Dashboard (aka AWS Health)
+- visibility of AWS services'/accounts' **performance and availability** 
+- see how they affect you, e.g. AWS needs to run some update on your machine
+- you can als view **upcoming AWS maintenance tasks**
+- **near instant delivery** of notifications and alerts
+- can use **EventBridge** for automation
+- events:
+  - **AWS Health Event** - for AWS services sent by AWS
+  - **Account-specific Event** - for your account / organization
+    - also e.g. suspension notice due to pending billing charges
+  - **Public Event** - events for public services, not specific to accounts
+- concepts:
+  - **Event type code, event type category, event status** (open, close, upcoming)
+  - **AWS Health Dashboard** - account and public events
+  - **Affected Entities** - which AWS resources may be affected
+
+# AWS Service Catalog 
+- **catalog of pre-approved services, as CloudFormation templates**
+  - can be AWS services but also third party
+  - e.g. **AMIs, servers, software databases, other preconfigured components**
+  - users can deploy them into their own accounts (less operational overhead)
+- **centralized in AWS Organizations**
+- **used for standarization across organization, self-service for users, bulk version updates**
+
+# AWS Proton
+- offers **Infrastructure as Code (IaC) provisioning and deployment**
+  - developers can move faster with **self-service** 
+  - provision **infrastructure** 
+  - manage **code deployments**
+  - configure **CI/CD**
+- uses **templates** to define and manage **app stacks**
+- supports **CLoudFormation** and **Terraform** IaC providers
+
