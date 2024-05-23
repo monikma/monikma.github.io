@@ -451,3 +451,97 @@ Now I will go topic by topic/service by service.
     - the client can therefore use a **IP caching**, and you are still free to change what's behind (also relevant for **failover**)
   - the accelerators direct traffic to the most optimal UPD / TCP endpoint of your application (according to the routing type)
   
+# AWS Snow Family
+- moving data to Cloud **over Internet** can have drawbacks (security, speed, reliability)
+- **peta-scale**, AWS ships **physical hard drives to you**, and you send tem back
+- types of services:
+  - **Snowcone** 
+    - you also get a Compute to process and download your data first
+    - smallest EC2, `8`TB storage, `4`GB memory, `2`v2CPUs
+    - direct **IoT sensor integration**
+    - good for edge computing where **power and space are constrained**
+  - **Snowball Edge** 
+    - storage of `48`-`81`TB
+    - optionally small Compute, **GPU flavors**
+    - e.g. on a boat where you **don't have good connection, or one time migration**
+    - for databases, can be used in conjunction with **Schema Conversion Tool (SCT)** to move data to S3, and DMS can move it from S3 to the AWS DB
+      - still compatible with CDC (how?)
+  - **Snowmobile**
+    - `100`PB of data, **exabyte-scale**
+- in exam also **data encrypted at rest and in transit** could qualify for Snow Family
+- all offerings works **both directions** (to migrate to and from AWS)
+  - usually takes about **a week**
+
+# Storage Gateway
+- **hybrid cloud storage service**
+- can help with **one time migration** or to **have the hybrid storage permanently**
+- AWS **provides VMs**, transfer over **HTTPS**
+- offerings:
+  - **File Gateway** 
+    - **network file share, NFS or SMB**
+    - **data backup**
+    - put **all data** or still **cache most recently used** on-premise (Cached File Gateway)
+      - helps when there is **not enough storage**
+    - uses **S3**
+  - **Volume Gateway**
+    - **iSCSI mount**
+    - also **cached or stored mode**
+    - **uses EBS snapshots**, you can restore the volume in AWS
+  - **Tape Gateway**
+    - to move existing **tape-based storage / backup** to AWS
+    - uses **S3 / S3 GLacier**
+- on exam, favor answers that mention **complete migration**
+
+# AWS DataSync
+- **agent-based solution for migrating on-premise to AWS** (from NFS or SMB)
+- for **one-time** migration
+- transfer between the agent and AWS DataSync is via **TLS**
+- pick e.g. **S3, EFS, or FSx** on AWS side
+
+# AWS Transfer Family
+- easily move files **in and out** of **S3 / EFS**, using **SFTP, FTPS or FTP**
+- the **legacy** client endpoint can still look like **SFTP, FTPS or ~~FTP~~**, but there is another service on AWS side
+- the **DNS entry stays the same**
+
+# AWS Migration Hub
+- a GUI to **track the progress of SMS and DMS migrations**
+- **Server Migration Service (SMS)**
+  - you have a VM in your datacenter, and want to move it to AWS
+  - you **schedule** when your data will be copied: **S3 -> EBS snapshot -> AMI**
+- **Database Migration Service (DMS)**
+  - **in or out** of AWS migration
+  - **RDS and NoSQL**
+  - **one time migration (Full Load), or ongoing replication (Change Data Capture (CDC)), or both**
+    - **CDC guarantees transactional integrity of the target DB**
+  - you can use **Schema Conversion Tool** for translation to another DB engine
+    - that tool supports **OLAP** and **OLTP** dbs, as well as **data warehouses**
+    - on AWS side, you can import to any RDS, also RedShift
+      - you can run the migrated DB even on EC2
+  - you have a **DMS server** which is running the migration software, you **schedule tasks**, you can **create the schema yourself or leave it up to DMS**
+  - the source and target are called **endpoints**
+- there are als third party solutions available
+- AWS Console: **AWS Migration Hub** -> Get started with discovery / Get started migrating
+  - discovery: import data, view discovered servers, group servers as applications
+    - **discovery agent** - you install it on your VMs
+    - **discovery connector** - you install it in your vMWare VCenter, it collects info about your VMs
+
+# AWS Application Discovery Service 
+- helps planning of the **migrating to AWS**, by **collecting your on-premise configuration and usage data**
+- integrates with **AWS Migration Hub**, simplifies migration tracking
+- you can **group discovered servers and view migration status by application**
+- discovery types:
+  - **agentless** - via an agentless collector: **OVA file within the VMWare vCenter**
+    - collects **IP and MAC addresses, resource memory/CPU allocations, hostnames, ..**
+    - collects many **utilisation data metrics**, including disc I/O
+  - **agent-based** - install this agent on eah of the VMs and each of your servers
+    - both **Linux and Windows** versions
+    - collects more info: on top **static config data, time-series performance info, network connections, OS processes**
+
+# AWS Application Migration Service (AWS MGN)
+- **migrate your infrastructure and services to AWS with minimal changes**
+- used to **avoid cutover windows and disruptions**
+- for **physical, virtual or cloud servers**
+- replicates **source servers into AWS and automatically launches them when you are ready**
+- **Recovery Time Objective (RTO)** - how quick to restore normal operations, depends on OS boot time, typically minutes
+- **Recovery Point Objective (RPO)** - how much data back in time can be lost, sub second range
+

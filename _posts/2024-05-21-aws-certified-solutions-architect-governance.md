@@ -41,6 +41,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
 - **Service Control Policies (SCPs)** are JSON policies applied to accounts or OUs, that **restrict/permit certain actions**
   - they do not affect the **Management Account** the same though
   - they look just like IAM Policies
+  - they can even stop root users from doing stuff
 - it is recommended to 
   - create **Centralized logging account** for organizational **CloudTrail** logs
   - **leverage cross-account** roles for accessing accounts
@@ -82,6 +83,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
 - **per region basis**, operates in each region where it is enabled independently
 - **integrates with SNS** to get notifications when configuration changes or does not comply to the rules
   - also integrates with **EventBridge**
+  - this is **not real-time**
 - the results can be **aggregates cross region and cross account**
 - you can:
   - **Query** - discover components, you can also see deleted resources
