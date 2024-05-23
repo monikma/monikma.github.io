@@ -545,3 +545,45 @@ Now I will go topic by topic/service by service.
 - **Recovery Time Objective (RTO)** - how quick to restore normal operations, depends on OS boot time, typically minutes
 - **Recovery Point Objective (RPO)** - how much data back in time can be lost, sub second range
 
+# AWS Amplify
+- tools for frontend and mobile devs to **quickly build full stack apps on AWS**
+- **Amplify Hosting**
+  - support for **single page application (SPA) frameworks: React, Angular, Vue.js**, also **Gatsby and Hugo** static site generators
+  - separate staging and prod env
+  - **server-side rendering support, e.g. Next.js** (can't do this just with S3 static website)
+- **Amplify Studio**  
+  - quickly **implement auths in your app**
+  - **visual development**
+  - **ready to use components**
+  
+# AWS Device Farm
+- **testing service, for Android, iOS and web**, AWS runs it on actual phones
+- testing methods:
+  - **automated** - parallel tests based on scripts
+  - **remote access** - on the browser you can actually use the phone, for manual testing
+  
+# Amazon Pinpoint
+- **engage with customers over different messaging channels**, **for marketers, business users**, rarely developers
+- features:
+  - **Projects** - information, segments, campaigns, journeys
+  - **Channels** - how you message your clients
+  - **Segments** - customer groups, dynamic or imported
+  - **Campaigns** - initiatives for specific Segments, using tailored messages
+  - **Journeys** - customized, multi-step engagements
+  - **Message templates**
+- you can leverage ML for user patterns
+- use cases:
+  - **marketing**, **bulk communication**, **non-bulk communication**
+
+# Amazon Elastic Transcoder
+- **to change media files format/encoding, to be optimized for target devices**
+- scalable on-demand
+
+# Kinesis Video Streams
+- **stream media content from a large number of devices (millions) to AWS**
+- can later run **analytics, ML, playback**
+  - e.g. those door cameras that recognise when there is a person (**smart home, smart cities**)
+  - or, **LIDAR** radar data processing
+- **scalable, encrypted and indexed data**
+
+# 
