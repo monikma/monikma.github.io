@@ -586,4 +586,87 @@ Now I will go topic by topic/service by service.
   - or, **LIDAR** radar data processing
 - **scalable, encrypted and indexed data**
 
-# 
+# Amazon Comprehend
+- ML for **Natural Language Processing (NLP)**, sentiment analysis
+- **call center customer satisfaction, reviews, legal documents search, insurance claims, financial documents**
+
+# Amazon Kendra
+- **intelligent search service with ML, search across enterprise data, connecting silos**
+- search in **S3 buckets, file servers, websites**
+- can be used to **provide better search results to customers, analyse new compliance laws, better internal search in the company**
+
+# Amazon Textract
+- **use ML to extract text from handwritten documents**
+- use for **processing handwritten applications, health insurance claims, tax return forms**
+
+# Amazon Forecast
+- **use ML to predict time-series data**
+  - automatically select the **right machine learning algorithm**  
+- can use in **IoT, website analytics, devops monitoring** 
+
+# Amazon Fraud Detector
+- **AI service to detect fraud in your data**, you train a model first
+- e.g. **suspicious online payments, suspicious user accounts, prevent users abusing free trial, account takeover detection**
+
+# Amazon Transcribe
+- **convert speech to text**
+- **generate subtitles**
+
+# Amazon Polly
+- **turns text to speech**, variety of languages and accents
+
+# Amazon Lex
+- **build conversational interfaces using natural language models**
+- **chat bots at customer service**, also phone bots
+- you can use your **existing scripts**
+- **A-Lex-a** is using `Amazon Transcribe -> Amazon Lex -> Amazon Polly` :)
+
+# Amazon Rekognition
+- **analysing images**
+- **picture and face recognition, deep learning, neural networks**
+- also for **content moderation (family filter)**, recognising **people on camera**, **celebrity recognition**
+
+# Amazon SageMaker
+- for **training and deploying ML models in the AWS Cloud**
+- sections: 
+  - **Ground Truth** - set up and manage labeling jobs for training datasets, active learning and human labeling
+  - **Notebook** - managed **Jupyter Notebook environment**, for writing your **python** algorithms
+  - **Training** - train models
+  - **Inference** - package and deploy models **at scale**
+- deployment types:
+  - **online usage** - for a model that has to respond to real-time data
+    - **synchronous or real-time**
+    - uses SageMaker hosting services
+    - low latency predictions
+    - various inputs, output is always **JSON**  
+  - **offline usage** - if you don't need immediate response
+    - **asynchronous or batch**
+    - uses SageMaker batch transform
+    - various inputs and outputs
+- stages:
+  1. **create a model**
+    - **Training**
+      - the data can come from **various sources**
+      - the ML Training Container (from Container Registry) is started
+      - the **Model Artifacts are put in S3**
+    - **CreateModel**
+      - you put the **data + the training model + inference container** into **SageMaker** and then you actually get the model (online or offline model)
+      - you can also **buy ready models**
+  2. **configure endpoint (production variant)** - pick the model, inference instance type, instance count, variant name and weight
+  3. **create endpoint** - the model is **published and you can invoke** it with `InvokeEndpoint()` method
+- **SageMaker Neo** - customize your ML models created by third party (e.g. TensorFlow), for specific hardware, e.g. **ARM, Intel, NVIDIA** (a compiler will convert the model so that it is optimized to the target architecture)
+- **Elastic Inference (EI)** 
+  - **speeds up throughput and decreases latency of the online models**
+  - **only uses CPU-based instances** (not expensive GPU)
+  - **good for reducing cost**
+  - only for some algorithms
+- automatic **scaling**
+- high **availability** - you can deploy it in another AZ if the first one fails
+
+# Amazon Translate
+- **translate content into different language**
+- deep learning and neural network
+- continuously improving and highly accurate they say
+- easy to integrate
+- cost effective compared to human translators
+- **scalable**
