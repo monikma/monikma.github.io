@@ -22,53 +22,54 @@ This section is about AWS Storage and AWS Databases.
 </div>
 
 <h1>Table of contents</h1>
-
-<a href="#simple-storage-service-s3" class="mindmap mindmap-new-section" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `S3` `object < 5 TB` `min 3 AZ` `Bucket Policy` `ACL List` `12-48 h, 7-10 years for Deep Archive` `Compliance/Governance Object Lock`
-  `Legal Hold` `Glacier Vault Lock` `Replication` `Lifecycle Management` `strong read after write consistency` `SSE-S3, KMS, or SSE-C at rest` 
-  `x-amz-server-side-encryption` `Multipart upload` `S3 Byte-Range Fetches` 
-</a>
-<a href="#elastic-block-store-ebs" class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `Elastic Block Store (EBS)` `replicated within 1 AZ` `same AZ as EC2` `deleted on Termination by default` `Throughput optimized HDD (st1) (big data)`
-  `Provisioned IOPS (io2)` `General Purpose SSD (gp3)` `Cold HDD (SC1)` `incremental Snapshots` `End to end encryption, AES-256`
-</a>
-<a href="#elastic-file-service-efs" class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `Elastic File Service (EFS)` `central` `Network File System (NFS)` `only Linux` `multiple AZ` 
-  `mount target in VPC & subnet` `Lifecycle Management` `read after write consistency` `Lifecycle Management` `General Purpose` `Max/IO (big data)` 
-  `encryption at rest with KMS` `default backup and encrypted`
-</a>
-<a href="#fsx" class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `FSx` `central` `Windows or Lustre` `built on Windows File Server` `Windows Server Message Block (SMB)` `encryption with KMS`
-  `AD users` `Lustre High Performance Computing, ML`
-</a>
-<a href="#rds" class="mindmap mindmap-new-section" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `RDS` `multi AZ support for failover` `read replicas` `OLTP processing` `automated backups` `max 40 instances` 
-  `Aurora min 3 AZ` `max 5 replicas, Aurora 15` `Aurora snapshots` `Aurora self healing` `Aurora Serverless`
-</a>
-<a href="#dynamodb-serverless"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `DynamoDB` `3 geographically different DCs` `on SSD` `eventually/strongly consistent reads` `transactional reads/writes` 
-   `transactions <100 items <4MB volume` `Global Tables` `encryption at rest with KMS` `BatchWriteItem` `on-demand backup` `PITR 5 mins - 35 days` 
-  `DynamoDB Streams` `DAX in VPC` `DAX pay per request`
-</a>
-<a href="#documentdb" class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `DocumentDB` `MongoDB` `AWS Migration Service` `on-premise Mongo`
-</a>
-<a href="#amazon-keyspaces-serverless"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `Keyspaces` `Cassandra` `Big Data`
-</a>
-<a href="#amazon-neptune"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `Neptune` `graph DB` `ad targeting`
-</a>
-<a href="#qldb-amazon-quantuum-ledger-database"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `QLDB` `ledger DB` `cryptographically verifiable` `blockchain, tracking`
-</a>
-<a href="#amazon-timestream"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `Timestream` `time-series DB` `<trillions events per day`
-</a>
-<a href="#redshift"  class="mindmap" markdown="1" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
-  `RedShift` `Based on PostgreSQL` `OLAP workloads` `<16 PB data` `Columnar, parallel queries` `<=2 AZ` `Incremental backups to S3` 
-  `RedShift spectrum` `enhanced VPC routing` `Snapshots, restoration to other regions` `favor large batch inserts`
-</a>
+<div markdown="1">
+  <a href="#simple-storage-service-s3" class="mindmap mindmap-new-section" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `S3` `object < 5 TB` `min 3 AZ` `Bucket Policy` `ACL List` `12-48 h, 7-10 years for Deep Archive` `Compliance/Governance Object Lock`
+    `Legal Hold` `Glacier Vault Lock` `Replication` `Lifecycle Management` `strong read after write consistency` `SSE-S3, KMS, or SSE-C at rest` 
+    `x-amz-server-side-encryption` `Multipart upload` `S3 Byte-Range Fetches` 
+  </a>
+  <a href="#elastic-block-store-ebs" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `Elastic Block Store (EBS)` `replicated within 1 AZ` `same AZ as EC2` `deleted on Termination by default` `Throughput optimized HDD (st1) (big data)`
+    `Provisioned IOPS (io2)` `General Purpose SSD (gp3)` `Cold HDD (SC1)` `incremental Snapshots` `End to end encryption, AES-256`
+  </a>
+  <a href="#elastic-file-service-efs" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `Elastic File Service (EFS)` `central` `Network File System (NFS)` `only Linux` `multiple AZ` 
+    `mount target in VPC & subnet` `Lifecycle Management` `read after write consistency` `Lifecycle Management` `General Purpose` `Max/IO (big data)` 
+    `encryption at rest with KMS` `default backup and encrypted`
+  </a>
+  <a href="#fsx" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `FSx` `central` `Windows or Lustre` `built on Windows File Server` `Windows Server Message Block (SMB)` `encryption with KMS`
+    `AD users` `Lustre High Performance Computing, ML`
+  </a>
+  <a href="#rds" class="mindmap mindmap-new-section" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `RDS` `multi AZ support for failover` `read replicas` `OLTP processing` `automated backups` `max 40 instances` 
+    `Aurora min 3 AZ` `max 5 replicas, Aurora 15` `Aurora snapshots` `Aurora self healing` `Aurora Serverless`
+  </a>
+  <a href="#dynamodb-serverless"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `DynamoDB` `3 geographically different DCs` `on SSD` `eventually/strongly consistent reads` `transactional reads/writes` 
+     `transactions <100 items <4MB volume` `Global Tables` `encryption at rest with KMS` `BatchWriteItem` `on-demand backup` `PITR 5 mins - 35 days` 
+    `DynamoDB Streams` `DAX in VPC` `DAX pay per request`
+  </a>
+  <a href="#documentdb" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `DocumentDB` `MongoDB` `AWS Migration Service` `on-premise Mongo`
+  </a>
+  <a href="#amazon-keyspaces-serverless"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `Keyspaces` `Cassandra` `Big Data`
+  </a>
+  <a href="#amazon-neptune"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `Neptune` `graph DB` `ad targeting`
+  </a>
+  <a href="#qldb-amazon-quantuum-ledger-database"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `QLDB` `ledger DB` `cryptographically verifiable` `blockchain, tracking`
+  </a>
+  <a href="#amazon-timestream"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `Timestream` `time-series DB` `<trillions events per day`
+  </a>
+  <a href="#redshift"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `RedShift` `Based on PostgreSQL` `OLAP workloads` `<16 PB data` `Columnar, parallel queries` `<=2 AZ` `Incremental backups to S3` 
+    `RedShift spectrum` `enhanced VPC routing` `Snapshots, restoration to other regions` `favor large batch inserts`
+  </a>
+</div>
   
 # Simple Storage Service (S3)
 - Buckets must be **globally unique**

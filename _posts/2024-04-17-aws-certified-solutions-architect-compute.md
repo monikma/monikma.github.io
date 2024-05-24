@@ -9,22 +9,51 @@ tags:
 - Cloud
 commentIssueId: 45
 type: certification
-draft: true
 customColor: true
 fgColor: "#b30000"
 bgColor: "#ffcccc"
 ---
 
 <div class="bg-info panel-body" markdown="1">
-Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
+Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview) course.
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
-This section is about AWS EC2 Compute.
+This section is about AWS Compute.
 </div>
 
-<h3>Table of contents</h3>
-- TOC
-{:toc max_level=1}
+<h1>Table of contents</h1>
+<div markdown="1">
+  <a href="#elastic-compute-cloud-ec2" class="mindmap mindmap-new-section" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `EC2` `booting: OS, user data, application` `On-Demand` `Reserved 1-3 years` `Reserved regional` `Reserved convertible/scheduled` 
+    `Spot` `Spot 2 minutes to stop` `Spot Request, one-time/persistent` `Spot Fleet (mixed)` `Dedicated Hosts, reserved/on-demand`
+    `SSH=22, HTTPS=443` `Security Group: inbound blocked outbound open` `Security Groups many-to-many, most permissive wins` `EC2 Metadata`
+    `EC2 Hibernation, <60 days, <150 RAM`
+  </a>
+  <a href="#ec2-amazon-machine-image-ami" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `EC2 Amazon Machine Image (AMI)` `region based` `EBS` `Instance Store - ephemeral storage` `EC2 Launch Templates` `Instance Profile when IAM role` 
+    `ENI, EN (high performance), EFA Networking (ML, OS-bypass) cards` `EC2 Placement Groups: Cluster, Spread, Partition (Cassandra)` 
+    `EC2 Hibernation, <60 days, <150 RAM`
+  </a>
+  <a href="#ec2-networking" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `EC2 Networking` `Elastic Network Interface (ENI)` `Enhanced Networking (EN), Single Root I/O Virtualization (SR-IOV), high performance` `Elastic Fabric Adapter (EFA), OS-bypass, e.g. HPC, ML) cards` 
+  </a>
+  <a href="#ec2-placement-groups" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `EC2 Placement Groups` `Cluster, single AZ` `Spread, separate hardware` `Partition, racks separate, e.g. Cassandra` `can move stopped instance`
+    `only some are compatible`
+  </a>
+  <a href="#ec2-practical---step-by-steps" class="mindmap mindmap-new-section" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `EC2 Practical` `Launching EC2 instance` `AWS CLI` `Configuring Instance Profile in EC2 CLI/AWS Console` 
+    `Bootstraping EC2 servers` `Installing Wordpress`
+  </a>
+  <a href="#vmware-on-ec2" class="mindmap mindmap-new-section" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `VMWare on EC2` `vCenter` `hybrid cloud` `disaster recovery` `AWS migration` `cherry pick AWS services` `dedicated hardware` `single account` `512 RAM` 
+    `15 TB storage` `2-16 hosts per cluster` 
+  </a>
+  <a href="#aws-outposts" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `AWS Outposts` `AWS in private datacenter` `hybrid cloud` `<96 server units` `Outpost Rack (has servers), for datacenter` 
+    `Outpost Servers` `AWS staff visits`
+  </a>
+</div>
 
 # Elastic Compute Cloud (EC2)
 - virtual machine in AWS, needs web server installed on it next
@@ -198,35 +227,6 @@ This section is about AWS EC2 Compute.
   - RAM is reloaded, processes resumed
   - data volumes are reattached
 - this boots way faster, useful **for long running processes or long initializing ones**
-
-## VMWare on EC2
-- VMWare has been used by people around the world for private (on-premise) cloud deployments
-  - some companies want a **hybrid cloud strategy**, and combine it with AWS Services 
-  - some want to use AWS as an **inexpensive disaster recovery**
-  - others want to **migrate to AWS**, and can use AWS VMWare built-in tools for that
-  - others just want to **use some AWS Services** that are not available with VMWare
-- deploying VMWare on AWS (more specifically deploying vCenter using VMWare)
-  - it runs on **dedicated hardware** hosted in AWS, on a **single account**
-    - each host has `2` sockets with `18` cores per socket, `512` GB RAM, `15.2 TB` Raw SSD storage
-    - each host can run **hundreds of VMWare instances**
-    - clusters can start with `2-16` hosts per cluster
-
-## AWS Outposts
-- is **AWS in your private datacenter** (the other way round than WMVare on AWS)
-- server racks, rack can have `42`U, server units of `1`U and `2`U
-- this is **another way to get hybrid cloud**
-  - **AWS manages all the infrastructure**
-  - consistency
-- Outpost Family Members
-  - **Outpost Rack**
-    - starts with `1` 42U rack and scales up to `96` racks
-    - to be used in a **datacenter**, i.e. when you need a lot of storage
-  - **Outpost Servers**
-    - individual U1 or U2 servers, when you have less space
-    - **retail stores, branch offices, healthcare provider locations, factory floors**
-- you **order them in AWS Console**
-  - AWS staff will come to install and deploy the hardware
-  - you can manage everything via AWS Console
 
 ## EC2 Practical - Step-by-steps
 
@@ -460,3 +460,34 @@ sudo nano wp-config.php
     define( 'DB_COLLATE', '' );
 ```
 - Security Group -> add MySQL inbound rule, from that same SG
+
+
+
+# VMWare on EC2
+- VMWare has been used by people around the world for private (on-premise) cloud deployments
+  - some companies want a **hybrid cloud strategy**, and combine it with AWS Services
+  - some want to use AWS as an **inexpensive disaster recovery**
+  - others want to **migrate to AWS**, and can use AWS VMWare built-in tools for that
+  - others just want to **use some AWS Services** that are not available with VMWare
+- deploying VMWare on AWS (more specifically deploying vCenter using VMWare)
+  - it runs on **dedicated hardware** hosted in AWS, on a **single account**
+    - each host has `2` sockets with `18` cores per socket, `512` GB RAM, `15.2 TB` Raw SSD storage
+    - each host can run **hundreds of VMWare instances**
+    - clusters can start with `2-16` hosts per cluster
+
+# AWS Outposts
+- is **AWS in your private datacenter** (the other way round than WMVare on AWS)
+- server racks, rack can have `42`U, server units of `1`U and `2`U
+- this is **another way to get hybrid cloud**
+  - **AWS manages all the infrastructure**
+  - consistency
+- Outpost Family Members
+  - **Outpost Rack**
+    - starts with `1` 42U rack and scales up to `96` racks
+    - to be used in a **datacenter**, i.e. when you need a lot of storage
+  - **Outpost Servers**
+    - individual U1 or U2 servers, when you have less space
+    - **retail stores, branch offices, healthcare provider locations, factory floors**
+- you **order them in AWS Console**
+  - AWS staff will come to install and deploy the hardware
+  - you can manage everything via AWS Console

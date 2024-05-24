@@ -22,7 +22,7 @@ This section is about some general exam information as well some topics that did
 <h3>Table of contents</h3>
 - TOC
 {:toc max_level=1}
-
+  
 # Exam Guide
 
 They put a lot of emphasis on how to pass the exam in the first place, not sure how I feel about this.

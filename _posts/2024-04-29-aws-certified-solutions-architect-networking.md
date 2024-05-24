@@ -254,8 +254,3 @@ This section is about AWS Networking.
   - Route53 Traffic Flow - graphical UI, complex workflow for routing, you can combine other policies, it is using geographical location, latency and availability
 - Latency Routing Policy - picks the record with lowest response time, you still have to tell AWS its region; remember latency changes
 - Multivalue Answer Policy - multiple records, works like Simple Routing Policy but with Health Check
-
-
-
-
-
