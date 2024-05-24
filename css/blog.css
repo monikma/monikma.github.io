@@ -176,3 +176,44 @@ h5 {
     transform: scale(1.0);
   }
 }
+
+.mindmap{
+  text-decoration: none!important;
+  display:block;
+}
+
+.mindmap-new-section{
+  margin-top: 30px;
+}
+
+.mindmap code{
+    display: inline-block; /* Changed to inline-block for better control */
+    padding: .2em .6em .3em;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 1em;
+    font-family: Arial, sans-serif;
+    position: relative; /* For positioning the pseudo-element */
+}
+
+.mindmap code:first-child {
+    color: #fff;
+    min-width: 1px; /* will be adjusted with the script */
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: right;
+    border-radius: .25em 1em 1em .25em;
+}
+
+/* Offset anchor links to adjust for fixed headers */
+:target::before {
+  content: "";
+  display: block;
+  height: 100px; /* Adjust according to the height of your fixed header */
+  margin: -100px 0 0; /* Adjust to match the height */
+  visibility: hidden;
+}

@@ -93,6 +93,42 @@
   ga('create', 'UA-78542713-1', 'auto');
   ga('send', 'pageview');
     </script>
+
+    <script>
+    <!-- this is to render "code" snippets in mindmap divs as labels in the color specified in the parent -->
+      document.addEventListener("DOMContentLoaded", function() {
+        var mindmapDivs = document.querySelectorAll('.mindmap');
+
+        mindmapDivs.forEach(function(mindmapDiv) {
+            var codeElements = mindmapDiv.querySelectorAll('code');
+            var mindmapColor = window.getComputedStyle(mindmapDiv).getPropertyValue('--mindmap-color');
+            var mindmapColorLighter = window.getComputedStyle(mindmapDiv).getPropertyValue('--mindmap-color-lighter');
+
+            if (codeElements.length > 0) {
+                codeElements[0].style.backgroundColor = mindmapColor; // First code element
+            }
+
+            for (var i = 1; i < codeElements.length; i++) {
+                codeElements[i].style.backgroundColor = mindmapColorLighter; // Other code elements
+            }
+        });
+        // now adjust the first element lengths
+        var divsWithCode = document.querySelectorAll('.mindmap code:first-child');
+
+        var longestWidth = 0;
+        divsWithCode.forEach(function(div) {
+            var width = div.clientWidth;
+            if (width > longestWidth) {
+                longestWidth = width;
+            }
+        });
+
+        // Set the min-width of all first-child code elements with the longest width
+        divsWithCode.forEach(function(div) {
+            div.style.minWidth = longestWidth + 'px';
+        });
+    });
+</script>
 </head>
 <body>
 
