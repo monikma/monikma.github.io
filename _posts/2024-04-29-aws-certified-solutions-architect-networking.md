@@ -23,10 +23,15 @@ This section is about AWS Networking.
 
 <h3>Table of contents</h3>
 <div markdown="1">
-  <a href="#" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+  <a href="#vpc" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
     `VPC` `default VPC per region, CIDR 172.31.0.0/16` `route table` `NACL` `subnets, within AZ`
     `Internet Gateway` `Amazon VPC IP Manager (IPAM), for CIDR`, `Three tier architecture`
     `No default subnets with new VPC`
+  </a>
+  <a href="#aws-vpc-flow-logs" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `AWS VPC Flow Logs` `VPC level` `Subnet level` `Network Interface level (ENI)` `send to S3` `send to CloudWatch`
+    `IAM role` `5-15 minutes to show up` `CloudWatch metric filter from logs for alarm` `Athena queries to S3`
+    `default alarm period 1 minute`
   </a>
   <a href="#nat-gateway" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
     `NAT Gateway` `Network Address Translation` `sits in public subnet` `AWS->Internet` `stateful`
@@ -152,7 +157,67 @@ This section is about AWS Networking.
     - `ssh ec2-user@<private IP of the DB EC2> -i mykey.pem`
     - see it works
     - notice you cannot do `yum update`, to be continued
-                                                           
+
+## AWS VPC Flow Logs
+- **VPC Flow logs** can be configured at the **VPC, Subnet or the Network Interface level (ENI)**, here we do VPC level
+- Send flow logs to s3
+  - VPC -> Flow Log -> **Create Flow Log, send to S3**
+  - notice that then the bucket Permissions -> Policy was automatically updated
+- Send flow logs to Cloud Watch
+  - Cloud Watch -> Log Groups -> Create Log Group
+  - VPC -> Flow Log -> Create Flow Log, send to Cloud Watch Logs, pick the log group, pick an **IAM role that will allow the Flow Logs to write to Cloud Watch**
+- generate traffic - it is enough to ssh into the instance; also try ssh after you have disabled SSH on Security group
+  - in logs you will see **ACCEPT or REJECT, when the SSH was disabled**
+- the logs can take **5-15 minutes** to show up, both in CW and in S3
+  - will be one stream per ENI (Elastic Network Interface)
+- create **CloudWatch metric filter** for denied SSH connections and alarm
+  - Cloud Watch -> Log groups -> pick your group -> Metric Filter -> Create Metric Filter
+  - filter pattern: `[version, account, eni, source, destination, srcport, destport="22", protocol="6", packets, bytes, windowstart, windowend, action="REJECT", flowlogstatus]`
+  - then you also need metric **name and value** (e.g. `1`) - so this will be a metric generated from logs matching that pattern
+  - after it is created, click on it's **checkbox -> Create alarm -> ... -> create SNS** topic, then generate some traffic and see the alarm working (default period is **1 minute**)
+- **create Athena table** from the logs in s3 and query
+  - find the logs in s3 -> Copy s3 URI. Next Athena -> Query editor -> Edit settings and enter that location you copied
+  - create the Athena table:
+    ```sql
+    CREATE EXTERNAL TABLE IF NOT EXISTS default.vpc_flow_logs (
+      version int,
+      account string,
+      interfaceid string,
+      sourceaddress string,
+      destinationaddress string,
+      sourceport int,
+      destinationport int,
+      protocol int,
+      numpackets int,
+      numbytes bigint,
+      starttime int,
+      endtime int,
+      action string,
+      logstatus string
+    ) PARTITIONED BY (
+      dt string
+    ) ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ' LOCATION 's3://cfst-3029-12735640b585b0eeecf119-vpcflowlogsbucket-okxucddutz8q/AWSLogs/825242597096/vpcflowlogs/us-east-1/' TBLPROPERTIES ("skip.header.line.count"="1");
+    ```                      
+  - partition the table
+    ```sql
+    ALTER TABLE default.vpc_flow_logs
+    ADD PARTITION (dt='2024-05-07') location 's3://cfst-3029-12735640b585b0eeecf119-vpcflowlogsbucket-okxucddutz8q/AWSLogs/825242597096/vpcflowlogs/us-east-1/2024/05/07/';
+    ```
+  - run queries
+    ```sql
+    SELECT day_of_week(from_iso8601_timestamp(dt)) AS day,
+      dt,
+      interfaceid,
+      sourceaddress,
+      destinationport,
+      action,
+      protocol
+    FROM vpc_flow_logs
+    WHERE action = 'REJECT' AND protocol = 6
+    order by sourceaddress
+    LIMIT 100;
+    ```
+
 # NAT Gateway
 - **NAT = Network Address Translation**
 - to allow **stuff from private subnet to connect to the Internet** but not vice versa (unless Internet is answering)

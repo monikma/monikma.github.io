@@ -16,15 +16,63 @@ bgColor: "#ffe6f2"
 ---
 
 <div class="bg-info panel-body" markdown="1">
-Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
+Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview) course.
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
 This section is about everything AWS that has to do with governance: AWS Organisations, Cost Explorer, audits, and so on.
 </div>
 
 <h3>Table of contents</h3>
-- TOC
-{:toc max_level=1}
+<div markdown="1">
+  <a href="#aws-organizations" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Organizations`
+  </a>
+  <a href="#aws-resource-access-manager-ram" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Resource Access Manager (RAM)`
+  </a>
+  <a href="#setting-up-cross-account-access" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Setting up cross-account access`
+  </a>
+  <a href="#aws-config" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Config`
+  </a>
+  <a href="#aws-directory-service" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Directory Service`
+  </a>
+  <a href="#cost-explorer" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Cost Explorer`
+  </a>
+  <a href="#aws-budgets" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Budgets`
+  </a>
+  <a href="#aws-cost-and-usage-reports-cur" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Cost and Usage Reports (CUR)`
+  </a>
+  <a href="#aws-compute-optimizer" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Compute Optimizer`
+  </a>
+  <a href="#aws-savings-plans" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Savings Plans`
+  </a>
+  <a href="#trusted-advisor" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Trusted Advisor`
+  </a>
+  <a href="#aws-control-tower" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Control Tower`
+  </a>
+  <a href="#aws-license-manager" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS License Manager`
+  </a>
+  <a href="#aws-personal-health-dashboard-aka-aws-health" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Personal Health Dashboard (aka AWS Health)`
+  </a>
+  <a href="#aws-service-catalog" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Service Catalog`
+  </a>
+  <a href="#aws-proton" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Proton`
+  </a>
+</div>
 
 # AWS Organizations
 - for **managing multiple AWS account**, streamline processes and centralization, security, billing, and so on

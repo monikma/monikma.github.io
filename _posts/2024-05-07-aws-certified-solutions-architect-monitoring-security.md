@@ -9,22 +9,114 @@ tags:
 - Cloud
 commentIssueId: 47
 type: certification
-draft: true
 customColor: true
 fgColor: "#6600cc"
 bgColor: "#ccccff"
 ---
 
 <div class="bg-info panel-body" markdown="1">
-Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
+Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview) course.
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
 This section is about AWS Monitoring and Security.
 </div>
 
 <h3>Table of contents</h3>
-- TOC
-{:toc max_level=1}
+<div markdown="1">
+  <a href="#cloudwatch" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `CloudWatch` `System Metrics (out of the box)` `Application Metrics (disc, memory)`, `anomaly detection`
+    `on alarm triggers` `System Manager trigger` `default metrics (CPU, network througput)` `custom metrics (with agent, memory, EBS)`
+    `basic monitoring, 5 minutes` `detailed monitoring, 1 minute` `not real-time` `Log Event` `Log Stream` `Log Group`
+    `filter patterns` `Log Insights` `on-premise integration`
+  </a>
+  <a href="#how-to-configure-cloud-watch-logs-for-ec2" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `CloudWatch config` `IAM must have IAM policies, AmazonSMMManagedInstanceCore` `install the agent` `configure agent` `start agent`
+  </a>
+  <a href="#iam" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `IAM` `global service` `least privilege principle` `no predefined users, groups, roles, policies, identity providers`
+    `no default permissions for new users` `Access Key` `password policy in Account Settings` 
+    `login with SSO via Identity Center, e.g. AD, OpenID`
+  </a>
+  <a href="#securing-root-account" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Securing root account` `add MFA` `admin user group`
+  </a>
+  <a href="#iam-policy-document" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `IAM Policies & Roles` `IAM Policy Document` `Action` `Effect` `Resource`
+    `user group policy` `115 AWS managed policies` `identity policies` `resource policies` `by default deny`
+    `role assumed temporarily` `temporary security credentials` `permissions and trust policy` `principal`
+    `cross-account access`
+  </a>
+  <a href="#aws-key-management-service-kms" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Key Management Service (KMS)` `deletion earliest 7 days after creation` `resource based IAM policies`  `key lifecycle`
+    `Hardware Security Module (HSM), cryptoprocessor` `Customer Master Key (CMK), own or AWS` `Cloud HSM, dedicated`
+  </a>
+  <a href="#aws-secrets-manager" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Secrets Manager` `rotates` `encryption in transit & at rest with KMS` `CloudFormatio can generate passwords`
+  </a>
+  <a href="#aws-parameter-store" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Parameter Store` `part of Systems Manager` `hierarchical storage` `free` `<10 000 params` `Parameter Policy, e.g. expiration date`
+    `String` `StringList` `SecureString`
+  </a>
+  <a href="#amazon-cognito" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon Cognito` `auth & user management` `sign in` `sign up` `tokens` `3rd party auth` `user pools for sign in/up`
+    `identity pools for AWS resource access` `AWS Security Token Service (STS) uses Cognito for IAM Role validation`
+  </a>
+  <a href="#amazon---managed-grafana" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon-managed Grafana` `query, correlate, visualise logs` `workspaces` `pricing per user` `VPC endpoints support` `IoT`
+  </a>
+  <a href="#amazon-managed-service-for-prometheus" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon Managed Service for Prometheus` `monitoring at scale` `managed, open source` `PromQL` `data retention 150 days` `3 AZs` 
+    `monitor Kubernetes`
+  </a>
+  <a href="#distributed-denial-of-service-ddos-attack" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Distributed Denial of Service (DDoS) attack` `SYN flood TCP layer 4` `Amplification attack layer 4` `layer 7 attack`
+  </a>
+  <a href="#cloudtrail" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `CloudTrail` `AWS actions & API calls` `no RDP & SSH traffic` `logs to S3` `no real-time` `compliance`
+    `trigger actions`
+  </a>
+  <a href="#aws-shield" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Shield` `DDoS protection` `layer 3 & 4 protection` `ELB` `CloudFront` `Route53` `base version free and enabled by default`
+    `AWS Shield Advanced, $3000/month, near real-time, 24/7 DDoS Response Team (DRT), AWS bill protection` 
+  </a>
+  <a href="#aws-web-application-firewall-waf" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Web Application Firewall (WAF)` `DDoS protection` `layer 7 protection` `403 response` `CloudFront` `ALB`
+    `allow/bock/count` `regex` `SQL/script injection`
+  </a>
+  <a href="#aws-firewall-manager" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Firewall Manager` `manage centrally Shield& WAF in AWS Organizations`
+  </a>
+  <a href="#aws-network-firewall" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Network Firewall` `physical firewall for VPC` `before Internet Gateway` `intrusion prevention system (IPS)`
+  </a>
+  <a href="#amazon-guardduty" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon GuardDuty` `monitor unusual/malicious behavior with ML` `baseline 1-2 weeks` `CloudTrail logs, VPC FLow logs, DNS logs`
+    `cross account` `CloudWatch Events` `uses 3rd party info` `pricing by volume`
+  </a>
+  <a href="#aws-macie" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Macie` `detect PII in S3` `GDPR` `HIPAA` `EventBridge integration`
+  </a>
+  <a href="#amazon-inspector" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon Inspector` `list of security findings` `Network assesment` `Host assesment, requires Inspector Agent`
+    `run once or weekly`
+  </a>
+  <a href="#aws-certificate-manager" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Certificate Manager` `create/manage/deploy` `public&private SSL certificates` `free` `rotation`
+  </a>
+  <a href="#aws-audit-manager" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Audit Manager` `Internal Risk Assessments` `reports for auditors`
+  </a>
+  <a href="#aws-artifact" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Artifact` `downloading compliance documents from AWS` `not for auditors`
+  </a>
+  <a href="#amazon-detective" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon Detective` `investigate suspicious activity with ML` `find root cause` `uses graph theory` 
+    `incorporates GuardDuty findings` `triage security hunting` `threat hunting`
+  </a>
+  <a href="#aws-security-hub" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS Security Hub` `cross account all security findings from other services` `Cloud Security Posture Management (CSPM)`
+  </a>
+</div>
   
 ## CloudWatch
 - **monitoring and observability** platform
@@ -137,66 +229,6 @@ This section is about AWS Monitoring and Security.
 - next, you have to **start the agent**: `sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json`
 - next you can see your **log group with instance ID** in the Cloud Watch, and the logs
 
-### Setting up AWS VPC Flow Logs for security
-- **VPC Flow logs** can be configured at the **VPC, Subnet or the Network Interface level (ENI)**, here we do VPC level
-- Send flow logs to s3
-  - VPC -> Flow Log -> **Create Flow Log, send to S3**
-  - notice that then the bucket Permissions -> Policy was automatically updated
-- Send flow logs to Cloud Watch
-  - Cloud Watch -> Log Groups -> Create Log Group
-  - VPC -> Flow Log -> Create Flow Log, send to Cloud Watch Logs, pick the log group, pick an **IAM role that will allow the Flow Logs to write to Cloud Watch**
-- generate traffic - it is enough to ssh into the instance; also try ssh after you have disabled SSH on Security group
-  - in logs you will see **ACCEPT or REJECT, when the SSH was disabled**
-- the logs can take **5-15 minutes** to show up, both in CW and in S3
-  - will be one stream per ENI (Elastic Network Interface)
-- create **CloudWatch metric filter** for denied SSH connections and alarm
-  - Cloud Watch -> Log groups -> pick your group -> Metric Filter -> Create Metric Filter
-  - filter pattern: `[version, account, eni, source, destination, srcport, destport="22", protocol="6", packets, bytes, windowstart, windowend, action="REJECT", flowlogstatus]`
-  - then you also need metric **name and value** (e.g. `1`) - so this will be a metric generated from logs matching that pattern
-  - after it is created, click on it's **checkbox -> Create alarm -> ... -> create SNS** topic, then generate some traffic and see the alarm working (default period is **1 minute**)
-- **create Athena table** from the logs in s3 and query
-  - find the logs in s3 -> Copy s3 URI. Next Athena -> Query editor -> Edit settings and enter that location you copied
-  - create the Athena table:
-    ```sql
-    CREATE EXTERNAL TABLE IF NOT EXISTS default.vpc_flow_logs (
-      version int,
-      account string,
-      interfaceid string,
-      sourceaddress string,
-      destinationaddress string,
-      sourceport int,
-      destinationport int,
-      protocol int,
-      numpackets int,
-      numbytes bigint,
-      starttime int,
-      endtime int,
-      action string,
-      logstatus string
-    ) PARTITIONED BY (
-      dt string
-    ) ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ' LOCATION 's3://cfst-3029-12735640b585b0eeecf119-vpcflowlogsbucket-okxucddutz8q/AWSLogs/825242597096/vpcflowlogs/us-east-1/' TBLPROPERTIES ("skip.header.line.count"="1");
-    ```                      
-  - partition the table
-    ```sql
-    ALTER TABLE default.vpc_flow_logs
-    ADD PARTITION (dt='2024-05-07') location 's3://cfst-3029-12735640b585b0eeecf119-vpcflowlogsbucket-okxucddutz8q/AWSLogs/825242597096/vpcflowlogs/us-east-1/2024/05/07/';
-    ```
-  - run queries
-    ```sql
-    SELECT day_of_week(from_iso8601_timestamp(dt)) AS day,
-      dt,
-      interfaceid,
-      sourceaddress,
-      destinationport,
-      action,
-      protocol
-    FROM vpc_flow_logs
-    WHERE action = 'REJECT' AND protocol = 6
-    order by sourceaddress
-    LIMIT 100;
-    ```
-
 # IAM
 - `us-east-1` is the region AWS **rolls out their services first** - but **IAM is global**
 - by default: `0` users, `0` user groups, `2` roles, `0` policies, `0` identity providers
@@ -254,29 +286,6 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
   - you assign the users to the role in **"add principal", this is the "role-trust relationship"**
 - roles can allow **cross-account access**
 - **role assumption expires**
-
-
-## Amazon-managed Grafana
-- **query, correlate and visualise logs, metrics and traces**
-- AWS managed, has security, you can have **different workspaces**, scaling, high availability
-- **pricing per user**
-- collects data from **Cloud Watch, Amazon Managed Service for Prometheus, AWS OpenSearch, AWS TimeStream, AWS X-Ray, ...**
-- good for
-  - **visualisations**
-  - **IoT** (since a lot of different data sources)
-  - **ops / troubleshooting**
-- works with **VPC endpoints**
-
-## Amazon Managed Service for Prometheus
-- **serverless, Prometheus-compatible service** for metrics
-  - Prometheus is open source monitoring system, this is the same Prometheus
-  - AWS will scale it automatically
-  - AWS will replicate in **3 AZs (availability)**
-  - can be used to **monitor Kubernetes (self managed or AWS EKS clusters)**
-  - uses **PromQL language (open source)** for querying data
-  - data retention `150` days
-- works with **VPC endpoints**
-- pick this also for **monitoring at scale**
 
 # AWS Key Management Service (KMS)
 - create and control **encryption keys**, integrates with many AWS services
@@ -336,7 +345,29 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
 - pools:
   - **user pools** - for sign in and sign up
   - **identity pools** - for access to AWS resources, with **AWS credentials**, that you exchange the token for
-- AWS Security Token Service (STS) - validates the assume role request using Cognito
+- **AWS Security Token Service (STS)** - validates the assume role request using Cognito
+
+# Amazon-managed Grafana
+- **query, correlate and visualise logs, metrics and traces**
+- AWS managed, has security, you can have **different workspaces**, scaling, high availability
+- **pricing per user**
+- collects data from **Cloud Watch, Amazon Managed Service for Prometheus, AWS OpenSearch, AWS TimeStream, AWS X-Ray, ...**
+- good for
+  - **visualisations**
+  - **IoT** (since a lot of different data sources)
+  - **ops / troubleshooting**
+- works with **VPC endpoints**
+
+# Amazon Managed Service for Prometheus
+- **serverless, Prometheus-compatible service** for metrics
+  - Prometheus is open source monitoring system, this is the same Prometheus
+  - AWS will scale it automatically
+  - AWS will replicate in **3 AZs (availability)**
+  - can be used to **monitor Kubernetes (self managed or AWS EKS clusters)**
+  - uses **PromQL language (open source)** for querying data
+  - data retention `150` days
+- works with **VPC endpoints**
+- pick this also for **monitoring at scale**
 
 # Distributed Denial of Service (DDoS) attack
 - attempt to make the application unavailable to your users

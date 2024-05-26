@@ -16,15 +16,69 @@ bgColor: "#f2e6d9"
 ---
 
 <div class="bg-info panel-body" markdown="1">
-Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview).
+Those are the notes I took during the Cloud Guru [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview) course.
 Note that the course content changes as the AWS changes. The notes are from March-May 2024.
 
 This section is about everything AWS that has to do with decoupling and serverless: SQS, SNS, API Gateway, Lambda, and so on.
 </div>
 
 <h3>Table of contents</h3>
-- TOC
-{:toc max_level=1}
+<div markdown="1">
+  <a href="#loose-coupling" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Loose coupling` ``
+  </a>
+  <a href="#aws-gateway-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS Gateway #serverless` ``
+  </a>
+  <a href="#aws-batch" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS Batch` ``
+  </a>
+  <a href="#amazon-mq" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon MQ` ``
+  </a>
+  <a href="#step-functions-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Step Functions #serverless` ``
+  </a>
+  <a href="#amazon-appflow" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon AppFlow` ``
+  </a>
+  <a href="#lambda" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Lambda` ``
+  </a>
+  <a href="#aws-serverless-application-repository" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS Serverless Application Repository` ``
+  </a>
+  <a href="#containers" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Containers` ``
+  </a>
+  <a href="#fargate-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Fargate #serverless` ``
+  </a>
+  <a href="#amazon-elastic-container-service-ecs" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon Elastic Container Service (ECS)` ``
+  </a>
+  <a href="#amazon-eventbridge" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon EventBridge` ``
+  </a>
+  <a href="#elastic-container-registry-amazon-ecr" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Elastic Container Registry (Amazon ECR)` ``
+  </a>
+  <a href="#amazon-eks-anywhere" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon EKS Anywhere` ``
+  </a>
+  <a href="#amazon-ecs-anywhere" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon ECS Anywhere` ``
+  </a>
+  <a href="#aurora-serverless-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Aurora Serverless #serverless` ``
+  </a>
+  <a href="#aws-x-ray" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS X-Ray` ``
+  </a>
+  <a href="#aws-appsync" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS AppSync` ``
+  </a>
+</div>
 
 # Loose coupling
 - **having an ELB in front of your instances is already considered loose coupling**
