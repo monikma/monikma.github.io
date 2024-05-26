@@ -28,6 +28,9 @@ This section is about AWS Storage and AWS Databases.
     `Legal Hold` `Glacier Vault Lock` `Replication` `Lifecycle Management` `strong read after write consistency` `SSE-S3, KMS, or SSE-C at rest` 
     `x-amz-server-side-encryption` `Multipart upload` `S3 Byte-Range Fetches` 
   </a>
+  <a href="#s3-pre---signed-url" class="mindmap mindmap-new-section" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `S3 Pre-signed URL` `with sharer's security credentials` `private objects` `limited time` `pre-signed cookies for many files`
+  </a>
   <a href="#elastic-block-store-ebs" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `Elastic Block Store (EBS)` `replicated within 1 AZ` `same AZ as EC2` `deleted on Termination by default` `Throughput optimized HDD (st1) (big data)`
     `Provisioned IOPS (io2)` `General Purpose SSD (gp3)` `Cold HDD (SC1)` `incremental Snapshots` `End to end encryption, AES-256`
@@ -87,7 +90,14 @@ This section is about AWS Storage and AWS Databases.
   - durability (`9.9999999999%`, *"eleven nines"*)
 - AWS CLI returns `HTTP 200` on successful upload (`PUT`)
 - **consistency model**: strong "read after write" consistency - it will not read outdated file, also list operations won't
-    
+
+# S3 Pre-signed URLs
+- can **share a private S3 object** by creating a pre-signed URL, using their **own security credentials**, to allow a download for a **limited amount of time**
+- the link is valid only for some time
+- there are also **pre-signed cookies** which you can use to share several files, the receiver then can browse the shared objects
+  - can be used e.g. in non free stock photos, to provide the customer the link only after they have paid
+- how to pre-sign an object: `aws s3 presign s3://bucketname/object --expires-in 3600` - `1`h, is default (you need S3 Admin access)
+
 ## Static website on S3
 - good when you need to scale quick, when you are not sure about the demand
   - on the bucket properties there's sth like ”host static website”
