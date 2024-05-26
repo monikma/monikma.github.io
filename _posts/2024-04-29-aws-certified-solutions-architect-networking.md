@@ -28,8 +28,49 @@ This section is about AWS Networking.
     `Internet Gateway` `Amazon VPC IP Manager (IPAM), for CIDR`, `Three tier architecture`
     `No default subnets with new VPC`
   </a>
-  <a href="#" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
-    `VPC`
+  <a href="#nat-gateway" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `NAT Gateway` `Network Address Translation` `sits in public subnet` `AWS->Internet` `stateful`
+    `redundant inside AZ` `don't share across AZs` `has public IP`
+  </a>
+  <a href="#acl-lists" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `ACL Lists` `before the subnet` `stateless` `custom ACL all disabled` `each subnet needs an ACL` 
+    `IP address blocking` `rule number` `lower number wins` `ephemeral ports for outbound`
+  </a>
+  <a href="#vpc-endpoint" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `VPC Endpoint` `keep inside AWS network` `interface endpoint, ENI` `gateway endpoint, S3, DynamoDB` `sits in private subnet`
+    `adjust IAM permissions`
+  </a>
+  <a href="#vpc-peering" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `VPC Peering` `as if same network` `cross region` `cross account` `not transitive` `acceptor is accessing`
+    `no CIDR overlap` `adjust route tables` `adjust security group`
+  </a>
+ <a href="#route53" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `Route53` `DNS port 53` `Top Level Domain (TLD)` `IANA controls TLD` `InterNIC, WHOIS database for under TLD`
+    `Domain Registrars` `TLD => NS record` `authoritative DNS record` `NS record => SOA record` `A Record, domain name`
+    `CNAME, another site version` `AWS Alias Record, also mapping` `hosted zone = domain` `record name = subdomain`
+    `private hosted zones`
+  </a>
+  <a href="#route53-routing-policies" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `Route53 Routing Policies` `Simple, one with all IPs` `Weighted, % for records` `Failover, Secondary on HC fail`
+    `Geolocation, IP location` `Geoproximity, with Traffic Flow and biases` `Latency, lowest in region`
+    `Multivalue, random IP with HC`
+  </a>
+  <a href="#aws-privatelink" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `AWS PrivateLink` `connect to thousands customers' VPCs` `you need LB` `they need ENI`
+  </a>
+  <a href="#vpc-vpn-cloudhub" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `VPC VPN CloudHub` `connect many sites with VPN` `encrypted over Internet` `not expensive`
+  </a>
+  <a href="#direct-connect" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `Direct Connect (DX)` `dedicated connection` `hosted connection via partner` `DX Locations, with AWS Cage and Customer Cage`
+    `X-Connect = cable` `public & private VPC` `VPN over DX`
+  </a>
+  <a href="#transit-gateway" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `Transit Gateway` `connect VPCs` `central hub` `transitive` `IP multicast` `inter region` 
+    `inter account (with Resource Access Manager (RAM))` `simplify topology` `route tables`
+  </a>
+  <a href="#aws-wavelength" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `AWS Wavelength` `5G endpoint` `low latency` `mobile edge computing`
   </a>
 </div>
 
@@ -176,6 +217,46 @@ This section is about AWS Networking.
   - next, you need to adjust the **main route tables on both sides** - map the other's CIDR to Peering Connection
   - and lastly, modify **requester security group** - e.g. **allow MySQL traffic from the other VPC CIDR**
 
+# Route53
+- **DNS service**, registering domain names and pointing them at AWS webservice, DNS operates on port `53`
+  - DNS converts domain names to IP addresses, which computers use to identify each other on the network
+- IPv4 was the old pool of IPs, which are running out (32 bits, 4 billion addresses), this is why we have IPv6 (128 bits, 340 undecilion addresses) (migration is in progress), both are supported by Route53
+- Domains
+  - In this address: `google.com`, `.com` is the **top-level domain (TLD)**, and `google` would be second-level domain
+  - **TLDs are controlled by IANA (Internet Assigned Numbers Authority)**, in a root zone database with all top-level domains
+  - **Domain registrars** are authorities that can assign domain names **directly under TLD**, with **InterNIC (from ICANN)**, which enforces uniqueness, and stores domains in **WHOIS database**; examples: GoDaddy, domain.com, AWS, Namecheap
+- DNS Resolution
+  - **First TLD resolution**, gives you **NS record** - name server record, used by top level domain servers to direct traffic to **content DNS server**, which contains the **authoritative DNS records**
+  - Next, **NS Record leads you SOA record**, this is the **start of the authority**, start of your DNS records
+    - contains: **server name for the zone**, **administrator of the zone**, **current version of data file**, **TTL file on resource records**
+    - all other records, like
+      - **A record** - the mapping between **domain and the IP address**, this has the **TTL**
+      - **CNAME** - resolve one domain name to another, e.g. `m.acloudguru.com`, cannot be used for naked domain names, like `acloudguru.com`
+      - **AWS Alias Record** - is similar to CNAME, maps records to AWS services, can be used for naked domain names, pick this one in the exam
+- How to register a domain name
+  - AWS is now also a domain registrar, so you only need AWS
+  - **Route53 -> Register Domain** -> Select -> checkout -> Enter personal details -> you will receive status email for each domain
+  - EC2 -> create instances in 2 regions, with a simple webpage
+  - Route53 -> Hosted Zone (your **domain will be the hosted zone name**) -> Create record
+    - **Record name - subdomain in front of your main domain**, can keep blank to create for root domain, pick A record
+    - Enter the **public IP addresses of your EC2s**
+    - Set TTL
+    - Set **routing policy**
+- you can also have **private hosted zones with Route53**
+
+## Route53 routing policies
+- **Simple Routing Policy** - you can only have 1 record, it returns all record values (IPs) in random order
+- **Weighted Routing Policy** - multiple records, some % of traffic to one set and some % to another, create 1 record per EC2 instance, set weights, pick health check
+  - **Health Checks** - you can set it on records, you can set up SNS alerts
+    - Route53 -> Health Checks -> Endpoint -> put your IP, put `index.html` as hostname, no path; create 1 HC per EC2 instance
+    - if HC fails, the Weighted Policy will send traffic to other records
+- **Failover Routing Policy** - multiple records, if one fails HC then the other is a fallback; you need to pick Primary / Secondary
+- **Geolocation Routing Policy** - multiple records, returns based on **requested IP location**; when you create records, you pick location - **continents or countries**
+- **Geoproximity Routing Policy** - needs **Traffic Flow**, you can set a `bias` value to adjust the area of geographical zone
+  - **Route53 Traffic Flow** - **graphical UI, complex workflow for routing**, you can combine other policies, it is using geographical location, latency and availability
+- **Latency Routing Policy** - picks the record with **lowest response time**, you still have to tell AWS its **region**; remember latency changes
+- **Multivalue Answer Policy** - multiple records, works like **Simple Routing Policy but with Health Check**
+
 # AWS PrivateLink
 - to expose your **VPC to up to thousands of customers' VPC**
 - better than VPC Peering or Internet Gateway because less configuration and more secure
@@ -221,43 +302,3 @@ This section is about AWS Networking.
 # AWS Wavelength
 - `5`G AWS endpoint, for **ultra low latency**, **with compute and storage**
 - **mobile edge computing**
-
-# Route53
-- **DNS service**, registering domain names and pointing them at AWS webservice, DNS operates on port `53`
-  - DNS converts domain names to IP addresses, which computers use to identify each other on the network
-- IPv4 was the old pool of IPs, which are running out (32 bits, 4 billion addresses), this is why we have IPv6 (128 bits, 340 undecilion addresses) (migration is in progress), both are supported by Route53
-- Domains
-  - In this address: `google.com`, `.com` is the **top-level domain (TLD)**, and `google` would be second-level domain
-  - **TLDs are controlled by IANA (Internet Assigned Numbers Authority)**, in a root zone database with all top-level domains
-  - **Domain registrars** are authorities that can assign domain names **directly under TLD**, with **InterNIC (from ICANN)**, which enforces uniqueness, and stores domains in **WHOIS database**; examples: GoDaddy, domain.com, AWS, Namecheap
-- DNS Resolution
-  - **First TLD resolution**, gives you **NS record** - name server record, used by top level domain servers to direct traffic to **content DNS server**, which contains the **authoritative DNS records**
-  - Next, **NS Record leads you SOA record**, this is the **start of the authority**, start of your DNS records
-    - contains: **server name for the zone**, **administrator of the zone**, **current version of data file**, **TTL file on resource records**
-    - all other records, like
-      - **A record** - the mapping between **domain and the IP address**, this has the **TTL**
-      - **CNAME** - resolve one domain name to another, e.g. `m.acloudguru.com`, cannot be used for naked domain names, like `acloudguru.com`
-      - **AWS Alias Record** - is similar to CNAME, maps records to AWS services, can be used for naked domain names, pick this one in the exam
-- How to register a domain name
-  - AWS is now also a domain registrar, so you only need AWS
-  - **Route53 -> Register Domain** -> Select -> checkout -> Enter personal details -> you will receive status email for each domain
-  - EC2 -> create instances in 2 regions, with a simple webpage
-  - Route53 -> Hosted Zone (your **domain will be the hosted zone name**) -> Create record
-    - **Record name - subdomain in front of your main domain**, can keep blank to create for root domain, pick A record
-    - Enter the **public IP addresses of your EC2s**
-    - Set TTL
-    - Set **routing policy**
-- you can also have **private hosted zones with Route53**
-
-## Route53 routing policies
-- **Simple Routing Policy** - you can only have 1 record, it returns all record values (IPs) in random order
-- **Weighted Routing Policy** - multiple records, some % of traffic to one set and some % to another, create 1 record per EC2 instance, set weights, pick health check
-  - **Health Checks** - you can set it on records, you can set up SNS alerts
-    - Route53 -> Health Checks -> Endpoint -> put your IP, put `index.html` as hostname, no path; create 1 HC per EC2 instance
-    - if HC fails, the Weighted Policy will send traffic to other records
-- **Failover Routing Policy** - multiple records, if one fails HC then the other is a fallback; you need to pick Primary / Secondary
-- **Geolocation Routing Policy** - multiple records, returns based on **requested IP location**; when you create records, you pick location - **continents or countries**
-- **Geoproximity Routing Policy** - needs **Traffic Flow**, you can set a `bias` value to adjust the area of geographical zone
-  - **Route53 Traffic Flow** - **graphical UI, complex workflow for routing**, you can combine other policies, it is using geographical location, latency and availability
-- **Latency Routing Policy** - picks the record with **lowest response time**, you still have to tell AWS its **region**; remember latency changes
-- **Multivalue Answer Policy** - multiple records, works like **Simple Routing Policy but with Health Check**
