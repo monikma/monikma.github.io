@@ -201,7 +201,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
 - exam: look for **detailed cost breakdowns**, **daily delivery of usage reports**, **tracking Savings Plans utilizations**
 
 # AWS Compute Optimizer
-- analyses **configuration and utilisation metrics** or your AWS resources
+- analyses **configuration and utilisation metrics** of your AWS resources
 - reports usage **optimizations and recommendations**
 - visualises data as **graph** with **history**
 - provides **projected utilization metrics**
@@ -229,7 +229,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
   
 # Trusted Advisor
 - industry and customer-established **best-practices auditing tool**, covering:
-  - **Pperformance**
+  - **Performance**
   - **Cost Optimization**
   - **Security**
   - **Fault tolerance** - resiliency and availability
@@ -237,7 +237,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
   - **Operational Excellence** - best practices
 - works at an **account level**, just the service (so service or account)
 - **Basic/Developer support** has only `6` checks in Security category
-- **Business/Enterprise On-Ramp/Enterprise support** get al checks, as well as **EventBridge** automation
+- **Business/Enterprise On-Ramp/Enterprise support** get al checks, as well as   **EventBridge** automation
 - AWS Console: Trusted Advisor - shows recommendations
 
 # AWS Control Tower
@@ -250,7 +250,7 @@ This section is about everything AWS that has to do with governance: AWS Organis
   - **Landing Zone** - holds all accounts and OUs
   - **Guardrails** - governance rules, can be enabled or disabled
     - **preventative** - **service control policies** disable stuff
-    - **detective** - detect non compliant resources **leverages AWS Config rules**, **available only in ertain regions**
+    - **detective** - detect non compliant resources **leverages AWS Config rules**, **available only in certain regions**
     - **proactive** - prevent non compliant resources from being created, using AWS CloudFormation hooks
   - **Account Factory** - account template
   - **CloudFormation StackSet** - automated deployment of templates for resources

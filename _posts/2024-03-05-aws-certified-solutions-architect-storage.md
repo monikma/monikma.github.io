@@ -47,11 +47,18 @@ This section is about AWS Storage and AWS Databases.
   <a href="#rds" class="mindmap mindmap-new-section" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `RDS` `multi AZ support for failover` `read replicas` `OLTP processing` `automated backups` `max 40 instances` 
     `Aurora min 3 AZ` `max 5 replicas, Aurora 15` `Aurora snapshots` `Aurora self healing` `Aurora Serverless`
+    `scale only up` `storage auto scaling`
+  </a>
+  <a href="#aurora-serverless-serverless" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff ;">
+    `Aurora Serverless` `on-demand` `per second billing` `Aurora Capacity Unit (ACU), 2 GB mem` `min&max ACUs`
+    `storage 10 GB-128 TB` `AWS-managed warm pools, shared infra` `multi tenant apps` `capacity planning`
+    `unpredictable spikes` `dev&test envs`
   </a>
   <a href="#dynamodb-serverless"  class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `DynamoDB` `3 geographically different DCs` `on SSD` `eventually/strongly consistent reads` `transactional reads/writes` 
-     `transactions <100 items <4MB volume` `Global Tables` `encryption at rest with KMS` `BatchWriteItem` `on-demand backup` `PITR 5 mins - 35 days` 
-    `DynamoDB Streams` `DAX in VPC` `DAX pay per request`
+    `transactions <100 items <4MB volume` `Global Tables` `encryption at rest with KMS` `BatchWriteItem` `on-demand backup` `PITR 5 mins - 35 days` 
+    `DynamoDB Streams` `DAX in VPC` `DAX pay per request` `provisioned capacity/on-demand` `change twice / 24j` `4KB RCU` `1KB WCU`
+    `1 consistent ops/s or 2 eventually consistent` `Capacity Calculator`
   </a>
   <a href="#documentdb" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `DocumentDB` `MongoDB` `AWS Migration Service` `on-premise Mongo`
@@ -415,6 +422,7 @@ This section is about AWS Storage and AWS Databases.
   - can also be promoted to be its own database, useful e.g. before a big querying party
   - RDS -> DB -> Actions -> Create read replica
   - **max 40 Amazon RDS DB instances per account**
+-  storage auto-scaling, when storage <10%, since >5 min, and last storage modification > 6h
 
 ### Provisioning RDS
 - RDS -> Create Database
@@ -423,6 +431,20 @@ This section is about AWS Storage and AWS Databases.
   - Public access usually No
   - Security groups
   - after creating there is a **popup View credential details** - you only see it once
+
+### Scaling RDS
+- vertical scaling incurs costs, but it's **a valid solution**
+- **you can scale storage up but not down**
+- **read only replicas can spread the load** (for failover/availability use multi AZ implementations, they will be standby instances not used until needed)
+  - you can point your read operations to its endpoint
+- or you can use **Aurora serverless - for unpredictable workflows**
+- how to scale a DB
+  - RDS -> pick your DB -> Actions -> **Create Read Replica** (will have same Security and Parameter Groups), you could
+    - change the instance class (the `t3.micro` for example)
+    - pick a different region
+    - pick storage, and you can also pick "Enable storage autoscaling" and "max threshold" so that it does not get too big
+    - pick multi AZ
+  - creating the read replica will take some time..
 
 ### Amazon Aurora
 - is Amazon's DB
@@ -437,6 +459,24 @@ This section is about AWS Storage and AWS Databases.
 - automated backups enabled automatically
 - you can take **snapshots** and share with other accounts
 - note there is also **Aurora Serverless**, see the serverless section (this would be **Provisioned**)
+
+### Aurora Serverless #serverless
+- scales up and down according to the needs
+- **on demand**
+- **per-second billing**
+- **Aurora Capacity Units (ACUs)**
+  - each ACU is a combination of approximately `2` gigabytes (GB) of memory, corresponding CPU, and networking
+  - storage scales automatically, from `10` GB to `128` TB
+  - you can set **min and max ACUs** for scaling
+- **AWS-managed warm pools** - for quick allocation, infrastructure shared between customers
+- like Aurora Provisioned, **6 copies of data across 3 AZs**
+- use cases:
+  - **infrequent, intermittent or unpredictable workflows**
+  - **multi-tenant apps** - adjusts capacity automatically
+  - new apps, **capacity planning**
+  - **dev and test** environments
+  - **mixed use apps**, which cause unpredictable spikes
+- it is easy to **switch between Provisioned and Serverless**
 
 ## DynamoDB #serverless
 - fast flexible non relational, with **consistent millisecond latency**
@@ -501,6 +541,19 @@ This section is about AWS Storage and AWS Databases.
 - replication latency ~< `1`s
 - **how to spread your table across multiple regions**
   - DynamoDB -> Create table -> PK -> Open the table -> Global Tables -> Create replica -> pick region (streams will be automatically enabled)
+
+### Scaling DynamoDB
+- e.g. DynamoDB is easier
+  - **provisioned capacity** - for predictable workloads, most cost effective
+  - **on demand** - for sporadic workloads, pay per read/write
+- **Capacity Units**
+  - **RCU - Read Capacity Units**, <= `4KB`, one strongly consistent read per second or two eventually consistent reads per second
+  - **WCU - Write Capacity Units**, <= `1KB`, same with consistent reads like RCU
+- in the console
+  - when he was creating the table, the **default was provisioned with 5 WCU and 5 RCU**, both with **default autoscaling** turned on
+    - there is a **Capacity Calculator** built in, if you want to adjust it (also shows the cost)
+    - you can also **switch to On Demand**, you **can only change it 2x in 24h**
+- for design for performance, **avoid hot keys**, **know your access patterns**
 
 ## DocumentDB
 - is **MongoDB on AWS** - document database

@@ -24,41 +24,71 @@ This section is about everything AWS that has to do with decoupling and serverle
 
 <h3>Table of contents</h3>
 <div markdown="1">
-  <a href="#loose-coupling" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Loose coupling` ``
+  <a href="#loose-coupling" class="mindmap mindmap-new-section" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Loose coupling` `ELB is loose coupling`
+  </a>
+  <a href="#aws-sqs" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS SQS` `delivery delay, 0 (default) - 15 mins` `257 KB message size` `encryption in transit by default`
+    `encryption at rest, Server Side Encryption (SSE-SQS)` `message retention, default 4 days, 1 min - 14 days`
+    `short pooling (default), separate connection` `long pooling` `visibility timeout 30 sec` `max receives before DLQ, default 10`
+    `DLQ depth alarm`
+  </a>
+  <a href="#fifo-sqs" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `FIFO SQS` `in order` `no duplicates` `deduplication interval` `300 transactions / sec`
+    `FIFO HIgh Throughput 9000 messages/sec` `batching x10` `deduplication scope with message group id`
+  </a>
+  <a href="#sns" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `SNS` `message size 256 KB` `FIFO topics` `FIFO deduplication` `encryption in transit by default`
+    `encrypted at rest with AWS KMS` `resource policies for cross account` `Large Message Payload, <2 GB on S3`
+    `SNS Fanout` `JSON filter policy` `active tracing, with X-Ray` `retry policy only for HTTP/s`
   </a>
   <a href="#aws-gateway-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `AWS Gateway #serverless` ``
+    `AWS Gateway` `serverless` `versioning` `REST API` `HTTP API` `WebSocket API` `Edge-optimized`
+    `Regional` `Private (VPC Endpoint)` `Custom TLS via AWS Certificate Manager (ACM)` `IAM Roles`
+    `AWS Cognito` `don't pipe big S3 via API-G` `default Lambda integration timeout 29 sec` `stages`
   </a>
   <a href="#aws-batch" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `AWS Batch` ``
-  </a>
+    `AWS Batch` `Batch Compute workloads` `automatic workload distribution` `EC2` `ECS/Fargate recommended` 
+    `Job` `Job Definition` `Job Queue` `Compute Environment` `ECS <16 CPU, <20 GB mem` `(AWS) managed` `unmanaged`
+    `managed only specify networking, can mix in Spot EC2 instances` `alternative to AWS Lambda` `Docker compatible`
+</a>
   <a href="#amazon-mq" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon MQ` ``
+    `Amazon MQ` `migration of existing broker` `JMS` `AMQP` `MQTT` `OpenWire` `Stomp` `highly available`
+    `Apache Active MQ, with 1 instance and standby` `RabbitMQ, with cluster deployment, 3 broker nodes across AZs`
+    `one-to-one` `one-to-many` `Amazon MQ requires private networking`
   </a>
   <a href="#step-functions-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Step Functions #serverless` ``
-  </a>
-  <a href="#amazon-appflow" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon AppFlow` ``
+    `Step Functions` `orchestration` `state machine` `state` `Pass` `Choice` `Task` `Wait` `Succeed` `Fail` `Parallel` 
+    `Map` `workflow execution` `Standard workflow, no duplicates, <1 year, <2000 per second, billed by transition, auditable history`
+    `Express workflow, can have duplicates, <5 minutes, billed for executions and resources, IoT, high rate`
   </a>
   <a href="#lambda" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Lambda` ``
+    `Lambda` `1000k requests free Tier` `pay per request` `memory <10 GB` `IAM Role` `in VPC or not`
+    `<1000 concurrent exeutions` `512MB - 10GB disc storage` `EFS integration (in VPC)` `<4KB for env variables`
+    `128-10GB mem` `<15 min execution` `<50MB deployment compressed` `<250MB deployment uncompressed`
+    `<6 MB payload` `streamed responses <20 MB` `Lambda Layers` `Lambda Applications`
+  </a>
+  <a href="#containers" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Containers` `code with all dependencies` `Docker file` `Image` `Docker registry` `Container - running image`
+  </a>
+  <a href="#fargate-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Fargate` `serverless` `runS Docker containers in ECS or EKS` `isolated environment per container`
+    `pricing by resources and time` `integrates with EFS` `may be more expensive than EC2`
+  </a>
+  <a href="#amazon-elastic-container-service-ecs" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon Elastic Container Service (ECS)` `managing Docker containers` `<1000 containers`
+    `EC2 and Fargate` `can't pick VPC with Fargate` `Task Definition` `Task Role, for the app` `Task Exeution Role, for the container`
+    `launch service or task`
+  </a>
+  <a href="#amazon-eventbridge" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon EventBridge` `=CloudWatch Events`
+  </a>
+
+  <a href="#amazon-appflow" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon AppFlow` `data exchange between AWS and SaaS app`
   </a>
   <a href="#aws-serverless-application-repository" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `AWS Serverless Application Repository` ``
-  </a>
-  <a href="#containers" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Containers` ``
-  </a>
-  <a href="#fargate-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Fargate #serverless` ``
-  </a>
-  <a href="#amazon-elastic-container-service-ecs" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon Elastic Container Service (ECS)` ``
-  </a>
-  <a href="#amazon-eventbridge" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon EventBridge` ``
   </a>
   <a href="#elastic-container-registry-amazon-ecr" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `Elastic Container Registry (Amazon ECR)` ``
@@ -68,9 +98,6 @@ This section is about everything AWS that has to do with decoupling and serverle
   </a>
   <a href="#amazon-ecs-anywhere" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `Amazon ECS Anywhere` ``
-  </a>
-  <a href="#aurora-serverless-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Aurora Serverless #serverless` ``
   </a>
   <a href="#aws-x-ray" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `AWS X-Ray` ``
@@ -247,30 +274,6 @@ This section is about everything AWS that has to do with decoupling and serverle
     - **good for high event rate workloads, e.g. IoT streaming and ingestion**
 - in the exam, think of Step Functions when you need a **wait period**
 
-# Amazon AppFLow
-- integration service, for data exchange between AWS and SaaS app
-  - e.g. for migrating data from Salesforce to S3
-- you define how to **ingest data and put them in an AWS service**, or the other direction (**bi-directional**)
-- terms:
-  - **Flow** - transfers data between source and destination
-  - **Data Mapping** - how source data is stored in the destination
-  - **Filters** - criteria which data records are transferred to the destination
-  - **Trigger** - how the flow is started: **on demand**, **on event** or **on schedule**
-- first you establish a con nection
-- can use `<100`GB per flow of data transfer
-- use case examples:
-  - **transferring Salesforce records to Redshift**
-  - **ingesting and analysing Slack conversations and storing them in S3**
-  - **migrating Zendesk support tickets to Snowflake**
-  - **transfer aggregated data on a scheduled basis to S3**
-  - generally, **easy and fast** SaaS/third party data transfer from and to AWS, especially on **schedule**
-  
-# Questions to ask yourself in the exam
-- is it sync or async
-- do you need push/pull, one to one or to many, do you need a workflow
-- does message order matter
-- what load is expected (consider service limits)
-
 # Lambda
 - `1000k` requests and `400k`GBs of Compute in Free Tier, afterwards **pay per request**
 - integrates with DynamoDB, S3, EventBridge, SQS/SNS, Kinesis, CloudWatch
@@ -294,14 +297,6 @@ This section is about everything AWS that has to do with decoupling and serverle
   - **invoke lambda when a file is put in S3** (remember IAM Role)
   - **create EventBridge rule to trigger lambda (CRON)**, and e.g. shut down dev instances
 - in AWS Console: you also have **Layers**, and **Applications**
-
-# AWS Serverless Application Repository
-- users can **find, deploy and publish serverless applications, within the AWS account (this is the default private)**
-  - can share privately with other organisations, or publicly
-  - *publish* means make available to find (you can browse public apps even if you don't have AWS account)
-  - *deploy* means actually deploy in your account, don't trust all public apps
-- **Manifest file** - also called **AWS SAM Template** (which are actually CloudFormation templates)
-- **integration with Lambda**
 
 # Containers
 - unit of software that packages up **code with all dependencies**, so that the application runs **quickly and reliably in various computing environments**
@@ -393,6 +388,38 @@ This section is about everything AWS that has to do with decoupling and serverle
 - image **tag immutability**, configured per repository
 - **integrates with container repositories on premise**, also integrates with ECS and EKS, and **Amazon Linux containers**
 
+# Amazon AppFLow
+- integration service, for data exchange between AWS and SaaS app
+  - e.g. for migrating data from Salesforce to S3
+- you define how to **ingest data and put them in an AWS service**, or the other direction (**bi-directional**)
+- terms:
+  - **Flow** - transfers data between source and destination
+  - **Data Mapping** - how source data is stored in the destination
+  - **Filters** - criteria which data records are transferred to the destination
+  - **Trigger** - how the flow is started: **on demand**, **on event** or **on schedule**
+- first you establish a con nection
+- can use `<100`GB per flow of data transfer
+- use case examples:
+  - **transferring Salesforce records to Redshift**
+  - **ingesting and analysing Slack conversations and storing them in S3**
+  - **migrating Zendesk support tickets to Snowflake**
+  - **transfer aggregated data on a scheduled basis to S3**
+  - generally, **easy and fast** SaaS/third party data transfer from and to AWS, especially on **schedule**
+
+# Questions to ask yourself in the exam
+- is it sync or async
+- do you need push/pull, one to one or to many, do you need a workflow
+- does message order matter
+- what load is expected (consider service limits)
+
+# AWS Serverless Application Repository
+- users can **find, deploy and publish serverless applications, within the AWS account (this is the default private)**
+  - can share privately with other organisations, or publicly
+  - *publish* means make available to find (you can browse public apps even if you don't have AWS account)
+  - *deploy* means actually deploy in your account, don't trust all public apps
+- **Manifest file** - also called **AWS SAM Template** (which are actually CloudFormation templates)
+- **integration with Lambda**
+
 # Amazon EKS Anywhere
 - separate from Amazon, **on premise EKS**, the one from Amazon, based on **EKS Distro**
 - **control place operated by the customer**, updates done my **manual CLI** or **Flux**
@@ -408,24 +435,6 @@ This section is about everything AWS that has to do with decoupling and serverle
   - you need to have **SSM agent, ECS agent, Docker installed on your server**
   - **register the external instances as System Manager (SSM) Managed instances** (you need SSM activation keys)
   - you can do it all with a startup script
-
-# Aurora Serverless #serverless
-- scales up and down according to the needs
-- **on demand**
-- **per-second billing**
-- **Aurora Capacity Units (ACUs)**
-  - each ACU is a combination of approximately `2` gigabytes (GB) of memory, corresponding CPU, and networking
-  - storage scales automatically, from `10` GB to `128` TB
-  - you can set **min and max ACUs** for scaling
-- **AWS-managed warm pools** - for quick allocation, infrastructure shared between customers
-- like Aurora Provisioned, **6 copies of data across 3 AZs**
-- use cases:
-  - **infrequent, intermittent or unpredictable workflows**
-  - **multi-tenant apps** - adjusts capacity automatically
-  - new apps, **capacity planning**
-  - **dev and test** environments
-  - **mixed use apps**, which cause unpredictable spikes
-- it is easy to **switch between Provisioned and Serverless**
 
 # AWS X-Ray
 - gathering and viewing **insights** about application's **requests and responses**

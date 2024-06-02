@@ -23,7 +23,10 @@ This section is about AWS Networking.
 
 <h3>Table of contents</h3>
 <div markdown="1">
-  <a href="#vpc" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+  <a href="#elastic-load-balancing-elb" class="mindmap mindmap-new-section" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
+    `Elastic Load Balancing (ELB)`
+  </a>
+  <a href="#vpc" class="mindmap" style="--mindmap-color: #e67300; --mindmap-color-lighter: #ffe6cc;">
     `VPC` `default VPC per region, CIDR 172.31.0.0/16` `route table` `NACL` `subnets, within AZ`
     `Internet Gateway` `Amazon VPC IP Manager (IPAM), for CIDR`, `Three tier architecture`
     `No default subnets with new VPC`
@@ -78,6 +81,47 @@ This section is about AWS Networking.
     `AWS Wavelength` `5G endpoint` `low latency` `mobile edge computing`
   </a>
 </div>
+
+# Elastic Load Balancing (ELB)
+- automatically distributing traffic across multiple targets, can be across **multiple AZs**
+- **Application Load Balancers**
+  - HTTP & HTTP traffic, level 7 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/) (Open System Interconnection), application aware, intelligent
+  - To be configured
+    - **Listener** - you specify protocol and port, has rules
+    - **Rules** - a rule consists of priority, actions and condition(s) (of when is activated), as a result the traffic is sent to a **Target Group**
+    - **Target Group** - routes traffic to one or more registered targets, e.g. EC2, on given port and protocol, also **has a Health Check attached**
+    - **Path Based Routing** - you enable path **patterns**, the decision about target group is based on request path, e.g. a subpath can be routed to another server, in a different AZ
+  - to use **HTTPS listener you need a SSL/TLS server certificate deployed on your ALB**, the ALB then terminates frontend connections, decrypts the requests from clients and sends them to the targets, **you will get the certificate if you register your domain with Route53**
+  - EC2 -> Load Balancing -> Create Load Balancer -> Application Load Balancer -> Internet facing, IPv4, pick your VPC
+    - add **mappings to all the AZs** where your EC2 instances are
+    - add **SG of your EC2 instances**
+    - Listener -> Create Target Group -> pick Instance type, HTTP, set up Health Checks -> pick all EC2s to register targets -> **Create target Group**
+    - you can then see if you access the LB DNS name, one of your EC2 instances will be hit
+- **Network Load Balancers**
+  - **TCP traffic**, level 4 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/), low latency, performance, millions request per second
+  - it has a Target Group, picks a target and opens a connection on given port and protocol
+    - supported protocols: **UDP, TCP, TCP_UDP, TLS**
+    - supported ports: **1-65535**
+  - can use **TLS listener for decryption / encryption**, for that it also needs a **SSL server certificate deployed**
+  - there are **no NLB Rules**
+  - **fail-open mode** - if all instances are unhealthy, NLB will try to send traffic to all of them
+- **Gateway Load Balancers**
+  - Network level, level 3 of [OSI model](https://www.bmc.com/blogs/osi-model-7-layers/), for inline virtual load balancing
+  - not appearing in the exam
+- **Classic Load Balancers**
+  - legacy, can be used in test and dev
+  - HTTP & HTTPS, and TCP
+  - `X-Forwarded-For header` - contains the original IP address of the client, because the instance will get request from the LB
+  - if LB cannot make a connection to the targets it will respond with `504 Gateway Timeout`
+  - EC2 -> Load Balancers -> Create Load Balancer -> Drop Down -> Classic Load Balancer -> Create, the rest same as ALB
+- **Sticky Sessions** - you can tell the LB to bind user session to a specific instance, not good if that instance dies
+  - in Classic or ALB you can have them, but in ALB on Target Group level, so you can at least have several IPs as the target
+- **Deregistration Delay** (**Connection Draining**)
+  - allows LB to keep existing connections open if EC2 instances are de-registered or become unhealthy, so that it can complete in-flight requests, enabled by default (you put the amount of milliseconds)
+
+## ELB Health checks
+- **attach it to ELB**, queries EC2 instance that is behind the LB -> **"In service" / "Out of service"**
+- LB will stop sending requests to an unhealthy instance, and resume when it's state is healthy again
 
 # VPC
 - virtual **datacenter** in the cloud

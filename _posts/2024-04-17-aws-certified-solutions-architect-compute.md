@@ -34,6 +34,9 @@ This section is about AWS Compute.
     `ENI, EN (high performance), EFA Networking (ML, OS-bypass) cards` `EC2 Placement Groups: Cluster, Spread, Partition (Cassandra)` 
     `EC2 Hibernation, <60 days, <150 RAM`
   </a>
+  <a href="#auto-scaling-groupd" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `Auto Scaling Groups`
+  </a>
   <a href="#ec2-networking" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
     `EC2 Networking` `Elastic Network Interface (ENI)` `Enhanced Networking (EN), Single Root I/O Virtualization (SR-IOV), high performance` `Elastic Fabric Adapter (EFA), OS-bypass, e.g. HPC, ML) cards` 
   </a>
@@ -121,6 +124,67 @@ This section is about AWS Compute.
       - **you still don't loose the data on reboot**
     - you can find them in Browse more AMIs -> Community AMIs -> filter by Instance Store
 
+# Auto Scaling Groups
+- Auto Scaling Group is a **collection of EC2 instances treated as a collective group for scaling and management**
+  - Auto Scaling is **only for EC2**, for other services it is not called like this
+- configuration consists of
+  - pick the **launch template**
+  - pick **purchasing options (On Demand or Spot)**, choose **multiple AZs** for availability (AWS wil automatically try to spread across them evenly)
+  - **ELB can be configured within the Auto Scaling Groups**
+    - Scaling Groups have their **own simple Health Checks**, but you can also use the ones from LBs
+    - you would have to **adjust Security Groups to allow traffic**
+    - including **ELB health checks cause unhealthy instances to be terminated and replaced** (you still need some checkbox)
+  - set scaling policy: **minimum**, **maximum** and **desired** (initial amount)
+    - you can also build **auto scaling policies**, on top of this
+  - you can set up **notifications with SNS**
+- **Lifecycle hooks**
+  - can happen **on scaling out** (start up), or **scaling in** (shut down)
+  - the hooks have **up to 2 hours waiting**, in case you need to run some scripts on the instance before startup, or save some logs before the shut down
+  - the hook have **wait state** (e.g. for running the scripts), and then **proceed state** (by sending the `complete-lifecycle-action` command)
+- how to create Auto Scaling Group
+  - EC2 -> Auto Scaling Groups -> Create, pick **name and launch template** -> **select VPC and subnet(s)** (remember for availability you need at least 2 AZs) -> ...
+    - .. -> Instance type requirements - you can specify **max and min for cpu and memory**, or **add instances manually**, with **weights**
+    - .. -> Instance Purchase Options - you can pick a distribution between **On-Demand or Spot**, if you pick both there is also sth like Allocation Strategy
+    - .. -> Load Balancing - **pick existing or create new one (NLB or ALB)**
+    - .. -> Health checks - you can add VPC and/or ELB health checks on top
+    - .. -> Metrics - you can enable Auto Scaling Group **metrics**, and add **warmup time** (before the metrics get collected after startup)
+    - .. -> Group size - this is the **min, max, desired**
+    - .. -> Scaling policies - you can only pick **Target Tracking** here
+      - you can disable scaling in here
+    - .. -> **Notifications** - there are predefined event types
+    - .. -> and wait for creation..
+  - in **Instance Management** tab you can see the **instances**, and add **lifecycle hooks**
+  - in **Monitoring** you can see monitoring for the auto Scaling Group as well as EC2 instances
+  - in **Instance Refresh** tab - you can start a **rolling update**
+  - under Automatic Scaling tab - you can adjust the scaling policy from **Target Tracking to Step or Simple** (all 3 of them are called dynamic tracking policies)
+    - you can also enable **Predictive scaling**
+    - you can also add **scheduled actions**
+  - if you are changing the network interface settings, remember ([source](https://docs.aws.amazon.com/autoscaling/ec2/userguide/create-launch-template.html#change-network-interface))
+    - **security groups must be configured as part of the interface**, not in Security Groups section
+    - **no secondary private IP addresses**
+    - you can only specify an **existing network interface if it has device index of `0`**, and in that case you can launch only 1 instance, use CLI, you have to specify the AZ but not the subnet
+    - you **cannot assign public IP address if you specify two network interfaces (both must be in the same subnet)**
+    - the address allocated to **network interface** comes from CIDR range of the subnet in which the instance is being launched
+- Auto Scaling is vital to create a highly available application, **allows multiple AZs**
+- pre-bake AMIs to shorten the startup times
+- use **Reserved Instances of Savings Plan** for the minimum instances to save costs
+- **CloudWatch is for alerting Auto Scaling Groups to have more or less instances** (you don't actually have to create any alerts explicitly)
+- what is **Stead State Group** - when you set **min=max=desired=1**, this is good to assure AWS will recover it each time it crashes, good e.g. for legacy solutions
+
+## Auto Scaling Policies
+- policy types
+  - **None - you can pick none
+  - **Stepped Scaling** - scaling by certain fixed amount of instances, and that amount depends on the utilization metric
+  - **Simple Scaling** - add/remove certain % of instances, depending on utilization metric
+  - **Target Tracking** - pick a scaling metric and the group will try to maintain it (e.g. CPU utilization should be 50%)
+- **Avoid Trashing** - killing instances that were just created
+  - you can add **Warm up period**, so that the instances are not being killed before they really start
+  - you can set up **Cooldown that pauses auto scaling for some time, if there is a massive spike**, to avoid big costs
+- types of scaling
+  - **reactive** - measure the load and determine if a change is needed
+  - **scheduled** - if you know the future workload
+  - **predictive** - AWS uses ML to predict, every 24h updates a 48h forecast
+  
 ## EC2 Launch templates
 - better than old Launch configuration
   - configurations were immutable, only certain autoscaling features (also no networking settings possible), templates are versioned, leverage all autoscaling features => use templates
