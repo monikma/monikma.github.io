@@ -19,10 +19,61 @@ Note that the course content changes as the AWS changes. The notes are from Marc
 This section is about some general exam information as well some topics that did not fit in other sections.
 </div>
 
-<h3>Table of contents</h3>
-- TOC
-{:toc max_level=1}
-  
+<h1>Table of contents</h1>
+<div markdown="1">
+  <a href="#exam-guide" class="mindmap mindmap-new-section" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Exam Guide`
+  </a>
+  <a href="#aws-well-architected-tool" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Well-Architected Tool`
+  </a>
+  <a href="#general-knowledge" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `General knowledge`
+  </a>
+  <a href="#global-infrastructure" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Global Infrastructure`
+  </a>
+  <a href="#shared-responsibility-model" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Shared responsibility model`
+  </a>
+  <a href="#aws-backup" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Backup`
+  </a>
+  <a href="#scaling" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Scaling`
+  </a>
+  <a href="#disaster-recovery-strategy" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Disaster Recovery Strategy`
+  </a>
+  <a href="#elastic-mapreduce-emr" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Elastic MapReduce (EMR)`
+  </a>
+  <a href="#kinesis" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Kinesis`
+  </a>
+  <a href="#aws-athena-serverless" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Athena`
+  </a>
+  <a href="#aws-glue-serverless" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Glue`
+  </a>
+  <a href="#amazon-quicksight-serverless" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Amazon QuickSight`
+  </a>
+  <a href="#aws-data-pipeline" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `AWS Data Pipeline`
+  </a>
+  <a href="#amazon-managed-streaming-for-apache" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Amazon Managed Streaming for Apache`
+  </a>
+  <a href="#amazon-appflow" class="mindmap mindmap-new-section" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon AppFlow` `data exchange between AWS and SaaS app` `flow` `data mapping` `filters`
+    `trigger: on demand, on event, on schedule` `<100 GB`
+  </a>
+  <a href="#aws-appsync" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS AppSync` `GraphQL interface` `React, React native, iOS, Android integration`
+  </a>
+</div>  
 # Exam Guide
 
 They put a lot of emphasis on how to pass the exam in the first place, not sure how I feel about this.
@@ -540,22 +591,28 @@ Now I will go topic by topic/service by service.
 - cost effective compared to human translators
 - **scalable**
 
---------------------------------
-Following are the unsupported life cycle transitions for S3 storage classes 
-  Any storage class to the Amazon S3 Standard storage class. 
-                           Reduced Redundancy storage class. 
-  The Amazon S3 Intelligent-Tiering storage class to the Amazon S3 Standard-IA storage class. 
-  The Amazon S3 One Zone-IA storage class to the Amazon S3 Standard-IA
-                                                 Amazon S3 Intelligent-Tiering storage classes.
+# Amazon AppFLow
+- integration service, for data exchange between AWS and SaaS app
+  - e.g. for migrating data from Salesforce to S3
+- you define how to **ingest data and put them in an AWS service**, or the other direction (**bi-directional**)
+- terms:
+  - **Flow** - transfers data between source and destination
+  - **Data Mapping** - how source data is stored in the destination
+  - **Filters** - criteria which data records are transferred to the destination
+  - **Trigger** - how the flow is started: **on demand**, **on event** or **on schedule**
+- first you establish a con nection
+- can use `<100`GB per flow of data transfer
+- use case examples:
+  - **transferring Salesforce records to Redshift**
+  - **ingesting and analysing Slack conversations and storing them in S3**
+  - **migrating Zendesk support tickets to Snowflake**
+  - **transfer aggregated data on a scheduled basis to S3**
+  - generally, **easy and fast** SaaS/third party data transfer from and to AWS, especially on **schedule**
 
-Here are the supported life cycle transitions for S3 storage classes - 
-  The S3 Standard storage class to any other storage class. 
-  Any storage class to the S3 Glacier or S3 Glacier Deep Archive storage classes. 
-  The S3 Standard-IA storage class to the S3 Intelligent-Tiering or 
-                                          S3 One Zone-IA storage classes. 
-  The S3 Intelligent-Tiering storage class to the S3 One Zone-IA storage class. 
-  The S3 Glacier storage class to the S3 Glacier Deep Archive storage class.
-
-waterfall model: https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html
-
-Standard, Standard IA, Intelligent, One Zone IA, Glaciers
+# AWS AppSync
+- **robust and scalable GraphQL interface**
+- combining many data sources, e.g. DynamoDB, Lambda, ..
+- GraphQL is a data language
+- seamless integration with **React, React native, iOS, Android, ..**
+- audience is **especially Frontend developers**
+- uses **declarative coding**

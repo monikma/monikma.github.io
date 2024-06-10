@@ -68,6 +68,10 @@ This section is about AWS Monitoring and Security.
     `Amazon Managed Service for Prometheus` `monitoring at scale` `managed, open source` `PromQL` `data retention 150 days` `3 AZs` 
     `monitor Kubernetes`
   </a>
+  <a href="#aws-x-ray" class="mindmap"  style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `AWS X-Ray` `request and response insights` `traces` `tracing headers` `X-Amzn-Trace-Id` `X-Ray daemon`
+    `trace segments` `service graph` `X-Ray SDK` `measure response processing time`
+  </a>
   <a href="#distributed-denial-of-service-ddos-attack" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
     `Distributed Denial of Service (DDoS) attack` `SYN flood TCP layer 4` `Amplification attack layer 4` `layer 7 attack`
   </a>
@@ -368,6 +372,21 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
   - data retention `150` days
 - works with **VPC endpoints**
 - pick this also for **monitoring at scale**
+
+# AWS X-Ray
+- gathering and viewing **insights** about application's **requests and responses**
+  - also **downstream calls within AWS**
+- uses **traces**, correlated by **tracing headers**, **tracing data** or **running an X-Ray daemon**
+  - trace id header is called `X-Amzn-Trace-Id`
+  - traces contain **Segments** which contain **Subsegments**
+- **Service graph** shows all services in the request
+- some % of the traces will be **dropped** for cost saving, there is some minimum defined
+- **X-Ray daemon** - runs along AWS X-Ray SDK, listens on `UDP 2000`, collects raw segment data and sends to X-Ray, makes it easier
+- integrates with **EC2, ECS, Lambda, Elastic Beanstalk, API Gateway, SNS, SQS**
+- uses:
+  - **request insights**
+  - **view how much time request took, including a queue or topic**
+  - **analyse HTTP responses**
 
 # Distributed Denial of Service (DDoS) attack
 - attempt to make the application unavailable to your users

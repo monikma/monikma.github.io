@@ -9,7 +9,6 @@ tags:
 - Cloud
 commentIssueId: 48
 type: certification
-draft: true
 customColor: true
 fgColor: "#996633"
 bgColor: "#f2e6d9"
@@ -81,29 +80,26 @@ This section is about everything AWS that has to do with decoupling and serverle
     `launch service or task`
   </a>
   <a href="#amazon-eventbridge" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon EventBridge` `=CloudWatch Events`
-  </a>
-
-  <a href="#amazon-appflow" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon AppFlow` `data exchange between AWS and SaaS app`
-  </a>
-  <a href="#aws-serverless-application-repository" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `AWS Serverless Application Repository` ``
+    `Amazon EventBridge` `=CloudWatch Events` `event` `rules` `event bus (router)` `pattern trigger`
+    `scheduled trigger` `cross account` `near real time` `DLQ for unprocessed events`
   </a>
   <a href="#elastic-container-registry-amazon-ecr" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Elastic Container Registry (Amazon ECR)` ``
+    `Elastic Container Registry (Amazon ECR)` `Docker` `OCI images` `per region` `ECR public`
+    `lifecycle policies` `image vulnerability scanning` `cache rules` `immutable image tags`
+    `on premise integration`
   </a>
-  <a href="#amazon-eks-anywhere" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon EKS Anywhere` ``
+  <a href="#aws-serverless-application-repository" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `AWS Serverless Application Repository` `share apps privately with other orgas` `share publicly`
+    `publish - make it available to others` `deploy` `AWS SAM Template = manifest file` `lambda integration`  
+  </a>
+
+  <a href="#amazon-eks-anywhere" class="mindmap mindmap-new-section" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
+    `Amazon EKS Anywhere` `on premise EKS` `EKS Distro based` `Enterprise subscription` `control plane customer managed`
+    `full lifecycle management`
   </a>
   <a href="#amazon-ecs-anywhere" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `Amazon ECS Anywhere` ``
-  </a>
-  <a href="#aws-x-ray" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `AWS X-Ray` ``
-  </a>
-  <a href="#aws-appsync" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
-    `AWS AppSync` ``
+    `Amazon ECS Anywhere` `ECS on premise` `no ELB support` `EXTERNAL launch type` `requires SSM agent and ECS agent on your server`
+    `System Manager Managed instances` `complately managed`
   </a>
 </div>
 
@@ -114,6 +110,11 @@ This section is about everything AWS that has to do with decoupling and serverle
   - SNS
   - API Gateway
 - in the exam, always choose loose coupling, and make sure it is loose all the way
+- questions to ask yourself in the exam:
+  - is it sync or async
+  - do you need push/pull, one to one or to many, do you need a workflow
+  - does message order matter
+  - what load is expected (consider service limits)
 
 ## AWS SQS
 - Poll-Based Messaging - the consumer polls for messages
@@ -388,30 +389,6 @@ This section is about everything AWS that has to do with decoupling and serverle
 - image **tag immutability**, configured per repository
 - **integrates with container repositories on premise**, also integrates with ECS and EKS, and **Amazon Linux containers**
 
-# Amazon AppFLow
-- integration service, for data exchange between AWS and SaaS app
-  - e.g. for migrating data from Salesforce to S3
-- you define how to **ingest data and put them in an AWS service**, or the other direction (**bi-directional**)
-- terms:
-  - **Flow** - transfers data between source and destination
-  - **Data Mapping** - how source data is stored in the destination
-  - **Filters** - criteria which data records are transferred to the destination
-  - **Trigger** - how the flow is started: **on demand**, **on event** or **on schedule**
-- first you establish a con nection
-- can use `<100`GB per flow of data transfer
-- use case examples:
-  - **transferring Salesforce records to Redshift**
-  - **ingesting and analysing Slack conversations and storing them in S3**
-  - **migrating Zendesk support tickets to Snowflake**
-  - **transfer aggregated data on a scheduled basis to S3**
-  - generally, **easy and fast** SaaS/third party data transfer from and to AWS, especially on **schedule**
-
-# Questions to ask yourself in the exam
-- is it sync or async
-- do you need push/pull, one to one or to many, do you need a workflow
-- does message order matter
-- what load is expected (consider service limits)
-
 # AWS Serverless Application Repository
 - users can **find, deploy and publish serverless applications, within the AWS account (this is the default private)**
   - can share privately with other organisations, or publicly
@@ -422,7 +399,7 @@ This section is about everything AWS that has to do with decoupling and serverle
 
 # Amazon EKS Anywhere
 - separate from Amazon, **on premise EKS**, the one from Amazon, based on **EKS Distro**
-- **control place operated by the customer**, updates done my **manual CLI** or **Flux**
+- **control plane operated by the customer**, updates done my **manual CLI** or **Flux**
 - **full lifecycle management of multiple clusters**
 - **operates independently of AWS**
 - offers **curated packages** that extend core functionalities of Kubernetes clusters (only Enterprise subscription)
@@ -435,26 +412,3 @@ This section is about everything AWS that has to do with decoupling and serverle
   - you need to have **SSM agent, ECS agent, Docker installed on your server**
   - **register the external instances as System Manager (SSM) Managed instances** (you need SSM activation keys)
   - you can do it all with a startup script
-
-# AWS X-Ray
-- gathering and viewing **insights** about application's **requests and responses**
-  - also **downstream calls within AWS**
-- uses **traces**, correlated by **tracing headers**, **tracing data** or **running an X-Ray daemon**
-  - trace id header is called `X-Amzn-Trace-Id`
-  - traces contain **Segments** which contain **Subsegments**
-- **Service graph** shows all services in the request
-- some % of the traces will be **dropped** for cost saving, there is some minimum defined
-- **X-Ray daemon** - runs along AWS X-Ray SDK, listens on `UDP 2000`, collects raw segment data and sends to X-Ray, makes it easier
-- integrates with **EC2, ECS, Lambda, Elastic Beanstalk, API Gateway, SNS, SQS**
-- uses:
-  - **request insights**
-  - **view how much time request took, including a queue or topic**
-  - **analyse HTTP responses**
-
-# AWS AppSync
-- **robust and scalable GraphQL interface**
-- combining many data sources, e.g. DynamoDB, Lambda, ..
-- GraphQL is a data language
-- seamless integration with **React, React native, iOS, Android, ..**
-- audience is **especially Frontend developers**
-- uses **declarative coding**
