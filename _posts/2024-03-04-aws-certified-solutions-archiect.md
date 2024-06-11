@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AWS Certified Solutions Architect - Associate (SAA-C03) - General & IAM
+title: AWS SAA-C03 - General & Caching
 date: '2024-03-04'
 author: monikma
 tags:
@@ -11,8 +11,8 @@ commentIssueId: 43
 type: certification
 draft: true
 customColor: true
-fgColor: "#996633"
-bgColor: "#f2e6d9"
+fgColor: "#800080"
+bgColor: "#ffe6ff"
 ---
 
 <div class="bg-info panel-body" markdown="1">
@@ -24,43 +24,43 @@ This section is about some general exam information as well some topics that did
 
 <h1>Table of contents</h1>
 <div markdown="1">
-  <a href="#exam-guide" class="mindmap mindmap-new-section" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#exam-guide" class="mindmap mindmap-new-section" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Exam Guide`
   </a>
-  <a href="#aws-well-architected-tool" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#aws-well-architected-tool" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `AWS Well-Architected Tool`
   </a>
-  <a href="#general-knowledge" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#general-knowledge" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `General knowledge`
   </a>
-  <a href="#global-infrastructure" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#global-infrastructure" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Global Infrastructure`
   </a>
-  <a href="#shared-responsibility-model" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#shared-responsibility-model" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Shared responsibility model`
   </a>
-  <a href="#aws-backup" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#aws-backup" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `AWS Backup`
   </a>
-  <a href="#scaling" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#scaling" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Scaling`
   </a>
-  <a href="#disaster-recovery-strategy" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#disaster-recovery-strategy" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Disaster Recovery Strategy`
   </a>
-  <a href="#cloudformation" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#cloudformation" class="mindmap mindmap-new-section" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `CloudFormation`
   </a>
-  <a href="#elasticbeanstalk" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#elasticbeanstalk" class="mindmap mindmap-new-section" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `ElasticBeanstalk`
   </a>
-  <a href="#cloudfront" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#cloudfront" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `CloudFront`
   </a>
-  <a href="#elasticache-memcached-redis" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#elasticache-memcached-redis" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `ElastiCache (Memcached / Redis)`
   </a>
-  <a href="#global-accelerator-ga" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+  <a href="#global-accelerator-ga" class="mindmap" style="--mindmap-color: #800080; --mindmap-color-lighter: #ffe6ff;">
     `Global Accelerator (GA)`
   </a>
 </div>

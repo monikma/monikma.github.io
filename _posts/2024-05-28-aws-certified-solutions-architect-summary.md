@@ -13,7 +13,7 @@ draft: true
 ---
 
 <div class="bg-info panel-body" markdown="1">
-This is my brain dump for the [AWS Certified Solutions Architect - Associate (SAA-C03)](https://learn.acloud.guru/course/certified-solutions-architect-associate/overview) certificate preparation, using different sources.
+This is my brain dump for the AWS Certified Solutions Architect - Associate (SAA-C03) certificate preparation, using different sources.
 The exam passed with 76%.
 The following practice exams were very useful: [Udemy Practice Exams](https://www.udemy.com/course/practice-exams-aws-certified-solutions-architect-associate/).
 </div>
@@ -120,12 +120,11 @@ ENI is basic, ENA is better (I/O), most performance with EFA (I/O + fast).
 # Bullet points
 
 ## S3
-- S3 Lifecycle Policy has an order: Standard -> Standard IA -> Intelligent Tiering -> Standard IA One Zone -> and the Glaciers, you can skip steps but cannot move a file back
 - S3 Lifecycle Policy has some special "minimum 30 days" rules for time and paying related to Standard* and Intelligent Tiering classes (complicated)
-- apart from multipart upload you also have S3TA for far geo locations, but you don't pay if it didn't accelerate
-- S3 is not for storing files! it is object storage
 - allowed transitions follow a [waterfall model](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-transition-general-considerations.html)
   (basically: Standard, Standard IA, Intelligent, One Zone IA, Glaciers)
+- apart from multipart upload you also have S3TA for far geo locations, but you don't pay if it didn't accelerate
+- S3 is not for storing files! it is object storage
 
 ## EBS
 - the SSDs can be used as boot volume, HDDs not, also Instance Store not
@@ -149,12 +148,12 @@ ENI is basic, ENA is better (I/O), most performance with EFA (I/O + fast).
 ## Databases
 - Aurora read replicas have priority tiers, first lowest number, second biggest gets promoted in the event of failover
 - Read replicas and multi region deployments are replicated asynchronously, while Multi AZ deployment synchronously (except Aurora)
+  - heck out this table [https://aws.amazon.com/rds/features/read-replicas/](https://aws.amazon.com/rds/features/read-replicas/)
 - Amazon RDS Custom for Oracle lets you customize Oracle server without need for using EC2
 - DynamoDB is not in-memory, DAX is, ElastiCache for Redis too
 - there exists Amazon Aurora Global Database
 - to encrypt an RDS database, create encrypted snapshot and restore
 - you don't have direct access to db snapshot in s3
-- check out this table https://aws.amazon.com/rds/features/read-replicas/
 
 ## EFS
 - EFS can be cross region with inter-region VPC peering
