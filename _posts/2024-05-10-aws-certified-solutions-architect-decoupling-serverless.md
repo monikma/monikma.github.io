@@ -50,11 +50,14 @@ This section is about everything AWS that has to do with decoupling and serverle
     `AWS Batch` `Batch Compute workloads` `automatic workload distribution` `EC2` `ECS/Fargate recommended` 
     `Job` `Job Definition` `Job Queue` `Compute Environment` `ECS <16 CPU, <20 GB mem` `(AWS) managed` `unmanaged`
     `managed only specify networking, can mix in Spot EC2 instances` `alternative to AWS Lambda` `Docker compatible`
-</a>
+   </a>
   <a href="#amazon-mq" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `Amazon MQ` `migration of existing broker` `JMS` `AMQP` `MQTT` `OpenWire` `Stomp` `highly available`
     `Apache Active MQ, with 1 instance and standby` `RabbitMQ, with cluster deployment, 3 broker nodes across AZs`
     `one-to-one` `one-to-many` `Amazon MQ requires private networking`
+  </a>
+  <a href="#amazon-managed-streaming-for-apache-kafka-amazon-MSK" class="mindmap" style="--mindmap-color: #99004d; --mindmap-color-lighter: #ffe6f2;">
+    `Amazon Managed Streaming for Apache`
   </a>
   <a href="#step-functions-serverless" class="mindmap" style="--mindmap-color: #996633; --mindmap-color-lighter: #f2e6d9;">
     `Step Functions` `orchestration` `state machine` `state` `Pass` `Choice` `Task` `Wait` `Succeed` `Fail` `Parallel` 
@@ -247,7 +250,29 @@ This section is about everything AWS that has to do with decoupling and serverle
 - SNS+SQS vs Amazon MQ:
   - use Amazon MQ only for migrating **existing** app, from scratch better use SQS+SNS
   - **Amazon MQ requires private networking, like VPC, Direct Connect or VPN**
-  
+
+# Amazon Managed Streaming for Apache Kafka (Amazon MSK)
+- (this lesson in Cloud Guru is just a disaster)
+- ingest and process streaming data in real time with **fully managed Apache Kafka**
+- **control plane operations**: something creates, updates and deletes clusters for you
+- **data plane operations**: you care about this part only
+- support for existing apps, tools and plugins, something with open source Kafka, don't get it
+- concepts:
+  - **Clusters**, containing Broker Nodes
+  - **Broker Nodes** - you specify the **amount per AZ**
+  - **ZooKeeper Nodes** - are created for you
+  - **Producers**, **Consumers** and **Topics** - that is also data plane something
+- **resilient**: **automatic detection and recovery from failures** (mitigation or replacement of unhealthy nodes)
+  - IP stays the same
+- **MSK Serverless** - offers **serverless cluster management**, provisioning and scaling
+- **MSK Connect** - stream data from/to **AWS services** and/or **external sources**
+- encryption:
+  - **encryption at rest by default, Server Side Encryption with KMS**
+  - **encryption by default in transit TLS 1.2** between brokers in clusters
+- logging to CloudWatch, S3, Kinesis Firehose
+- logs all **API calls to AWS CloudTrail**
+- metrics sent to CloudWatch by default
+
 # Step Functions #serverless
 - is a serverless orchestration service, combining many AWS services, with a graphical console
 - meant for **  event driven task executions**

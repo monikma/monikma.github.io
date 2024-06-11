@@ -7,7 +7,7 @@ tags:
 - Architecture
 - AWS
 - Cloud
-commentIssueId: 49
+commentIssueId: 50
 type: certification
 draft: true
 customColor: true

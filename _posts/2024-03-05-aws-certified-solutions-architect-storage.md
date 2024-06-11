@@ -31,6 +31,9 @@ This section is about AWS Storage and AWS Databases.
   <a href="#s3-pre---signed-url" class="mindmap mindmap-new-section" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `S3 Pre-signed URL` `with sharer's security credentials` `private objects` `limited time` `pre-signed cookies for many files`
   </a>
+  <a href="#aws-athena-serverless" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
+    `AWS Athena`
+  </a>
   <a href="#elastic-block-store-ebs" class="mindmap" style="--mindmap-color: #1b4bad; --mindmap-color-lighter: #cce6ff;">
     `Elastic Block Store (EBS)` `replicated within 1 AZ` `same AZ as EC2` `deleted on Termination by default` `Throughput optimized HDD (st1) (big data)`
     `Provisioned IOPS (io2)` `General Purpose SSD (gp3)` `Cold HDD (SC1)` `incremental Snapshots` `End to end encryption, AES-256`
@@ -255,6 +258,10 @@ This section is about AWS Storage and AWS Databases.
   - specify path to completion report, e.g. `s3//sourcebucket343425`
   - there may be a **S3 Batch Job** created to replicate existing (or also future?) objects, its folder may be created in source bucket,
     and also replicated into destination bucket -> but I have not seen this in the lab, only course video
+
+# AWS Athena #serverless
+- for analysing data in `S3` using `SQL`, **serverless**
+- can also query **logs** from S3 bucket
 
 # Elastic Block Store (EBS)
 - Virtual hard disc attached to VM

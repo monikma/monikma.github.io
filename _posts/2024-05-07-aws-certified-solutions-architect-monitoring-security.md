@@ -64,6 +64,10 @@ This section is about AWS Monitoring and Security.
   <a href="#amazon---managed-grafana" class="mindmap mindmap-new-section" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
     `Amazon-managed Grafana` `query, correlate, visualise logs` `workspaces` `pricing per user` `VPC endpoints support` `IoT`
   </a>
+  <a href="#amazon-quicksight-serverless" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
+    `Amazon QuickSight` `BI visualisations` `SPICE advanced calculations` `column level security with Enterprise`
+    `dashboards` `sharing dashboards with data` `serverless`
+  </a>
   <a href="#amazon-managed-service-for-prometheus" class="mindmap" style="--mindmap-color: #6600cc; --mindmap-color-lighter: #ccccff;">
     `Amazon Managed Service for Prometheus` `monitoring at scale` `managed, open source` `PromQL` `data retention 150 days` `3 AZs` 
     `monitor Kubernetes`
@@ -361,6 +365,15 @@ It defines the **permissions**, e.g. full access (aka `AdministratorAccess`) loo
   - **IoT** (since a lot of different data sources)
   - **ops / troubleshooting**
 - works with **VPC endpoints**
+
+# Amazon QuickSight #serverless
+- **serverless BI visualisations**, create dashboards, share
+- **SPICE** - robust **in-memory engine used to perform advanced calculations**, powering the Quickight
+- **Column-level Security (CLS)** - only with **Enterprise** offering, better data safeguarding
+- pricing is **per session and per user** basis
+- you an create **users** and in Enterprise version also **groups**, that you can share **dasboards** with
+- if a user sees the dashboard they can also see the **underlying data**
+- you can integrate it with **Athena**, but also RDS, S3, and more
 
 # Amazon Managed Service for Prometheus
 - **serverless, Prometheus-compatible service** for metrics

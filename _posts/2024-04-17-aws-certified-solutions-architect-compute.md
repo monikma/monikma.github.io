@@ -44,6 +44,9 @@ This section is about AWS Compute.
     `EC2 Placement Groups` `Cluster, single AZ` `Spread, separate hardware` `Partition, racks separate, e.g. Cassandra` `can move stopped instance`
     `only some are compatible`
   </a>
+  <a href="#systems-manager-ssm" class="mindmap" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
+    `Systems Manager (SSM)`
+  </a>
   <a href="#ec2-practical---step-by-steps" class="mindmap mindmap-new-section" style="--mindmap-color: #b30000; --mindmap-color-lighter: #ffcccc;">
     `EC2 Practical` `Launching EC2 instance` `AWS CLI` `Configuring Instance Profile in EC2 CLI/AWS Console` 
     `Bootstraping EC2 servers` `Installing Wordpress`
@@ -291,6 +294,33 @@ This section is about AWS Compute.
   - RAM is reloaded, processes resumed
   - data volumes are reattached
 - this boots way faster, useful **for long running processes or long initializing ones**
+
+# Systems Manager (SSM)
+- **manage and maintain EC2 instances**, including **on-premise**
+- **System Manager Agent** - installed on the instance
+- SSM capabilities:
+  - **automation** - streamlines resource management
+  - **Run Command** - remotely execute SSH scripts, without SSH
+  - **Session Manager** - securely connect to the compute without SSH access
+  - **Patch Manager** - automates OS and application patches
+  - **Parameter Store** - for secrets and configurations
+  - **maintenance windows** - can be scheduled by you, e.g. for patch updates
+- **Session Manager**
+  - **logs all connections and commands run on instance** to CloudWatch & CloudTrail
+  - **SSM Agent** - **both Linux and Windows**, the plus is you don't have to open any ports
+    - supports **EC2, edge devices (AWS and non-AWS IoT), on-premise servers, custom VMs**
+    - **preinstalled** on many AMIs
+    - need to ensure you have the right **IAM permissions**
+- AWS Console:
+  - notice we will connect without SSH, even without inbound Security Groups
+  - but we **need IAM permissions**: EC2 instance profile has `AmazonSSMManagedINstanceCore` policy attached
+  - then you click in EC2 on **Connect -> Session Manager**
+  - Systems Manager -> Run Command - there you can see a lot of command types, select shell script
+    - enter your script and working directory
+    - how to reference a parameter: `{{ssm:/dev/squid_conf}}`
+    - select targets: EC2 instances, by tags or by resurce group
+    - timeout, rate control, you can enable S3 and/or CloudWatch logs
+    - -> Run, you will get an **execution id**
 
 ## EC2 Practical - Step-by-steps
 
